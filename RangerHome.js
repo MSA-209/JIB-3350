@@ -23,6 +23,7 @@ import * as firebase from "firebase/app";
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, child, get, onValue } from "firebase/database";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import axios from "axios"
 
 const firebaseConfig = {
   apiKey: "AIzaSyA_5_RK8ebZPrHAErXJS9oPWoXTSvVCVxc",
@@ -120,6 +121,55 @@ function Flashcard({ flashcard }) {
 export function RangerScreen({ navigation, route }) {
   const theme = useTheme();
   const screen = route.name
+  //strapi implementation
+const [data, setData] = React.useState([])
+const [purposeScope, setPurposeScope] = React.useState("")
+const [courseScope, setCourseScope] = React.useState("")
+const [noteScope, setNoteScope] = React.useState("")
+React.useEffect(() => {
+  const fetchData = async () => {
+    try {
+      console.log(process.env.REACT_APP_API_URL + "ranger-programs")
+      const res = await axios.get(
+        "https://airdb-u5up.onrender.com/api/ranger-programs" ,
+      {
+        headers: {
+          Authorization: "bearer " + "4a47b960dbb6ee5a206f9e93a33e99865a0061acd0b8573a8caf40457d01c3060fad0851ab73ffd9f0fe9afbae69bea6205f7303734d79706bd6bce30f1a565ff880520efb9e2047cb643c6846a4d12bfbb67e0a732c2d411c9851a293e2f630aa0cf0b25d7390909ed050efb9d7bc8dda15500b5e0ee9f423c1a6b301f9af8e",
+      }
+    }
+    )
+    console.log(res.data)
+    console.log(res.data.data)
+    setData(res.data.data)
+  } catch (err) {
+    console.log(err);
+  }
+  }
+  fetchData();
+  console.log(data)
+}, []);
+React.useEffect(() => {
+  if (data.length > 0) {
+    if (data[0].attributes) {
+      console.log(data[0].attributes.purpose)
+      setPurposeScope(data[0].attributes.purpose)
+      console.log(purposeScope + "asdasd")
+
+      console.log(data[0].attributes.course)
+      setCourseScope(data[0].attributes.courseScope)
+      console.log(courseScope + "asdasd")
+
+      console.log(data[0].attributes.note)
+      setNoteScope(data[0].attributes.note)
+      console.log(noteScope + "asdasd")
+    } else {
+      console.log("No attributes");
+    }
+  } else {
+    console.log("Data is empty");
+  }
+}, [data]);
+
   return(
     <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
       <View style={{marginTop: -10, marginBottom: 8}}>
@@ -155,8 +205,9 @@ export function RangerScreen({ navigation, route }) {
                 <View style={styles.rectangle}></View>
               </View>
               <Text style={{ fontSize: 15, marginTop: 10, marginBottom: 10}}>
-                To train, assess, and select Ranger Candidates in order to send the most capable, 
-                qualified, and prepared Screaming Eagle Soldiers to the U.S. Army’s premier leadership school.
+                {/* /* To train, assess, and select Ranger Candidates in order to send the most capable, 
+                qualified, and prepared Screaming Eagle Soldiers to the U.S. Army’s premier leadership school. */}
+                {purposeScope}
               </Text>
               <Divider></Divider>
               <View style={{alignSelf: 'flex-start'}}>
@@ -164,20 +215,22 @@ export function RangerScreen({ navigation, route }) {
                 <View style={styles.rectangle}></View>
               </View>
               <Text style={{ fontSize: 15, marginTop: 10, marginBottom: 10}}>
-                This course covers the skills and concepts necessary to achieve success as a Ranger Student. 
+                {/* This course covers the skills and concepts necessary to achieve success as a Ranger Student. 
                 Candidates will be evaluated on their ability to complete an RPFT, 12-mile road march, CWSA, 
                 and Land Navigation.  Training will cover individual Soldiers skills and Small Unit Tactics, 
                 including Ambushes, Reconnaissance operations, Formations and Movement techniques,  and Troop 
-                Leading Procedures. At the conclusion of the course, Candidates will be better prepared to 
-                represent the Division at the U.S. Army Ranger school.
+                Leading Procedures. At the conclusion of the scourse, Candidates will be better prepared to 
+                represent the Division at the U.S. Army Ranger school. */}
+                  {courseScope}
               </Text>
               <View style={{alignSelf: 'flex-start'}}>
                 <Text style={{ fontSize: 17, marginTop: 10, marginBottom: 10}}>NOTE:</Text>
                 <View style={styles.rectangle}></View>
               </View>
               <Text style={{ fontSize: 15, marginTop: 10, marginBottom: 10}}>
-                Packets for entrance must consist of a digitally filled FC 4137 and a complete phase 1 physical 
-                dated within 120 days of course start date along with a dental memorandum. 
+                {/* Packets for entrance must consist of a digitally filled FC 4137 and a complete phase 1 physical 
+                dated within 120 days of course start date along with a dental memorandum.  */}
+                  {noteScope}
               </Text>
             </Card.Content>
           </Card>

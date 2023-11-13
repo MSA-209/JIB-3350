@@ -52,6 +52,8 @@ import {RangerScreen} from './RangerHome.js';
 const version = Constants.manifest.version
 console.log("Version: ", version)
 
+import axios from "axios"
+
 const { LightTheme, DarkTheme } = adaptNavigationTheme({
   reactNavigationLight: NavigationDefaultTheme,
   reactNavigationdark: NavigationDarkTheme,
@@ -559,9 +561,59 @@ return (
 }
 
 
+
+
 function About({ navigation, route }) {
   const theme = useTheme();
   const screen = route.name
+  //strapi implementation
+const [data, setData] = React.useState([])
+const [phone, setPhone] = React.useState("")
+const [email, setEmail] = React.useState("")
+const [location, setLocation] = React.useState("")
+const [hoursOfOperation, sethoursOfOperation] = React.useState("")
+const [graduationTime, setgraduationTime] = React.useState("")
+const [note, setNote] = React.useState("")
+React.useEffect(() => {
+  const fetchData = async () => {
+    try {
+      console.log(process.env.REACT_APP_API_URL + "course-informations")
+      const res = await axios.get(
+        "https://airdb-u5up.onrender.com/api/abouts" ,
+      {
+        headers: {
+          Authorization: "bearer " + "4a47b960dbb6ee5a206f9e93a33e99865a0061acd0b8573a8caf40457d01c3060fad0851ab73ffd9f0fe9afbae69bea6205f7303734d79706bd6bce30f1a565ff880520efb9e2047cb643c6846a4d12bfbb67e0a732c2d411c9851a293e2f630aa0cf0b25d7390909ed050efb9d7bc8dda15500b5e0ee9f423c1a6b301f9af8e",
+        }
+      }
+    )
+    console.log(res.data)
+    console.log(res.data.data)
+    setData(res.data.data)
+  } catch (err) {
+    console.log(err);
+   }
+  }
+  fetchData();
+  console.log(data)
+}, []);
+React.useEffect(() => {
+  if (data.length > 0) {
+    if (data[0].attributes) {
+      console.log(data[0])
+      setPhone(data[0].attributes.phone)
+      setEmail(data[0].attributes.email)
+      setLocation(data[0].attributes.location)
+      sethoursOfOperation(data[0].attributes.hoursOfOperation)
+      setgraduationTime(data[0].attributes.graduationTime)
+      setNote(data[0].attributes.note)
+      console.log(note + "asdasd")
+    } else {
+      console.log("No attributes");
+    }
+  } else {
+    console.log("Data is empty");
+  }
+}, [data]);
   return(
     <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
       <View style={{marginTop: 0}}>
@@ -594,8 +646,8 @@ function About({ navigation, route }) {
                 <View style={styles.rectangle}></View>
               </View>
               <Text style={{ fontSize: 15, marginTop: 10, marginBottom: 10}}>
-                TSAAS: (270) 798-4410 {"\n"}
-                Pre Ranger: (270) 412-1111
+                {/*TSAAS: (270) 798-4410 {"\n"} Pre Ranger: (270) 412-1111 **/}
+                {phone}
               </Text>
               <Divider></Divider>
               <View style={{alignSelf: 'flex-start'}}>
@@ -603,7 +655,8 @@ function About({ navigation, route }) {
                 <View style={styles.rectangle}></View>
               </View>
               <Text style={{ fontSize: 15, marginTop: 10, marginBottom: 10}}>
-                usarmy.campbell.101-abn-div.mbx.air-assault-school@army.mil
+                {/*usarmy.campbell.101-abn-div.mbx.air-assault-school@army.mil**/}
+                {email}
               </Text>
               <Divider></Divider>
               <View style={{alignSelf: 'flex-start'}}>
@@ -611,20 +664,22 @@ function About({ navigation, route }) {
                 <View style={styles.rectangle}></View>
               </View>
               <Text style={{ fontSize: 15, marginTop: 10, marginBottom: 10}}>
-                6883 Air Assault St. {"\n"}
-                Fort Campbell, KY 42223
+                {/*6883 Air Assault St. {"\n"}
+                Fort Campbell, KY 42223**/}
+                {location}
               </Text>
               <View style={{alignSelf: 'flex-start'}}>
                 <Text style={{ fontSize: 17, marginTop: 10, marginBottom: 10}}>Hours of Operation:</Text>
                 <View style={styles.rectangle}></View>
               </View>
               <Text style={{ fontSize: 15, marginTop: 10, marginBottom: 10}}>
-                Class Report Times {"\n"}{"\n"}
+                {/*Class Report Times {"\n"}{"\n"}
                 Air Assault Day Zero - 6:00 a.m. {"\n"}{"\n"}
                 FRIES/SPIES Master Day One - 8:30 a.m. {"\n"}{"\n"}
                 Pathfinder Day One - 8:00 a.m. {"\n"}{"\n"}
                 Pre-Ranger Day Zero - 9:00 a.m. {"\n"}{"\n"}
-                Rappel Master Day One - 8:30 a.m. 
+              Rappel Master Day One - 8:30 a.m.**/}
+                {hoursOfOperation} 
               </Text>
               <Divider></Divider>
               <View style={{alignSelf: 'flex-start'}}>
@@ -632,8 +687,9 @@ function About({ navigation, route }) {
                 <View style={styles.rectangle}></View>
               </View>
               <Text style={{ fontSize: 15, marginTop: 10, marginBottom: 10}}>
-              Air Assault - 11 a.m.{"\n"}
-              Pathfinder - 11 a.m.
+                {/*Air Assault - 11 a.m.{"\n"}
+                Pathfinder - 11 a.m.**/}
+                {graduationTime}
               </Text>
               <Divider></Divider>
               <View style={{alignSelf: 'flex-start'}}>
@@ -641,13 +697,14 @@ function About({ navigation, route }) {
                 <View style={styles.rectangle}></View>
               </View>
               <Text style={{ fontSize: 15, marginTop: 10, marginBottom: 10}}>
-                ATTENTION SERVICE MEMBERS AND ATRRS MANAGERS - Please coordinate directly with The 
+                {/*ATTENTION SERVICE MEMBERS AND ATRRS MANAGERS - Please coordinate directly with The 
                 Sabalauski Air Assault School (TSAAS) via phone or email on class availability and ATRRS 
                 reservations. Unit ATRRS Managers are NOT allowed to slot Service Members into any TSAAS 
                 courses through ATRRS, under any circumstances. TSAAS Operations executes all course 
                 ATRRS slotting – any course reservations made outside of TSAAS Operations are invalid and 
                 will be cancelled. Service Members attempting to “walk-on” to any course are NOT 
-                guaranteed a slot in the course.
+              guaranteed a slot in the course.**/}
+                {note}
               </Text>
               <Divider></Divider>
             </Card.Content>

@@ -23,7 +23,7 @@ import * as firebase from "firebase/app";
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, child, get, onValue } from "firebase/database";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-
+import axios from "axios"
 const firebaseConfig = {
   apiKey: "AIzaSyA_5_RK8ebZPrHAErXJS9oPWoXTSvVCVxc",
   authDomain: "airassaultapp.firebaseapp.com",
@@ -118,6 +118,49 @@ function Flashcard({ flashcard }) {
 }
 
 export function PathfinderScreen({ navigation, route }) {
+   //strapi implementation
+const [data, setData] = React.useState([])
+const [pathfinderPurpose, setPathfinderPurpose] = React.useState("")
+const [pathfinderNote, setpathFinderNote] = React.useState("")
+React.useEffect(() => {
+  const fetchData = async () => {
+    try {
+      console.log(process.env.REACT_APP_API_URL + "pathfinder-programs")
+      const res = await axios.get(
+        "https://airdb-u5up.onrender.com/api/pathfinder-programs" ,
+      {
+        headers: {
+          Authorization: "bearer " + "4a47b960dbb6ee5a206f9e93a33e99865a0061acd0b8573a8caf40457d01c3060fad0851ab73ffd9f0fe9afbae69bea6205f7303734d79706bd6bce30f1a565ff880520efb9e2047cb643c6846a4d12bfbb67e0a732c2d411c9851a293e2f630aa0cf0b25d7390909ed050efb9d7bc8dda15500b5e0ee9f423c1a6b301f9af8e",
+        }
+      }
+    )
+    console.log(res.data)
+    console.log(res.data.data)
+    setData(res.data.data)
+  } catch (err) {
+    console.log(err);
+   }
+  }
+  fetchData();
+  console.log(data)
+}, []);
+React.useEffect(() => {
+  if (data.length > 0) {
+    if (data[0].attributes) {
+      console.log(data[0].attributes.purpose)
+      setPathfinderPurpose(data[0].attributes.purpose)
+      console.log(pathfinderPurpose)
+
+      console.log(data[0].attributes.note)
+      setpathFinderNote(data[0].attributes.note)
+      console.log(pathfinderNote)
+    } else {
+      console.log("No attributes");
+    }
+  } else {
+    console.log("Data is empty");
+  }
+}, [data]);
   const theme = useTheme();
   const screen = route.name
   return(
@@ -155,7 +198,7 @@ export function PathfinderScreen({ navigation, route }) {
                 <View style={styles.rectangle}></View>
               </View>
               <Text style={{ fontSize: 15, marginTop: 10, marginBottom: 10}}>
-                Army Pathfinders are trained to provide navigational aid and advisory 
+                {/*Army Pathfinders are trained to provide navigational aid and advisory 
                 services to military aircraft in areas designated by supported unit 
                 commanders.  The Pathfinders’ secondary missions include providing 
                 advice and limited aid to units planning air assault or airdrop operations. 
@@ -165,19 +208,21 @@ export function PathfinderScreen({ navigation, route }) {
                 Helicopter Landing Zone and Pick Up Zone operations, and Drop Zone operations 
                 (Computed Air Release Point, Ground Marker Release System, and Verbally Initiated 
                 Release System), dealing with U.S. military fixed and rotary wing aircraft for 
-                personnel and equipment.
+                personnel and equipment.**/}
+                {pathfinderPurpose}
               </Text>
               <View style={{alignSelf: 'flex-start'}}>
                 <Text style={{ fontSize: 17, marginTop: 10, marginBottom: 10}}>NOTE:</Text>
                 <View style={styles.rectangle}></View>
               </View>
               <Text style={{ fontSize: 15, marginTop: 10, marginBottom: 10}}>
-                PACKETS MUST BE TURNED IN TO TSAAS 10 BUSINESS DAYS PRIOR TO 
+                {/*PACKETS MUST BE TURNED IN TO TSAAS 10 BUSINESS DAYS PRIOR TO 
                 THE COURSE START DATE. PACKETS WILL NOT BE ACCEPTED WITHIN THAT 10 DAY WINDOW. 
                 {'\n'}{'\n'}
                 It is recommended to only study the Sling Load Deficiency list on page 66-67 and the
                 Nomenclature's.  Do not study anything in the handbook for HLZ's or DZ's as this will
-                confuse you. Wait for the block of instruction from the PFDR cadre!
+              confuse you. Wait for the block of instruction from the PFDR cadre!**/}
+              {pathfinderNote}
               </Text>
             </Card.Content>
           </Card>
