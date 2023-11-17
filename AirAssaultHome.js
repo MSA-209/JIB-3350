@@ -306,8 +306,45 @@ React.useEffect(() => {
 }
 
 export function Phase1Screen({ navigation, route }) {
+
+const [testdata, settestData] = React.useState([])
+const [testCards, setTestCards] = React.useState([])
+const [isLoading, setIsLoading] = React.useState(true); // add new state variable
+React.useEffect(() => {
+  const fetchData = async () => {
+    try {
+      console.log(process.env.REACT_APP_API_URL + "flashcards")
+      const res = await axios.get(
+        "https://airdb-u5up.onrender.com/api/flashcards" ,
+      {
+        headers: {
+          Authorization: "bearer " + "4a47b960dbb6ee5a206f9e93a33e99865a0061acd0b8573a8caf40457d01c3060fad0851ab73ffd9f0fe9afbae69bea6205f7303734d79706bd6bce30f1a565ff880520efb9e2047cb643c6846a4d12bfbb67e0a732c2d411c9851a293e2f630aa0cf0b25d7390909ed050efb9d7bc8dda15500b5e0ee9f423c1a6b301f9af8e"
+          /*{"77f8b9051e98185e8415940294a97ccfaa98676aaef1b5a728ff3cad09197502ddac6a2494767c24f4447d8ee68d56226ee8319849ab6074c8460c2d33d65972383838a7dc2a2ca2db871d658424547ec55a5df560b82568759f3d78161e12599c42363c91e23bef25aeffce1d81d671da1cc712e615236fe0bc61a4e17699bf"}**/,
+        }
+      }
+    )
+    console.log(res.data)
+    console.log(res.data.data)
+    settestData(res.data.data)
+    const testCards = Object.keys(res.data.data).map((key) => {
+      return { ...res.data.data[key], id: key };
+    });
+    setTestCards(testCards)
+    console.log(testCards)
+    setIsLoading(false); // set loading status to false once flashcards are loaded
+
+  } catch (err) {
+    console.log(err);
+   }
+  }
+  fetchData();
+  console.log(testdata)
+  
+}, []);
+          
   const theme = useTheme();
   const screen = route.name
+          /*
   const [flashcards, setFlashcards] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true); // add new state variable
   const flashcardsRef = ref(getDatabase(), "airAssaultPhaseOne");
@@ -337,7 +374,7 @@ export function Phase1Screen({ navigation, route }) {
       // you can clear your events listeners or any async calls here
     }
   }, [])
-
+*/
   return (
     <ScrollView style={{marginTop: -10, marginBottom: 0}} showsVerticalScrollIndicator={false}>
       <View style={{alignItems: 'center', backgroundColor: "#221f20", height: 45, borderTopWidth: 5, borderBottomWidth: 3, borderColor: "#ffcc01"}}>
@@ -347,8 +384,8 @@ export function Phase1Screen({ navigation, route }) {
         {isLoading ? ( // show loading indicator when isLoading is true
           <ActivityIndicator size="large" style={{marginTop:50}} color={theme.colors.primary} />
         ) : (
-          flashcards.map((flashcard) => (
-            <Flashcard key={flashcard.id} flashcard={flashcard} />
+          testCards.map((flashcard) => (
+            <Flashcard key={flashcard.id} flashcard={flashcard.attributes} />
           ))
         )}
       </View>
