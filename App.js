@@ -46,6 +46,7 @@ import {Phase1Screen} from './AirAssaultHome.js';
 import {Phase2Screen} from './AirAssaultHome.js';
 import {PathfinderScreen} from './PathfinderHome.js';
 import {RangerScreen} from './RangerHome.js';
+import {VideoScreen} from './AirAssaultHome.js';
 //import {TestScreen} from './AirAssaultHome.js';
 
 //version output
@@ -739,6 +740,7 @@ function HomeStackScreen({navigation, route}) {
       <Stack.Screen name='Air Assault Program: Phase II' component={Phase2Screen} />
       <Stack.Screen name='Pathfinder Program' component={PathfinderScreen}/>
       <Stack.Screen name='Ranger Program' component={RangerScreen}/>
+      <Stack.Screen name='Video Hub' component={VideoScreen} />
     </Stack.Navigator>
   );
 }

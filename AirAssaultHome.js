@@ -298,6 +298,21 @@ React.useEffect(() => {
                 {insertTimes}
               </Text>
             </Card.Content>
+            <TouchableRipple
+              onPress={() => {
+                navigation.navigate('Video Hub'); // Navigate to VideoScreen when clicking on "Video" under Phase 1
+              }}
+              borderless={true}
+              style={{ borderRadius: 0 }}
+            >
+              <Card.Title
+                title="Video Hub"
+                titleVariant="titleLarge"
+                left={(props) => <Icon name='video' color={theme.colors.primary} size={24} style={{ marginLeft: 8 }} />}
+                right={(props) => <Icon name='chevron-right' color={theme.colors.primary} size={24} style={{ marginRight: 32 }} />}
+              />
+          </TouchableRipple>
+          <Divider bold={true}></Divider>
           </Card>
         </View>
       </View>
@@ -476,3 +491,39 @@ export function Phase2Screen({ navigation, route }) {
   );
 }
 
+// Video Screen thumbnail display
+import VideoButton from './VideoButton';
+
+export function VideoScreen({ navigation, route }) {
+  const theme = useTheme();
+  const screen = route.name;
+// link STRAPI later
+  const videoLinks = [
+    'https://www.youtube.com/watch?v=jfKfPfyJRdk',
+    'https://www.youtube.com/watch?v=jfKfPfyJRdk',
+    'https://www.youtube.com/watch?v=jfKfPfyJRdk',
+    'https://www.youtube.com/watch?v=jfKfPfyJRdk',
+    'https://www.youtube.com/watch?v=jfKfPfyJRdk',
+    'https://www.youtube.com/watch?v=jfKfPfyJRdk',
+    'https://www.youtube.com/watch?v=jfKfPfyJRdk',
+    'https://www.youtube.com/watch?v=jfKfPfyJRdk',
+    'https://www.youtube.com/watch?v=jfKfPfyJRdk',
+    'https://www.youtube.com/watch?v=jfKfPfyJRdk',
+    'https://www.youtube.com/watch?v=jfKfPfyJRdk',
+    'https://www.youtube.com/watch?v=jfKfPfyJRdk'
+    // Add more video links as needed
+  ];
+
+  return (
+    <ScrollView style={{ marginTop: -10, marginBottom: 0 }} showsVerticalScrollIndicator={true}>
+      <View style={{ alignItems: 'center', backgroundColor: "#221f20", height: 45, borderTopWidth: 5, borderBottomWidth: 3, borderColor: "#ffcc01" }}>
+        <Text style={{ color: "#FFFFFF", fontSize: 20 }} variant='headlineLarge'>{screen}</Text>
+      </View>
+
+      {/* Display video button with an array of video links */}
+      <VideoButton videoLinks={videoLinks} />
+
+      <View style={{ marginBottom: 30 }}></View>
+    </ScrollView>
+  );
+}
