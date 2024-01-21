@@ -7,7 +7,8 @@ import {
           View,
           TouchableOpacity,
           SafeAreaView,
-          ScrollView
+          ScrollView,
+          TextInput
         } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import {   
@@ -493,16 +494,15 @@ export function Phase2Screen({ navigation, route }) {
 
 // Video Screen thumbnail display
 import VideoButton from './VideoButton';
-
 export function VideoScreen({ navigation, route }) {
   const theme = useTheme();
   const screen = route.name;
 // link STRAPI later
   const videoLinks = [
     'https://www.youtube.com/watch?v=jfKfPfyJRdk',
-    'https://www.youtube.com/watch?v=jfKfPfyJRdk',
-    'https://www.youtube.com/watch?v=jfKfPfyJRdk',
-    'https://www.youtube.com/watch?v=jfKfPfyJRdk',
+    'https://www.youtube.com/watch?v=fNk_zzaMoSs',
+    'https://www.youtube.com/watch?v=k7RM-ot2NWY',
+    'https://www.youtube.com/watch?v=kYB8IZa5AuE',
     'https://www.youtube.com/watch?v=jfKfPfyJRdk',
     'https://www.youtube.com/watch?v=jfKfPfyJRdk',
     'https://www.youtube.com/watch?v=jfKfPfyJRdk',
@@ -513,15 +513,39 @@ export function VideoScreen({ navigation, route }) {
     'https://www.youtube.com/watch?v=jfKfPfyJRdk'
     // Add more video links as needed
   ];
+  const [searchQuery, setSearchQuery] = React.useState('');
+  const [isSearchVisible, setIsSearchVisible] = React.useState(false);
 
+  const onChangeSearch = query => setSearchQuery(query);
   return (
     <ScrollView style={{ marginTop: -10, marginBottom: 0 }} showsVerticalScrollIndicator={true}>
       <View style={{ alignItems: 'center', backgroundColor: "#221f20", height: 45, borderTopWidth: 5, borderBottomWidth: 3, borderColor: "#ffcc01" }}>
         <Text style={{ color: "#FFFFFF", fontSize: 20 }} variant='headlineLarge'>{screen}</Text>
       </View>
+      {/* flex container so all on one row */}
+      <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
+        {/* Conditionally render the search bar shows when user clicks on search*/}
+        {isSearchVisible && (
+          <TextInput
+            style={{ height: 40, borderColor:theme.colors.primary , borderWidth: 1, color:theme.colors.primary, flex: 100 }}
+            onChangeText={text => onChangeSearch(text)}
+            value={searchQuery}
+          />
+        )}
+        <TouchableOpacity onPress={() => setIsSearchVisible(!isSearchVisible)}>
+          <Text style={{color:theme.colors.primary, fontSize: 20}}>Search</Text>
+          {/* navigates to playlistScreen which will only shows videos in playlist*/}
+        </TouchableOpacity>
+        <IconButton
+        icon="playlist-play"
+        color="black"
+        size={20}
+        onPress={() => navigation.navigate('PlaylistScreen')}
+      />
+      </View>
 
       {/* Display video button with an array of video links */}
-      <VideoButton videoLinks={videoLinks} />
+          <VideoButton videoLinks={videoLinks} /> 
 
       <View style={{ marginBottom: 30 }}></View>
     </ScrollView>
