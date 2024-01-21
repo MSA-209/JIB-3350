@@ -47,7 +47,10 @@ import {Phase2Screen} from './AirAssaultHome.js';
 import {PathfinderScreen} from './PathfinderHome.js';
 import {RangerScreen} from './RangerHome.js';
 import {VideoScreen} from './AirAssaultHome.js';
+import { PlaylistScreen } from './AirAssaultHome.js';
 //import {TestScreen} from './AirAssaultHome.js';
+
+import { AddedVideosContext } from './videoContext.js';
 
 //version output
 const version = Constants.manifest.version
@@ -727,8 +730,9 @@ const AppContext = React.createContext({
 function HomeStackScreen({navigation, route}) {
   const theme = useTheme();
   const { isDarkMode, toggleDarkMode } = React.useContext(AppContext);
-
+  const [addedVideos, setAddedVideos] = React.useState({});
   return (
+    <AddedVideosContext.Provider value={{ addedVideos, setAddedVideos }}>
     <Stack.Navigator
       screenOptions={{
         header: (props) => <CustomNavigationBar {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />,
@@ -741,7 +745,9 @@ function HomeStackScreen({navigation, route}) {
       <Stack.Screen name='Pathfinder Program' component={PathfinderScreen}/>
       <Stack.Screen name='Ranger Program' component={RangerScreen}/>
       <Stack.Screen name='Video Hub' component={VideoScreen} />
+      <Stack.Screen name='Your Playlist' component={PlaylistScreen} />
     </Stack.Navigator>
+    </AddedVideosContext.Provider>
   );
 }
 

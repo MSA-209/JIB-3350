@@ -1,41 +1,42 @@
 import React from 'react';
 import { View, Image, TouchableOpacity, Text, Linking, ScrollView } from 'react-native';
 import {IconButton} from 'react-native-paper'
+import { AddedVideosContext } from './videoContext';
 
 const VideoButton = ({ videoLinks }) => {
-  const [addedVideos, setAddedVideos] = React.useState({});
+  const { addedVideos, setAddedVideos } = React.useContext(AddedVideosContext);
 
-  const handleVideoPress = (videoLink) => {
+  const handleVideoPress = (video) => {
     // Open YouTube app or browser with the video link
-    Linking.openURL(videoLink);
+    Linking.openURL(video.link);
   };
 
-  const handleAddToPlaylist = (videoLink) => {
+  const handleAddToPlaylist = (video) => {
     // Toggle the added status of the video
     setAddedVideos(prevState => ({
       ...prevState,
-      [videoLink]: !prevState[videoLink]
+      [video.link]: !prevState[video.link]
     }));
     console.log(addedVideos)
   };
 
   return (
     <ScrollView vertical showsVerticalScrollIndicator={true}>
-      {videoLinks.map((videoLink, index) => (
+      {videoLinks.map((video, index) => (
         <View key={index} style={{ marginRight: 16 }}>
-          <TouchableOpacity onPress={() => handleVideoPress(videoLink)} style={{ width: 320, alignSelf: 'center' }}>
+          <TouchableOpacity onPress={() => handleVideoPress(video)} style={{ width: 320, alignSelf: 'center' }}>
             <Image
-              source={{ uri: `https://img.youtube.com/vi/${videoLink.split('v=')[1]}/0.jpg` }}
+              source={{ uri: `https://img.youtube.com/vi/${video.link.split('v=')[1]}/0.jpg` }}
               style={{ marginTop: 20, width: 320, height: 180, alignSelf: 'center', borderTopLeftRadius: 8, borderBottomRightRadius: 8 }}
             />
             <View style={{backgroundColor: '#ffcc01', width: 320, alignSelf: 'center', borderBottomLeftRadius:8, borderBottomRightRadius: 8, marginBottom: 10, flexDirection: 'row', justifyContent: 'space-between' }}>
               <Text style={{ fontSize: 16, fontWeight: 'bold', alignSelf: 'center', padding: 5 }}>
-                Video {index + 1}
+                {video.title}
               </Text>
               {/* Below changes depending on if user added it to playlist already or not*/}
-              <TouchableOpacity onPress={() => handleAddToPlaylist(videoLink)} style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <TouchableOpacity onPress={() => handleAddToPlaylist(video)} style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Text style={{ fontSize: 16, fontWeight: 'bold', alignSelf: 'center', padding: 5 }}>
-                  {addedVideos[videoLink] ? 'Remove from' : 'Add to'}
+                  {addedVideos[video.link] ? 'Remove from' : 'Add to'}
                 </Text>
                 <IconButton
                   icon="playlist-play"
