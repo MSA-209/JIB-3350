@@ -494,11 +494,11 @@ export function Phase2Screen({ navigation, route }) {
 
 // Video Screen thumbnail display
 import VideoButton from './VideoButton';
+// imports videoLinks
 import videoLinks from './videoLinks'
 export function VideoScreen({ navigation, route }) {
   const theme = useTheme();
   const screen = route.name;
-// link STRAPI later
   const [searchQuery, setSearchQuery] = React.useState('');
   const [isSearchVisible, setIsSearchVisible] = React.useState(false);
 

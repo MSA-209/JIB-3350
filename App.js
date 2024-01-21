@@ -732,6 +732,7 @@ function HomeStackScreen({navigation, route}) {
   const { isDarkMode, toggleDarkMode } = React.useContext(AppContext);
   const [addedVideos, setAddedVideos] = React.useState({});
   return (
+    //addedVideos are for playlist
     <AddedVideosContext.Provider value={{ addedVideos, setAddedVideos }}>
     <Stack.Navigator
       screenOptions={{
