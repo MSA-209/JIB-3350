@@ -494,25 +494,11 @@ export function Phase2Screen({ navigation, route }) {
 
 // Video Screen thumbnail display
 import VideoButton from './VideoButton';
+import videoLinks from './videoLinks'
 export function VideoScreen({ navigation, route }) {
   const theme = useTheme();
   const screen = route.name;
 // link STRAPI later
-  const videoLinks = [
-    'https://www.youtube.com/watch?v=jfKfPfyJRdk',
-    'https://www.youtube.com/watch?v=fNk_zzaMoSs',
-    'https://www.youtube.com/watch?v=k7RM-ot2NWY',
-    'https://www.youtube.com/watch?v=kYB8IZa5AuE',
-    'https://www.youtube.com/watch?v=jfKfPfyJRdk',
-    'https://www.youtube.com/watch?v=jfKfPfyJRdk',
-    'https://www.youtube.com/watch?v=jfKfPfyJRdk',
-    'https://www.youtube.com/watch?v=jfKfPfyJRdk',
-    'https://www.youtube.com/watch?v=jfKfPfyJRdk',
-    'https://www.youtube.com/watch?v=jfKfPfyJRdk',
-    'https://www.youtube.com/watch?v=jfKfPfyJRdk',
-    'https://www.youtube.com/watch?v=jfKfPfyJRdk'
-    // Add more video links as needed
-  ];
   const [searchQuery, setSearchQuery] = React.useState('');
   const [isSearchVisible, setIsSearchVisible] = React.useState(false);
 
@@ -540,14 +526,31 @@ export function VideoScreen({ navigation, route }) {
         icon="playlist-play"
         color="black"
         size={20}
-        onPress={() => navigation.navigate('PlaylistScreen')}
+        onPress={() => navigation.navigate('Your Playlist')}
       />
       </View>
-
       {/* Display video button with an array of video links */}
-          <VideoButton videoLinks={videoLinks} /> 
-
+        <VideoButton videoLinks={videoLinks} />
       <View style={{ marginBottom: 30 }}></View>
+    </ScrollView>
+  );
+}
+
+import { AddedVideosContext } from './videoContext';
+
+export function PlaylistScreen({ navigation, route }) {
+  const { addedVideos } = React.useContext(AddedVideosContext);
+  const theme = useTheme();
+  const screen = route.name;
+  
+  const playlistVideoLinks = videoLinks.filter(video => addedVideos[video.link]);
+
+  return (
+    <ScrollView style={{ marginTop: -10, marginBottom: 0 }} showsVerticalScrollIndicator={true}>
+      <View style={{ alignItems: 'center', backgroundColor: "#221f20", height: 45, borderTopWidth: 5, borderBottomWidth: 3, borderColor: "#ffcc01" }}>
+        <Text style={{ color: "#FFFFFF", fontSize: 20 }} variant='headlineLarge'>{screen}</Text>
+      </View>
+      <VideoButton videoLinks={playlistVideoLinks} /> 
     </ScrollView>
   );
 }
