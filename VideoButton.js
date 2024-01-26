@@ -83,18 +83,6 @@ const VideoButton = ({ videoLinks }) => {
          ))}
     </View>
       
-     /* <View style ={styles.container}>
-      
-      <YoutubePlayer
-        height={300}
-        width={300}
-        play={playing}
-        videoId={"fNk_zzaMoSs"}
-        />
-         
-    </View>
-     */
-  
 
     /*
     <ScrollView vertical showsVerticalScrollIndicator={true}>
