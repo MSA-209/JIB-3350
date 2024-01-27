@@ -1,59 +1,79 @@
 import React, { useState, useCallback, useRef } from 'react';
-import { StyleSheet, View, Image, TouchableOpacity, Text, Linking, ScrollView , Alert, Button} from 'react-native';
+import { StyleSheet, View, Image, TouchableOpacity, Text, Linking, ScrollView , Alert, Button, useWindowDimensions} from 'react-native';
 import {IconButton} from 'react-native-paper'
 import { AddedVideosContext } from './videoContext';
- 
-  
 import YoutubePlayer from "react-native-youtube-iframe";
 
+const isLargeScreen = window.innerWidth >= 768;
 const styles = StyleSheet.create(
   {
-    container: {
-      flex: 1,
+    responsiveContainer: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
       justifyContent: 'center',
-      alignItems: 'center',
     },
-  }
+    videoCard: {
+      borderRadius: 8,
+      // width: isLargeScreen? 600: 430,
+      // height: isLargeScreen? 350 : 350,
+      height: 250,
+      width: 350,
+      aspectRatio: 16 / 9,
+      // width: isLargeScreen? window.width : 320,
+      backgroundColor: '#ffcc01',
+      padding: 2,
+      backgroundColor: 'black',
+      margin: 30,
+      overflow: 'hidden',
+      shadowColor: '#848785',
+      shadowOffset: {
+        width: 3,
+        height: 3,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+    videoStyle: {
+      marginBottom: 0,
+    },
+}
 )
+
 function VideoComp({video, playing, handleAddToPlaylist, addedVideos}){
 
   return (
-    
-    <View style={{backgroundColor: '#ffcc01', width: 320,   alignSelf: 'center', 
-    borderBottomLeftRadius:8, borderBottomRightRadius: 8, 
-    borderTopRightRadius:8,borderTopLeftRadius:8,
-    marginBottom: 10, alignItems: 'center', justifyContent: 'center' }}>
-       <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10}} >
-        
-        <Text style={{ fontSize: 16, fontWeight: 'bold', alignSelf: 'center', padding: 10 }}>
-                {video.title}
-      </Text>
-    <TouchableOpacity onPress={() => handleAddToPlaylist(video)}  style={{ flexDirection: 'row', alignItems: 'center' }}>
-    <Text style={{ fontSize: 16, fontWeight: 'bold', alignSelf: 'center', padding: 5 }}>
-                  { addedVideos[video.link] ? 'Remove from' :'Add to'}</Text>
-      <IconButton
-      icon="playlist-play"
-      size={20}
-      color="#000000"
-    />
-    </TouchableOpacity>
-      
-       </View>
-      <YoutubePlayer
-        height={200}
-        width={300}
-        play={playing}
-        videoId={video.id}
-        />
+    <View>
+      <View style={styles.videoCard}>
+
+            <YoutubePlayer
+                height={'100%'}
+                width={340}
+                play={playing}
+                videoId={video.id}
+                />
+        <View style={{marginTop: -50, justifyContent: 'space-between', flexDirection: 'row', backgroundColor: '#ffcc01', borderBottomLeftRadius: 5, borderBottomRightRadius: 5}} >
+          <Text style={{ fontSize: 16, fontWeight: 'bold', alignSelf: 'center', padding: 8, flexDirection: 'start'}}>
+            {video.title}
+          </Text>
+          <TouchableOpacity onPress={() => handleAddToPlaylist(video)}  style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Text style={{ fontSize: 16, fontWeight: 'bold', alignSelf: 'center', padding: 5, flexDirection: 'end' }}>
+            { addedVideos[video.link] ? 'Remove from' :'Add to'}</Text>
+            <IconButton
+            icon="playlist-play"
+            size={20}
+            color="#000000"
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
     </View>
   );
-
 }
 const VideoButton = ({ videoLinks }) => {
-
+  //Layout for big screen as tablet and above
+  const window = useWindowDimensions();
   const [playing, setPlaying] = useState(false);
-   
-
   const { addedVideos, setAddedVideos } = React.useContext(AddedVideosContext);
 
   const handleVideoPress = (video) => {
@@ -70,19 +90,23 @@ const VideoButton = ({ videoLinks }) => {
     console.log(addedVideos)
   };
    
-  
   return (
-     
-     <View style ={styles.container}>
-       
+     <ScrollView contentContainerStyle={styles.responsiveContainer}>      
          {videoLinks.map((video) => (
-          <VideoComp key={video.id} video={video}
-          handleAddToPlaylist={handleAddToPlaylist} 
-          addedVideos={addedVideos}
+            <VideoComp 
+            key={video.id}
+            video={video}
+            handleAddToPlaylist={handleAddToPlaylist} 
+            addedVideos={addedVideos}
+            isLargeScreen={isLargeScreen}
+            videoStyle={styles.videoStyle} // Apply additional video styles here
+
           />
          ))}
-    </View>
-      
+    </ScrollView>
+  );
+};
+export default VideoButton;
      /* <View style ={styles.container}>
       
       <YoutubePlayer
@@ -132,8 +156,4 @@ const VideoButton = ({ videoLinks }) => {
       ))}
     </ScrollView>
     */
-  );
-};
 
-
-export default VideoButton;

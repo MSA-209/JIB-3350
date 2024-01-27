@@ -299,6 +299,7 @@ React.useEffect(() => {
                 {insertTimes}
               </Text>
             </Card.Content>
+            <Divider bold={true}></Divider>
             <TouchableRipple
               onPress={() => {
                 navigation.navigate('Video Hub'); // Navigate to VideoScreen when clicking on "Video" under Phase 1
@@ -313,7 +314,7 @@ React.useEffect(() => {
                 right={(props) => <Icon name='chevron-right' color={theme.colors.primary} size={24} style={{ marginRight: 32 }} />}
               />
           </TouchableRipple>
-          <Divider bold={true}></Divider>
+          
           </Card>
         </View>
       </View>
@@ -492,9 +493,9 @@ export function Phase2Screen({ navigation, route }) {
   );
 }
 
-// Video Screen thumbnail display
+// Video Hub Main Screen
 import VideoButton from './VideoButton';
-import videoLinks from './videoLinks'
+import videoLinks from './videoLinks';
 export function VideoScreen({ navigation, route }) {
   const theme = useTheme();
   const screen = route.name;
@@ -504,12 +505,13 @@ export function VideoScreen({ navigation, route }) {
 
   const onChangeSearch = query => setSearchQuery(query);
   return (
+    // Video Hub title
     <ScrollView style={{ marginTop: -10, marginBottom: 0 }} showsVerticalScrollIndicator={true}>
       <View style={{ alignItems: 'center', backgroundColor: "#221f20", height: 45, borderTopWidth: 5, borderBottomWidth: 3, borderColor: "#ffcc01" }}>
         <Text style={{ color: "#FFFFFF", fontSize: 20 }} variant='headlineLarge'>{screen}</Text>
       </View>
       {/* flex container so all on one row */}
-      <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         {/* Conditionally render the search bar shows when user clicks on search*/}
         {isSearchVisible && (
           <TextInput
@@ -546,7 +548,7 @@ export function PlaylistScreen({ navigation, route }) {
   const playlistVideoLinks = videoLinks.filter(video => addedVideos[video.link]);
 
   return (
-    <ScrollView style={{ marginTop: -10, marginBottom: 0 }} showsVerticalScrollIndicator={true}>
+    <ScrollView style={{ marginTop: -10, marginBottom: 0 }} showsVerticalScrollIndicator={false}>
       <View style={{ alignItems: 'center', backgroundColor: "#221f20", height: 45, borderTopWidth: 5, borderBottomWidth: 3, borderColor: "#ffcc01" }}>
         <Text style={{ color: "#FFFFFF", fontSize: 20 }} variant='headlineLarge'>{screen}</Text>
       </View>
