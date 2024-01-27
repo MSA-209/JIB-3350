@@ -46,29 +46,26 @@ function VideoComp({video, playing, handleAddToPlaylist, addedVideos}){
     <View>
       <View style={styles.videoCard}>
           <YoutubePlayer
-             height={'100%'}
-             width={340}
-             play={playing}
-             videoId={video.id}
-             />
-    // <View style={{backgroundColor: '#ffcc01', width: 320,   alignSelf: 'center', 
-    // borderBottomLeftRadius:8, borderBottomRightRadius: 8, 
-    // borderTopRightRadius:8,borderTopLeftRadius:8,
-    // marginBottom: 10, alignItems: 'center', justifyContent: 'center' }}>
-        <View style={{marginTop: -50, justifyContent: 'space-between', flexDirection: 'row', backgroundColor: '#ffcc01', borderBottomLeftRadius: 5, borderBottomRightRadius: 5}} >
-        <Text style={{ fontSize: 16, fontWeight: 'bold', alignSelf: 'center', padding: 10 }}>
-                {video.title}
-      </Text>
-    <TouchableOpacity onPress={() => handleAddToPlaylist(video)}  style={{ flexDirection: 'row', alignItems: 'center' }}>
-    <Text style={{ fontSize: 16, fontWeight: 'bold', alignSelf: 'center', padding: 5 }}>
-                  { addedVideos[video.link] ? 'Remove from' :'Add to'}</Text>
-      <IconButton
-      icon="playlist-play"
-      size={20}
-      color="#000000"
-    />
-    </TouchableOpacity>
-            </View>
+                  height={'100%'}
+                  width={340}
+                  play={playing}
+                  videoId={video.id}
+                  />
+       
+          <View style={{marginTop: -50, justifyContent: 'space-between', flexDirection: 'row', backgroundColor: '#ffcc01', borderBottomLeftRadius: 5, borderBottomRightRadius: 5}} >
+            <Text style={{ fontSize: 16, fontWeight: 'bold', alignSelf: 'center', padding: 10 }}>
+              {video.title}
+            </Text>
+            <TouchableOpacity onPress={() => handleAddToPlaylist(video)}  style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text style={{ fontSize: 16, fontWeight: 'bold', alignSelf: 'center', padding: 5 }}>
+              { addedVideos[video.link] ? 'Remove from' :'Add to'}</Text>
+              <IconButton
+              icon="playlist-play"
+              size={20}
+              color="#000000"
+              />
+            </TouchableOpacity>
+          </View>
        </View>
     </View>
   );
