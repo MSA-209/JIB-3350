@@ -507,7 +507,7 @@ export function VideoScreen({ navigation, route }) {
     setSearchQuery(query);
     const newFilteredData = videoLinks.filter(videoLinks => videoLinks.title.toLowerCase().includes(query.toLowerCase()) || videoLinks.description.toLowerCase().includes(query.toLowerCase())); 
     setFilteredData(newFilteredData);
-  } //filters the data by title based on the search query and updates the filteredData state
+  } //filters the data by title or description based on the search query and updates the filteredData state
   return (
     <ScrollView style={{ marginTop: -10, marginBottom: 0 }} showsVerticalScrollIndicator={true}>
       <View style={{ alignItems: 'center', backgroundColor: "#221f20", height: 45, borderTopWidth: 5, borderBottomWidth: 3, borderColor: "#ffcc01" }}>
