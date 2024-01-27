@@ -501,8 +501,13 @@ export function VideoScreen({ navigation, route }) {
 // link STRAPI later
   const [searchQuery, setSearchQuery] = React.useState('');
   const [isSearchVisible, setIsSearchVisible] = React.useState(false);
+  const [filteredData, setFilteredData] = React.useState(videoLinks); //created filteredData for search filtering
 
-  const onChangeSearch = query => setSearchQuery(query);
+  const onChangeSearch = query => { 
+    setSearchQuery(query);
+    const newFilteredData = videoLinks.filter(videoLinks => videoLinks.title.toLowerCase().includes(query.toLowerCase()) || videoLinks.description.toLowerCase().includes(query.toLowerCase())); 
+    setFilteredData(newFilteredData);
+  } //filters the data by title based on the search query and updates the filteredData state
   return (
     <ScrollView style={{ marginTop: -10, marginBottom: 0 }} showsVerticalScrollIndicator={true}>
       <View style={{ alignItems: 'center', backgroundColor: "#221f20", height: 45, borderTopWidth: 5, borderBottomWidth: 3, borderColor: "#ffcc01" }}>
@@ -522,6 +527,7 @@ export function VideoScreen({ navigation, route }) {
           <Text style={{color:theme.colors.primary, fontSize: 20}}>Search</Text>
           {/* navigates to playlistScreen which will only shows videos in playlist*/}
         </TouchableOpacity>
+  
         <IconButton
         icon="playlist-play"
         color="black"
@@ -530,7 +536,7 @@ export function VideoScreen({ navigation, route }) {
       />
       </View>
       {/* Display video button with an array of video links */}
-        <VideoButton videoLinks={videoLinks} />
+        <VideoButton videoLinks={filteredData} />
       <View style={{ marginBottom: 30 }}></View>
     </ScrollView>
   );
