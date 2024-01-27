@@ -1,4 +1,6 @@
 import * as React from 'react';
+
+
 import {  
           LayoutAnimation,
           Linking,
@@ -497,6 +499,42 @@ import VideoButton from './VideoButton';
 // imports videoLinks
 import videoLinks from './videoLinks'
 export function VideoScreen({ navigation, route }) {
+  const [data, setData] = React.useState([])
+  const [videoName, setVideoName] = React.useState("")
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        console.log(process.env.REACT_APP_API_URL + "air-assault-videos")
+        const res = await axios.get(
+          "https://airdb-u5up.onrender.com/api/air-assault-videos?populate=video" ,
+        {
+          headers: {
+            Authorization: "bearer " + "4a47b960dbb6ee5a206f9e93a33e99865a0061acd0b8573a8caf40457d01c3060fad0851ab73ffd9f0fe9afbae69bea6205f7303734d79706bd6bce30f1a565ff880520efb9e2047cb643c6846a4d12bfbb67e0a732c2d411c9851a293e2f630aa0cf0b25d7390909ed050efb9d7bc8dda15500b5e0ee9f423c1a6b301f9af8e"
+            /*{"77f8b9051e98185e8415940294a97ccfaa98676aaef1b5a728ff3cad09197502ddac6a2494767c24f4447d8ee68d56226ee8319849ab6074c8460c2d33d65972383838a7dc2a2ca2db871d658424547ec55a5df560b82568759f3d78161e12599c42363c91e23bef25aeffce1d81d671da1cc712e615236fe0bc61a4e17699bf"}**/,
+          }
+        }
+      )
+      console.log(res.data)
+      setData(res.data.data)
+    } catch (err) {
+      console.log(err);
+     }
+    }
+    fetchData();
+    console.log(data)
+  }, []);
+  React.useEffect(() => {
+    if (data.length > 0) {
+      if (data[0].attributes) {
+        console.log(data[0].attributes.video.data[0].attributes.name)
+        setVideoName(data[0].attributes.video.data[0].attributes.name)
+      } else {
+        console.log("No attributes");
+      }
+    } else {
+      console.log("Data is empty");
+    }
+  }, [data]);
   const theme = useTheme();
   const screen = route.name;
   const [searchQuery, setSearchQuery] = React.useState('');
