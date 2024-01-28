@@ -9,47 +9,20 @@ import YoutubePlayer from "react-native-youtube-iframe";
 const styles = StyleSheet.create(
   {
     container: {
-      flexDirection: 'row',
-      flexWrap: 'wrap',
+      flex: 1,
       justifyContent: 'center',
+      alignItems: 'center',
     },
-       videoCard: {
-      borderRadius: 8,
-      // width: isLargeScreen? 600: 430,
-      // height: isLargeScreen? 350 : 350,
-      height: 250,
-      width: 350,
-      aspectRatio: 16 / 9,
-      // width: isLargeScreen? window.width : 320,
-      backgroundColor: '#ffcc01',
-      padding: 2,
-      backgroundColor: 'black',
-      margin: 30,
-      overflow: 'hidden',
-      shadowColor: '#848785',
-      shadowOffset: {
-        width: 3,
-        height: 3,
-    },
-    shadowOpacity: 0.5,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
   }
 )
 function VideoComp({video, playing, handleAddToPlaylist, addedVideos}){
 
-   return (
-        <View>
-       <View style={styles.videoCard}>
-            <YoutubePlayer
-                height={'100%'}
-                width={340}
-                play={playing}
-                videoId={video.id}
-                />
+  return (
+    
+    <View>
+      <View style={styles.videoCard}>
         <View style={{marginTop: -50, justifyContent: 'space-between', flexDirection: 'row', backgroundColor: '#ffcc01', borderBottomLeftRadius: 5, borderBottomRightRadius: 5}} >
-        <Text style={{ fontSize: 16, fontWeight: 'bold', alignSelf: 'center', padding: 8, flexDirection: 'start' }}>
+        <Text style={{ fontSize: 16, fontWeight: 'bold', alignSelf: 'center', padding: 10 }}>
                 {video.title}
       </Text>
     <TouchableOpacity onPress={() => handleAddToPlaylist(video)}  style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -60,8 +33,14 @@ function VideoComp({video, playing, handleAddToPlaylist, addedVideos}){
       size={20}
       color="#000000"
     />
-          </TouchableOpacity>
-           </View>
+    </TouchableOpacity>
+            </View>
+            <YoutubePlayer
+             height={'100%'}
+             width={340}
+             play={playing}
+             videoId={video.id}
+             />
        </View>
     </View>
   );
