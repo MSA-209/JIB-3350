@@ -13,7 +13,7 @@ const styles = StyleSheet.create(
       flexWrap: 'wrap',
       justifyContent: 'center',
     },
-      videoCard: {
+       videoCard: {
       borderRadius: 8,
       // width: isLargeScreen? 600: 430,
       // height: isLargeScreen? 350 : 350,
@@ -35,37 +35,33 @@ const styles = StyleSheet.create(
     shadowRadius: 3.84,
     elevation: 5,
   },
-    videoStyle: {
-      marginBottom: 0,
-    },
   }
 )
 function VideoComp({video, playing, handleAddToPlaylist, addedVideos}){
 
-  return (
-    <View>
-      <View style={styles.videoCard}>
-          <YoutubePlayer
-                  height={'100%'}
-                  width={340}
-                  play={playing}
-                  videoId={video.id}
-                  />
-       
-          <View style={{marginTop: -50, justifyContent: 'space-between', flexDirection: 'row', backgroundColor: '#ffcc01', borderBottomLeftRadius: 5, borderBottomRightRadius: 5}} >
-            <Text style={{ fontSize: 16, fontWeight: 'bold', alignSelf: 'center', padding: 10 }}>
-              {video.title}
-            </Text>
-            <TouchableOpacity onPress={() => handleAddToPlaylist(video)}  style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={{ fontSize: 16, fontWeight: 'bold', alignSelf: 'center', padding: 5 }}>
-              { addedVideos[video.link] ? 'Remove from' :'Add to'}</Text>
-              <IconButton
-              icon="playlist-play"
-              size={20}
-              color="#000000"
-              />
-            </TouchableOpacity>
-          </View>
+   return (
+        <View>
+       <View style={styles.videoCard}>
+            <YoutubePlayer
+                height={'100%'}
+                width={340}
+                play={playing}
+                videoId={video.id}
+                />
+        <View style={{marginTop: -50, justifyContent: 'space-between', flexDirection: 'row', backgroundColor: '#ffcc01', borderBottomLeftRadius: 5, borderBottomRightRadius: 5}} >
+        <Text style={{ fontSize: 16, fontWeight: 'bold', alignSelf: 'center', padding: 8, flexDirection: 'start' }}>
+                {video.title}
+      </Text>
+    <TouchableOpacity onPress={() => handleAddToPlaylist(video)}  style={{ flexDirection: 'row', alignItems: 'center' }}>
+    <Text style={{ fontSize: 16, fontWeight: 'bold', alignSelf: 'center', padding: 5 }}>
+                  { addedVideos[video.link] ? 'Remove from' :'Add to'}</Text>
+      <IconButton
+      icon="playlist-play"
+      size={20}
+      color="#000000"
+    />
+          </TouchableOpacity>
+           </View>
        </View>
     </View>
   );
