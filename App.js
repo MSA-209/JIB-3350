@@ -48,6 +48,7 @@ import {PathfinderScreen} from './PathfinderHome.js';
 import {RangerScreen} from './RangerHome.js';
 import {VideoScreen} from './AirAssaultHome.js';
 import { PlaylistScreen } from './AirAssaultHome.js';
+import { VideoPlayerScreen } from './VideoButton.js';
 //import {TestScreen} from './AirAssaultHome.js';
 
 import { AddedVideosContext } from './videoContext.js';
@@ -746,6 +747,7 @@ function HomeStackScreen({navigation, route}) {
       <Stack.Screen name='Ranger Program' component={RangerScreen}/>
       <Stack.Screen name='Video Hub' component={VideoScreen} />
       <Stack.Screen name='Your Playlist' component={PlaylistScreen} />
+      <Stack.Screen name='Video Player' component={VideoPlayerScreen}/>
     </Stack.Navigator>
     </AddedVideosContext.Provider>
   );
