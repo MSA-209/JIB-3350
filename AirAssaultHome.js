@@ -301,7 +301,9 @@ React.useEffect(() => {
             </Card.Content>
             <TouchableRipple
               onPress={() => {
-                navigation.navigate('Video Hub'); // Navigate to VideoScreen when clicking on "Video" under Phase 1
+                navigation.navigate('Video Hub',{ 
+                  source: 'airassault' // or 'airassault' for airassaulthome.js
+                  });
               }}
               borderless={true}
               style={{ borderRadius: 0 }}
@@ -495,17 +497,20 @@ export function Phase2Screen({ navigation, route }) {
 // Video Screen thumbnail display
 import VideoButton from './VideoButton';
 import videoLinks from './videoLinks'
+import videoLinks2 from './videoLinks2'
 export function VideoScreen({ navigation, route }) {
   const theme = useTheme();
   const screen = route.name;
+  const source = route.params.source;
 // link STRAPI later
   const [searchQuery, setSearchQuery] = React.useState('');
   const [isSearchVisible, setIsSearchVisible] = React.useState(false);
-  const [filteredData, setFilteredData] = React.useState(videoLinks); //created filteredData for search filtering
+  const videoLinksUsed = source === 'pathfinder' ? videoLinks2 : videoLinks;
+  const [filteredData, setFilteredData] = React.useState(videoLinksUsed); //created filteredData for search filtering
 
   const onChangeSearch = query => { 
     setSearchQuery(query);
-    const newFilteredData = videoLinks.filter(videoLinks => videoLinks.title.toLowerCase().includes(query.toLowerCase()) || videoLinks.description.toLowerCase().includes(query.toLowerCase())); 
+    const newFilteredData = videoLinksUsed.filter(videoLinks => videoLinks.title.toLowerCase().includes(query.toLowerCase()) || videoLinks.description.toLowerCase().includes(query.toLowerCase())); 
     setFilteredData(newFilteredData);
   } //filters the data by title or description based on the search query and updates the filteredData state
   return (
