@@ -301,9 +301,9 @@ React.useEffect(() => {
             </Card.Content>
             <TouchableRipple
               onPress={() => {
-                navigation.navigate('Video Hub', { 
-                source: 'airassault' // or 'airassault' for airassaulthome.js
-                });
+                navigation.navigate('Video Hub',{ 
+                  source: 'airassault' // or 'airassault' for airassaulthome.js
+                  });
               }}
               borderless={true}
               style={{ borderRadius: 0 }}
@@ -505,12 +505,12 @@ export function VideoScreen({ navigation, route }) {
 // link STRAPI later
   const [searchQuery, setSearchQuery] = React.useState('');
   const [isSearchVisible, setIsSearchVisible] = React.useState(false);
-  const videoLinks = source === 'pathfinder' ? videoLinks2 : videoLinks;
-  const [filteredData, setFilteredData] = React.useState(videoLinks); //created filteredData for search filtering
+  const videoLinksUsed = source === 'pathfinder' ? videoLinks2 : videoLinks;
+  const [filteredData, setFilteredData] = React.useState(videoLinksUsed); //created filteredData for search filtering
 
   const onChangeSearch = query => { 
     setSearchQuery(query);
-    const newFilteredData = videoLinks.filter(videoLinks => videoLinks.title.toLowerCase().includes(query.toLowerCase()) || videoLinks.description.toLowerCase().includes(query.toLowerCase())); 
+    const newFilteredData = videoLinksUsed.filter(videoLinks => videoLinks.title.toLowerCase().includes(query.toLowerCase()) || videoLinks.description.toLowerCase().includes(query.toLowerCase())); 
     setFilteredData(newFilteredData);
   } //filters the data by title or description based on the search query and updates the filteredData state
   return (
