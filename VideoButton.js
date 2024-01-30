@@ -2,8 +2,8 @@ import React, { useState, useCallback, useRef } from 'react';
 import { StyleSheet, View, Image, TouchableOpacity, Text, Linking, ScrollView , Alert, Button} from 'react-native';
 import {IconButton} from 'react-native-paper'
 import { AddedVideosContext } from './videoContext';
- 
-  
+import { useNavigation } from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
 import YoutubePlayer from "react-native-youtube-iframe";
 
 const styles = StyleSheet.create(
@@ -37,17 +37,28 @@ const styles = StyleSheet.create(
   },
   }
 )
-function VideoComp({video, playing, handleAddToPlaylist, addedVideos}){
-
-   return (
+const VideoComp = ({video,  handleAddToPlaylist, addedVideos}) => {
+  const navigation = useNavigation();
+   
+   return ( 
         <View>
        <View style={styles.videoCard}>
-            <YoutubePlayer
+            {/* <YoutubePlayer
                 height={'100%'}
                 width={340}
                 play={playing}
                 videoId={video.id}
-                />
+                /> */}
+                <TouchableOpacity onPress={() => navigation.navigate('Video Player', {id: video.id, 
+      description: video.description, 
+      title: video.title,
+      handleAddToPlaylist,
+      addedVideos})} style={{ marginTop: -45, width: 345, alignSelf: 'center' }}>
+            <Image
+              source={{ uri: `https://img.youtube.com/vi/${video.link.split('v=')[1]}/0.jpg` }}
+              style={{ marginTop: 10, width: 345, height: 290, alignSelf: 'center', borderTopLeftRadius: 8, borderBottomRightRadius: 8 }}
+            />
+             
         <View style={{marginTop: -50, justifyContent: 'space-between', flexDirection: 'row', backgroundColor: '#ffcc01', borderBottomLeftRadius: 5, borderBottomRightRadius: 5}} >
         <Text style={{ fontSize: 16, fontWeight: 'bold', alignSelf: 'center', padding: 8, flexDirection: 'start' }}>
                 {video.title}
@@ -62,14 +73,50 @@ function VideoComp({video, playing, handleAddToPlaylist, addedVideos}){
     />
           </TouchableOpacity>
            </View>
+           </TouchableOpacity>
        </View>
     </View>
   );
-
+ 
 }
+export const VideoPlayerScreen = ({navigation, route}) =>{
+  const {id, description, title} = route.params;
+  const [playing, setPlaying] = useState(false);
+  const screen = route.name;
+  const [showDescription, setShowDescription] = useState(false);
+  const showDesc = () =>{
+    setShowDescription(!showDescription);
+  }
+  return (
+    
+    <ScrollView style={{ marginTop: -10, marginBottom: 0 }} showsVerticalScrollIndicator={true}>
+    <View style={{ alignItems: 'center', backgroundColor: "#221f20", height: 45, borderTopWidth: 5, borderBottomWidth: 3, borderColor: "#ffcc01" }}>
+      <Text style={{ color: "#FFFFFF", fontSize: 20 }} variant='headlineLarge'>{screen}</Text>
+    </View>
+     <View style ={{marginTop: 50, justifyContent: 'center', alignItems:'center'}} >
+      <YoutubePlayer
+        stlye={{  width:'100%', }}
+        height={200}
+        width={340}
+        play={playing}
+        videoId={id}
+                />
+      <View style = {{backgroundColor: '#ffcc01', borderTopRightRadius: 5,borderTopLeftRadius: 5,borderBottomLeftRadius: 5, borderBottomRightRadius: 5}}>
+      <TouchableOpacity onPress={showDesc}  style={{ flexDirection: 'row', alignItems: 'center' }}>
+    <Text style={{ fontSize: 16, fontWeight: 'bold', alignSelf: 'center', padding: 5 }}>
+                { showDescription ? 'Hide Description' :'Show Description'}</Text>
+      </TouchableOpacity>
+      {showDescription &&  <Text> {description}</Text> }
+      </View>
+    </View>
+  </ScrollView>
+    
+  );
+}
+ 
 const VideoButton = ({ videoLinks }) => {
 
-  const [playing, setPlaying] = useState(false);
+   
    
 
   const { addedVideos, setAddedVideos } = React.useContext(AddedVideosContext);
