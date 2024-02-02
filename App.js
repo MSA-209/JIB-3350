@@ -207,7 +207,7 @@ function CustomNavigationBar({ navigation, back, route, isDarkMode, toggleDarkMo
         onPress={toggleDarkMode}
         color={'#FFFFFF'}
       />
-      {(screen == ("Home") || screen == ("News") || screen == ("About")) && <TouchableRipple
+      {(screen == ("Home") || screen == ("News") || screen == ("About") || screen == ("Video Hub") || screen  == ("Your Playlist") || screen == ("Video Player")) && <TouchableRipple
         onPress={() => navigation.navigate('Home')}
         style={{
           height: 75,
