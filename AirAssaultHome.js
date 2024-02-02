@@ -553,8 +553,8 @@ export function PlaylistScreen({ navigation, route }) {
   const { addedVideos } = React.useContext(AddedVideosContext);
   const theme = useTheme();
   const screen = route.name;
-  
-  const playlistVideoLinks = videoLinks.filter(video => addedVideos[video.link]);
+  const allVideoLinks = [...videoLinks, ...videoLinks2];
+  const playlistVideoLinks = allVideoLinks.filter(video => addedVideos[video.link]);
 
   return (
     <ScrollView style={{ marginTop: -10, marginBottom: 0 }} showsVerticalScrollIndicator={true}>
