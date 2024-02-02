@@ -9,7 +9,7 @@ To launch, simply clone the repository and launch using Expo.
 * Feature 2 is search feature to allow easer searching for videos
 * Feature 3 is playlist which allows user to add certain videos to a playlist section
 * Feature 4 is a responsive display of the videos
-### Bug Fiex
+### Bug Fixes
 * N/A
 ### Known Issues
 * Mobile doesn't work with current video display
