@@ -541,7 +541,7 @@ export function VideoScreen({ navigation, route }) {
       />
       </View>
       {/* Display video button with an array of video links */}
-        <VideoButton videoLinks={filteredData} />
+        <VideoButton videoLinks={filteredData} currentVideoID={null} />
       <View style={{ marginBottom: 30 }}></View>
     </ScrollView>
   );
@@ -561,7 +561,7 @@ export function PlaylistScreen({ navigation, route }) {
       <View style={{ alignItems: 'center', backgroundColor: "#221f20", height: 45, borderTopWidth: 5, borderBottomWidth: 3, borderColor: "#ffcc01" }}>
         <Text style={{ color: "#FFFFFF", fontSize: 20 }} variant='headlineLarge'>{screen}</Text>
       </View>
-      <VideoButton videoLinks={playlistVideoLinks} /> 
+      <VideoButton videoLinks={playlistVideoLinks} currentVideoID={null} /> 
     </ScrollView>
   );
 }
