@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Video } from 'expo-av';
 import {  
           LayoutAnimation,
           Linking,
@@ -147,9 +148,11 @@ function Flashcard({ flashcard }) {
 export function AirAssaultScreen({ navigation, route }) {
   //strapi implementation
 const [data, setData] = React.useState([])
+const [videoData, setVideoData] = React.useState([])
 const [courseScope, setCourseScope] = React.useState("")
 const [purpose, setPurpose] = React.useState("")
 const [insertTimes, setInsertTimes] = React.useState("")
+const [videoArray, setVideoArray] = React.useState("")
 React.useEffect(() => {
   const fetchData = async () => {
     try {
@@ -170,8 +173,36 @@ React.useEffect(() => {
     console.log(err);
    }
   }
-  fetchData();
   console.log(data)
+  const fetchVideoData = async () => {
+    try {
+      console.log(process.env.REACT_APP_API_URL + "air-assault-videos")
+      const res = await axios.get(
+        "https://airdb-u5up.onrender.com/api/air-assault-videos?populate=video" ,
+      {
+        headers: {
+          Authorization: "bearer " + "4a47b960dbb6ee5a206f9e93a33e99865a0061acd0b8573a8caf40457d01c3060fad0851ab73ffd9f0fe9afbae69bea6205f7303734d79706bd6bce30f1a565ff880520efb9e2047cb643c6846a4d12bfbb67e0a732c2d411c9851a293e2f630aa0cf0b25d7390909ed050efb9d7bc8dda15500b5e0ee9f423c1a6b301f9af8e"
+        }
+      }
+    )
+    if (res.data && res.data.data) {
+      console.log(res.data.data)
+      const formattedData = res.data.data.map((item) => {
+        return {
+          link: item.attributes.video.data[0].attributes.url, // Assuming this is the video link
+          title: item.attributes.title,
+          description: item.attributes.desc,
+        };
+      });
+      setVideoData(formattedData); // Store the formatted data into videoData
+      console.log(videoData + "videoDATA")
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+fetchData();
+fetchVideoData();
 }, []);
 React.useEffect(() => {
   if (data.length > 0) {
@@ -180,7 +211,6 @@ React.useEffect(() => {
       setCourseScope(data[0].attributes.courseScope)
       setPurpose(data[0].attributes.purpose)
       setInsertTimes(data[0].attributes.insertTimes)
-      console.log(courseScope + "asdasd")
     } else {
       console.log("No attributes");
     }
@@ -188,6 +218,13 @@ React.useEffect(() => {
     console.log("Data is empty");
   }
 }, [data]);
+React.useEffect(() => {
+  if (videoData.length > 0) {
+    console.log(videoData, "videoDATA")
+  } else {
+    console.log("Data is empty");
+  }
+}, [videoData]);
   const theme = useTheme();
   const screen = route.name
   return(
@@ -317,6 +354,15 @@ React.useEffect(() => {
           </TouchableRipple>
           <Divider bold={true}></Divider>
           </Card>
+          {videoData && videoData.length > 0 && (
+        
+        <Video
+          source={{ uri: videoData[0].link }}
+          style={{ width: '100%', height: 300 }}
+          useNativeControls
+          resizeMode={Video.RESIZE_MODE_CONTAIN}
+        />
+      )}
         </View>
       </View>
     </ScrollView>
