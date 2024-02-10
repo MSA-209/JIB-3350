@@ -52,7 +52,7 @@ import { VideoPlayerScreen } from './VideoButton.js';
 //import {TestScreen} from './AirAssaultHome.js';
 
 import { AddedVideosContext } from './videoContext.js';
-
+// import {FeedbackScreen} from './feedbackScreen.js';
 //version output
 const version = Constants.manifest.version
 console.log("Version: ", version)
@@ -168,7 +168,7 @@ function CustomNavigationBar({ navigation, back, route, isDarkMode, toggleDarkMo
   return (
     <Appbar.Header style={{backgroundColor: "#221f20", borderBottomWidth: 5, borderColor: "#ffcc01", height: 55, justifyContent: "space-around"}}>
       <View style={{position: "absolute", left: 0, justifyContent: "center"}}>
-        {(screen == ("Home") || screen == ("News") || screen == ("About")) &&
+        {(screen == ("Home") || screen == ("News") || screen == ("About")|| screen == ("Feedback")) &&
         <Menu
           visible={menuVisible}
           onDismiss={closeMenu}
@@ -189,6 +189,8 @@ function CustomNavigationBar({ navigation, back, route, isDarkMode, toggleDarkMo
           <Menu.Item onPress={() => { navigation.navigate('NewsScreen'); closeMenu(); }} title="News" />
           <Divider></Divider>
           <Menu.Item onPress={() => { navigation.navigate('AboutScreen'); closeMenu(); }} title="About" />
+          <Divider></Divider>
+          <Menu.Item onPress={() => { navigation.navigate('FeedbackScreen'); closeMenu(); }} title="Feedback" />
           <Divider style= {{backgroundColor: "#ffcc01", height: 3}}></Divider>
           <Menu.Item onPress={() => { navigation.navigate('Air Assault Program'); closeMenu(); }} title="Air Assault" />
           <Divider></Divider>
@@ -198,7 +200,7 @@ function CustomNavigationBar({ navigation, back, route, isDarkMode, toggleDarkMo
           <Divider style= {{backgroundColor: "#ffcc01", height: 3, marginBottom: -10}}></Divider>
         </Menu>}
       </View>
-      {(screen != ("Home") && screen != ("About") && screen != ("News")) && <Appbar.BackAction 
+      {(screen != ("Home") && screen != ("About") && screen != ("News") && screen != ("Feedback")) && <Appbar.BackAction 
         style={{position: "absolute", left: 0, bottom: 0}} onPress={navigation.goBack} color={"#FFFFFF"}/>
       }
       <Appbar.Action
@@ -207,7 +209,7 @@ function CustomNavigationBar({ navigation, back, route, isDarkMode, toggleDarkMo
         onPress={toggleDarkMode}
         color={'#FFFFFF'}
       />
-      {(screen == ("Home") || screen == ("News") || screen == ("About") || screen == ("Video Hub") || screen  == ("Your Playlist") || screen == ("Video Player")) && <TouchableRipple
+      {(screen == ("Home") || screen == ("News") || screen == ("About") || screen == ("Video Hub") || screen  == ("Your Playlist") || screen == ("Video Player")|| screen == ("Feedback")) && <TouchableRipple
         onPress={() => navigation.navigate('Home')}
         style={{
           height: 75,
@@ -291,6 +293,7 @@ function CustomNavigationBar({ navigation, back, route, isDarkMode, toggleDarkMo
           resizeMode:"contain"
           }}/>
       </TouchableRipple>}
+
     </Appbar.Header>
   );
 }  
@@ -719,6 +722,13 @@ React.useEffect(() => {
     </ScrollView>
   );
 }
+function FeedbackScreen({ navigation, route }) {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Hello! The FeedbackScreen component is already created in App.js, you don't have to create another file!</Text>
+    </View>
+  );
+}
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -748,6 +758,7 @@ function HomeStackScreen({navigation, route}) {
       <Stack.Screen name='Video Hub' component={VideoScreen} />
       <Stack.Screen name='Your Playlist' component={PlaylistScreen} />
       <Stack.Screen name='Video Player' component={VideoPlayerScreen}/>
+
     </Stack.Navigator>
     </AddedVideosContext.Provider>
   );
@@ -779,6 +790,21 @@ function AboutStackScreen({navigation, route}) {
       <Stack.Screen name='About' component={About} />
     </Stack.Navigator>
   );
+  
+}
+function FeedbackStackScreen({navigation, route}) {
+  const { isDarkMode, toggleDarkMode } = React.useContext(AppContext);
+
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        header: (props) => <CustomNavigationBar {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />,
+      }}
+    >
+      <Stack.Screen name='Feedback' component={FeedbackScreen} />
+    </Stack.Navigator>
+  );
+  
 }
 
 //SplashScreen.preventAutoHideAsync(); // Prevents the splash screen from hiding automatically, for debugging
@@ -894,6 +920,16 @@ export default function App() {
                 tabBarIcon: ({ focused, color }) => (
                   <Icon name={focused ? 'information': 'information-outline'} color={color} size={24} />
                 ),
+              }}
+            />
+            <Tab.Screen
+              name='FeedbackScreen'
+              component={FeedbackStackScreen}
+              options={{
+                tabBarLabel: 'Feedback',
+                tabBarIcon: ({ focused, color }) => (
+                  <Icon name={focused ? 'message' : 'message-outline'} color={color} size={24} />
+                  ),
               }}
             />
           </Tab.Navigator>
