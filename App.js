@@ -2,7 +2,7 @@ import 'react-native-gesture-handler';
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Animated, Platform, Appearance, ImageBackground, Linking, Dimensions } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { Image, StyleSheet, View, TouchableOpacity, SafeAreaView, ScrollView, TextInput, Picker } from 'react-native';
+import { Image, StyleSheet, View, TouchableOpacity, SafeAreaView, ScrollView } from 'react-native';
 import { Searchbar } from 'react-native-paper';
 import * as rssParser from 'react-native-rss-parser';
 import Constants from "expo-constants"
@@ -722,57 +722,10 @@ React.useEffect(() => {
     </ScrollView>
   );
 }
-
 function FeedbackScreen({ navigation, route }) {
-  const theme = useTheme();
-  const [feedback, setFeedback] = useState('');
-  const [school, setSchool] = useState('');
-  const [title, setTitle] = useState('');
-  const handleFeedbackChange = (text) => {
-    setFeedback(text);
-  }
-  const handleSchoolChange = (value) => {
-    setSchool(value);
-  }
-  const handleTitleChange = (text) => {
-    setTitle(text);
-  }
-  const submitFeedback = () => {
-    if (!school || !title || !feedback) {
-      alert('Incomplete Feedback, Please fill in all fields.');
-      return;
-    }
-    //Implement logic to handle submitted feedback
-    setFeedback('');
-    setSchool('');
-    setTitle('');
-  }
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text style={{color:theme.colors.primary}}>Select a school to give feedback to</Text>
-      <Picker style={{ height: 20, width: 150, marginTop: 20, borderColor: theme.colors.primary, color:theme.colors.primary, fill:theme.colors.primary, backgroundColor:theme.colors.background}}
-      onValueChange={handleSchoolChange}
-      value={school}>
-      <Picker.Item label="Select School" value="" />
-      <Picker.Item label="Air Assault School" value="Air Assault School" />
-      <Picker.Item label="Pathfinder School" value="Pathfinder School" />
-      <Picker.Item label="Ranger School" value="Ranger School" />
-      </Picker>
-      <Text style={{color:theme.colors.primary}}>Enter title</Text>
-      <TextInput
-        style={{ height: 40, width: 1000, borderColor: theme.colors.primary, borderWidth: 1, marginTop: 20, paddingHorizontal: 10 , color:theme.colors.primary,}}
-        placeholder="Title"
-        onChangeText={handleTitleChange}
-        value={title}
-      />
-      <Text style={{color:theme.colors.primary}}>Enter your Feedback</Text>
-      <TextInput
-        style={{ height: 200, width: 1000, borderColor: theme.colors.primary, borderWidth: 1, marginTop: 20, paddingHorizontal: 10 , color:theme.colors.primary}}
-        placeholder="Feedback"
-        onChangeText={handleFeedbackChange}
-        value={feedback}
-      />
-      <Button title="Submit Feedback" onPress={submitFeedback}>Submit Feedback</Button>
+      <Text>Hello! The FeedbackScreen component is already created in App.js, you don't have to create another file!</Text>
     </View>
   );
 }
