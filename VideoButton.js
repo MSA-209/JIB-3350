@@ -2,9 +2,11 @@ import React, { useState, useCallback, useRef } from 'react';
 import { StyleSheet, View, Image, TouchableOpacity, Text, Linking, ScrollView , Alert, Button, Dimensions} from 'react-native';
 import {IconButton} from 'react-native-paper'
 import { AddedVideosContext } from './videoContext';
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { useRoute } from '@react-navigation/native';
 import YoutubePlayer from "react-native-youtube-iframe";
+import { Video } from 'expo-av';
+import VideoThumbnail from 'react-video-thumbnail';
 
 const screenDimension = Dimensions.get("screen")
 const styles = StyleSheet.create(
@@ -40,28 +42,34 @@ const styles = StyleSheet.create(
 )
 const VideoComp = ({video,  handleAddToPlaylist, addedVideos, videoLinks, currentVideoID}) => {
   const navigation = useNavigation();
-  
    return ( 
         <View>
-       <View style={styles.videoCard}>
-             
+       <View style={styles.videoCard}>            
                 <TouchableOpacity onPress={() => {
                   // navigation push will cause previous videos to continue playing and navigate just doesnt work
                   // replace will replace the current stack with new, if navigating from video hub -> video player
                   // pressing back will go to air assault home sicne video hub will be replaced by video player stack 
                   // if want to avoid this, can modify back button or figure out how to auto pause videos when using push
-                  navigation.replace('Video Player', {id: video.id, 
-                  description: video.description, 
+                  // navigate works now and it auto pauses the vid
+                  navigation.navigate('Video Player', {description: video.description, 
                   title: video.title,
                   link: video.link,
                   handleAddToPlaylist,
-                  addedVideos, videoLinks, currentVideoID})}} style={{ marginTop: -45, width: 345, alignSelf: 'center' }}>
-            <Image
+                  addedVideos, videoLinks, currentVideoID})}} style={{ marginTop: -45, width: 345, alignSelf: 'center' , zIndex: 1}}>
+            {/* <Image
               source={{ uri: `https://img.youtube.com/vi/${video.link.split('v=')[1]}/0.jpg` }}
               style={{ marginTop: 10, width: 345, height: 290, alignSelf: 'center', borderTopLeftRadius: 8, borderBottomRightRadius: 8 }}
-            />
-             
-        <View style={{marginTop: -50, justifyContent: 'space-between', flexDirection: 'row', backgroundColor: '#ffcc01', borderBottomLeftRadius: 5, borderBottomRightRadius: 5}} >
+            /> */}
+            
+              <View >
+            <VideoThumbnail
+              videoUrl={video.link}
+              thumbnailHandler={(thumbnail) => console.log(thumbnail)}
+              style={{ width: 345, height: 290, alignSelf: 'center', borderTopLeftRadius: 8, borderBottomRightRadius: 8, zIndex: 0}}
+              />
+              </View>
+        <View style={{position: 'absolute',marginTop: -50, justifyContent: 'space-between', 
+        flexDirection: 'row', backgroundColor: '#ffcc01', borderBottomLeftRadius: 5, borderBottomRightRadius: 5}} >
         <Text style={{ fontSize: 16, fontWeight: 'bold', alignSelf: 'center', padding: 8, flexDirection: 'start' }}>
                 {video.title}
       </Text>
@@ -103,15 +111,23 @@ export const VideoPlayerScreen = ({navigation, route}) =>{
     <View style={{ alignItems: 'center', backgroundColor: "#221f20", height: 45, borderTopWidth: 5, borderBottomWidth: 3, borderColor: "#ffcc01" }}>
       <Text style={{ color: "#FFFFFF", fontSize: 20 }} variant='headlineLarge'>{screen}</Text>
     </View>
-     <View style ={{marginTop: 50, justifyContent: 'center', alignItems:'center'}} >
-      <YoutubePlayer
+     <View style ={{ justifyContent: 'center', alignItems:'center'}} >
+      {/* <YoutubePlayer
         stlye={{  width:'100%', }}
         height={resolution*(screenDimension.height)}
         width={resolution*(screenDimension.width)}
         play={playing}
         videoId={id}
-                />
-      <View style={{width: resolution*(screenDimension.width), justifyContent: 'space-between', flexDirection: 'row', backgroundColor: '#ffcc01', borderBottomLeftRadius: 5, borderBottomRightRadius: 5}} >
+                /> */} 
+      <View style={{justifyContent: 'center', alignItems:'center'}}>
+      <Video 
+        source={{ uri: link}}
+        style={{ width: resolution*(screenDimension.width), height: resolution*(screenDimension.height) ,alignSelf: 'center'}}
+        useNativeControls
+        resizeMode={Video.RESIZE_MODE_CONTAIN}
+      />   
+      </View>  
+      <View style={{marginTop: -80, width: resolution*(screenDimension.width), justifyContent: 'space-between', flexDirection: 'row', backgroundColor: '#ffcc01', borderBottomLeftRadius: 5, borderBottomRightRadius: 5}} >
         <Text style={{ fontSize: 16, fontWeight: 'bold', alignSelf: 'center', padding: 8, flexDirection: 'start' }}>
                 {title}
       </Text>
@@ -125,7 +141,7 @@ export const VideoPlayerScreen = ({navigation, route}) =>{
     />
           </TouchableOpacity>
            </View>
-      <View style = {{width: resolution*(screenDimension.width),backgroundColor: '#ffcc01', borderTopRightRadius: 5,borderTopLeftRadius: 5,borderBottomLeftRadius: 5, borderBottomRightRadius: 5}}>
+      <View style = {{ width: resolution*(screenDimension.width),backgroundColor: '#ffcc01', borderTopRightRadius: 5,borderTopLeftRadius: 5,borderBottomLeftRadius: 5, borderBottomRightRadius: 5}}>
       <TouchableOpacity onPress={showDesc}  style={{ flexDirection: 'row', alignItems: 'center' }}>
     <Text style={{ fontSize: 16, fontWeight: 'bold', alignSelf: 'center', padding: 5 }}>
                 { showDescription ? 'Hide Description' :'Show Description'}</Text>
@@ -133,22 +149,23 @@ export const VideoPlayerScreen = ({navigation, route}) =>{
       {showDescription &&  <Text> {description}</Text> }
       </View>
       <View>
-        <VideoButton videoLinks={videoLinks} currentVideoID={id}/>
+        <VideoButton videoLinks={videoLinks} currentVideoID={link}/>
       </View>
     </View>
   </ScrollView>
     
   );
 }
- 
+
 const VideoButton = ({ videoLinks, currentVideoID }) => {
 
   const { addedVideos, setAddedVideos } = React.useContext(AddedVideosContext);
-  const otherVideos = videoLinks.filter(video => video.id !== currentVideoID);
+  const otherVideos = videoLinks.filter(video => video.link !== currentVideoID);
   const handleVideoPress = (video) => {
     // Open YouTube app or browser with the video link
     Linking.openURL(video.link);
   };
+
 
   const handleAddToPlaylist = (video) => {
     // Toggle the added status of the video
@@ -158,14 +175,12 @@ const VideoButton = ({ videoLinks, currentVideoID }) => {
     }));
     console.log(addedVideos)
   };
-   
-  
   return (
-     
+
      <View style ={styles.container}>
-       
+        
          {otherVideos.map((video) => (
-          <VideoComp key={video.id} video={video}
+          <VideoComp key={video.link} video={video}
           handleAddToPlaylist={handleAddToPlaylist} 
           addedVideos={addedVideos}
           videoLinks={videoLinks}

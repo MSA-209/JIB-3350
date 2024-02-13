@@ -145,10 +145,10 @@ function Flashcard({ flashcard }) {
   );
 }
 
+
 export function AirAssaultScreen({ navigation, route }) {
   //strapi implementation
 const [data, setData] = React.useState([])
-const [videoData, setVideoData] = React.useState([])
 const [courseScope, setCourseScope] = React.useState("")
 const [purpose, setPurpose] = React.useState("")
 const [insertTimes, setInsertTimes] = React.useState("")
@@ -174,35 +174,8 @@ React.useEffect(() => {
    }
   }
   console.log(data)
-  const fetchVideoData = async () => {
-    try {
-      console.log(process.env.REACT_APP_API_URL + "air-assault-videos")
-      const res = await axios.get(
-        "https://airdbnew.onrender.com/api/air-assault-videos?populate=video" ,
-      {
-        headers: {
-          Authorization: "bearer " + "2f30ba70854a898c7ec8c7e9bec66d3a7365c62feeea4d12e540c6cacebc3f169b1db46cc6b2b7b9367e5a60bfdd8488c4866cb97f0dc80ac7356caafe17d927397d26b52669a2bf3be2160346eed23a6f3043b08749e7fffa0ed3f0dd3e6c35bdaa42a756258cd95a864b4136f295c02ed9e4a4aff8b0128118e53cc44085b9"
-        }
-      }
-    )
-    if (res.data && res.data.data) {
-      console.log(res.data.data)
-      const formattedData = res.data.data.map((item) => {
-        return {
-          link: item.attributes.video.data[0].attributes.url, // Assuming this is the video link
-          title: item.attributes.title,
-          description: item.attributes.desc,
-        };
-      });
-      setVideoData(formattedData); // Store the formatted data into videoData
-      console.log(videoData + "videoDATA")
-    }
-  } catch (err) {
-    console.log(err);
-  }
-};
+  
 fetchData();
-fetchVideoData();
 }, []);
 React.useEffect(() => {
   if (data.length > 0) {
@@ -218,13 +191,6 @@ React.useEffect(() => {
     console.log("Data is empty");
   }
 }, [data]);
-React.useEffect(() => {
-  if (videoData.length > 0) {
-    console.log(videoData, "videoDATA")
-  } else {
-    console.log("Data is empty");
-  }
-}, [videoData]);
   const theme = useTheme();
   const screen = route.name
   return(
@@ -354,15 +320,14 @@ React.useEffect(() => {
           </TouchableRipple>
           <Divider bold={true}></Divider>
           </Card>
-          {videoData && videoData.length > 0 && (
-        
+          {/* {videoData && videoData.length > 0 && (
         <Video
           source={{ uri: videoData[0].link }}
           style={{ width: '100%', height: 300 }}
           useNativeControls
           resizeMode={Video.RESIZE_MODE_CONTAIN}
         />
-      )}
+      )} */}
         </View>
       </View>
     </ScrollView>
@@ -554,6 +519,49 @@ export function VideoScreen({ navigation, route }) {
   const videoLinksUsed = source === 'pathfinder' ? videoLinks2 : videoLinks;
   const [filteredData, setFilteredData] = React.useState(videoLinksUsed); //created filteredData for search filtering
 
+  //TEsting strpi videos
+  const [videoData, setVideoData] = React.useState([])
+
+  React.useEffect(() => {
+    const fetchVideoData = async () => {
+      try {
+        console.log(process.env.REACT_APP_API_URL + "air-assault-videos")
+        const res = await axios.get(
+          "https://airdbnew.onrender.com/api/air-assault-videos?populate=video" ,
+        {
+          headers: {
+            Authorization: "bearer " + "2f30ba70854a898c7ec8c7e9bec66d3a7365c62feeea4d12e540c6cacebc3f169b1db46cc6b2b7b9367e5a60bfdd8488c4866cb97f0dc80ac7356caafe17d927397d26b52669a2bf3be2160346eed23a6f3043b08749e7fffa0ed3f0dd3e6c35bdaa42a756258cd95a864b4136f295c02ed9e4a4aff8b0128118e53cc44085b9"
+          }
+        }
+      )
+      if (res.data && res.data.data) {
+        console.log(res.data.data)
+        
+        const formattedData = res.data.data.map((item) => {
+          return {
+            link: item.attributes.video.data[0].attributes.url, // Assuming this is the video link
+            title: item.attributes.title,
+            description: item.attributes.description,
+  
+          };
+        });
+        setVideoData(formattedData); // Store the formatted data into videoData
+        console.log(videoData + "videoDATA")
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  fetchVideoData();
+  }, []);
+  React.useEffect(() => {
+    if (videoData.length > 0) {
+      console.log(videoData, "videoDATA")
+    } else {
+      console.log("Data is empty");
+    }
+  }, [videoData]);
+  
   const onChangeSearch = query => { 
     setSearchQuery(query);
     const newFilteredData = videoLinksUsed.filter(videoLinks => videoLinks.title.toLowerCase().includes(query.toLowerCase()) || videoLinks.description.toLowerCase().includes(query.toLowerCase())); 
@@ -587,7 +595,8 @@ export function VideoScreen({ navigation, route }) {
       />
       </View>
       {/* Display video button with an array of video links */}
-        <VideoButton videoLinks={filteredData} currentVideoID={null} />
+        <VideoButton videoLinks={videoData} currentVideoID={null} />
+         {/* changing filtered data to test videos, replace the videolinks with videodata from strapi */}
       <View style={{ marginBottom: 30 }}></View>
     </ScrollView>
   );
@@ -596,11 +605,53 @@ export function VideoScreen({ navigation, route }) {
 import { AddedVideosContext } from './videoContext';
 
 export function PlaylistScreen({ navigation, route }) {
+  const [videoData, setVideoData] = React.useState([])
+
+  React.useEffect(() => {
+    const fetchVideoData = async () => {
+      try {
+        console.log(process.env.REACT_APP_API_URL + "air-assault-videos")
+        const res = await axios.get(
+          "https://airdbnew.onrender.com/api/air-assault-videos?populate=video" ,
+        {
+          headers: {
+            Authorization: "bearer " + "2f30ba70854a898c7ec8c7e9bec66d3a7365c62feeea4d12e540c6cacebc3f169b1db46cc6b2b7b9367e5a60bfdd8488c4866cb97f0dc80ac7356caafe17d927397d26b52669a2bf3be2160346eed23a6f3043b08749e7fffa0ed3f0dd3e6c35bdaa42a756258cd95a864b4136f295c02ed9e4a4aff8b0128118e53cc44085b9"
+          }
+        }
+      )
+      if (res.data && res.data.data) {
+        console.log(res.data.data)
+        
+        const formattedData = res.data.data.map((item) => {
+          return {
+            link: item.attributes.video.data[0].attributes.url, // Assuming this is the video link
+            title: item.attributes.title,
+            description: item.attributes.description,
+  
+          };
+        });
+        setVideoData(formattedData); // Store the formatted data into videoData
+        console.log(videoData + "videoDATA")
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  fetchVideoData();
+  }, []);
+  React.useEffect(() => {
+    if (videoData.length > 0) {
+      console.log(videoData, "videoDATA")
+    } else {
+      console.log("Data is empty");
+    }
+  }, [videoData]);
+
   const { addedVideos } = React.useContext(AddedVideosContext);
   const theme = useTheme();
   const screen = route.name;
-  const allVideoLinks = [...videoLinks, ...videoLinks2];
-  const playlistVideoLinks = allVideoLinks.filter(video => addedVideos[video.link]);
+  //const allVideoLinks = [...videoLinks, ...videoLinks2];
+  const playlistVideoLinks = videoData.filter(video => addedVideos[video.link]);
 
   return (
     <ScrollView style={{ marginTop: -10, marginBottom: 0 }} showsVerticalScrollIndicator={true}>
