@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Video } from 'expo-av';
 import {  
           LayoutAnimation,
           Linking,
@@ -147,18 +148,20 @@ function Flashcard({ flashcard }) {
 export function AirAssaultScreen({ navigation, route }) {
   //strapi implementation
 const [data, setData] = React.useState([])
+const [videoData, setVideoData] = React.useState([])
 const [courseScope, setCourseScope] = React.useState("")
 const [purpose, setPurpose] = React.useState("")
 const [insertTimes, setInsertTimes] = React.useState("")
+const [videoArray, setVideoArray] = React.useState("")
 React.useEffect(() => {
   const fetchData = async () => {
     try {
       console.log(process.env.REACT_APP_API_URL + "course-informations")
       const res = await axios.get(
-        "https://airdb-u5up.onrender.com/api/air-assault-programs" ,
+        "https://airdbnew.onrender.com/api/air-assault-programs" ,
       {
         headers: {
-          Authorization: "bearer " + "4a47b960dbb6ee5a206f9e93a33e99865a0061acd0b8573a8caf40457d01c3060fad0851ab73ffd9f0fe9afbae69bea6205f7303734d79706bd6bce30f1a565ff880520efb9e2047cb643c6846a4d12bfbb67e0a732c2d411c9851a293e2f630aa0cf0b25d7390909ed050efb9d7bc8dda15500b5e0ee9f423c1a6b301f9af8e"
+          Authorization: "bearer " + "2f30ba70854a898c7ec8c7e9bec66d3a7365c62feeea4d12e540c6cacebc3f169b1db46cc6b2b7b9367e5a60bfdd8488c4866cb97f0dc80ac7356caafe17d927397d26b52669a2bf3be2160346eed23a6f3043b08749e7fffa0ed3f0dd3e6c35bdaa42a756258cd95a864b4136f295c02ed9e4a4aff8b0128118e53cc44085b9"
           /*{"77f8b9051e98185e8415940294a97ccfaa98676aaef1b5a728ff3cad09197502ddac6a2494767c24f4447d8ee68d56226ee8319849ab6074c8460c2d33d65972383838a7dc2a2ca2db871d658424547ec55a5df560b82568759f3d78161e12599c42363c91e23bef25aeffce1d81d671da1cc712e615236fe0bc61a4e17699bf"}**/,
         }
       }
@@ -170,8 +173,36 @@ React.useEffect(() => {
     console.log(err);
    }
   }
-  fetchData();
   console.log(data)
+  const fetchVideoData = async () => {
+    try {
+      console.log(process.env.REACT_APP_API_URL + "air-assault-videos")
+      const res = await axios.get(
+        "https://airdbnew.onrender.com/api/air-assault-videos?populate=video" ,
+      {
+        headers: {
+          Authorization: "bearer " + "2f30ba70854a898c7ec8c7e9bec66d3a7365c62feeea4d12e540c6cacebc3f169b1db46cc6b2b7b9367e5a60bfdd8488c4866cb97f0dc80ac7356caafe17d927397d26b52669a2bf3be2160346eed23a6f3043b08749e7fffa0ed3f0dd3e6c35bdaa42a756258cd95a864b4136f295c02ed9e4a4aff8b0128118e53cc44085b9"
+        }
+      }
+    )
+    if (res.data && res.data.data) {
+      console.log(res.data.data)
+      const formattedData = res.data.data.map((item) => {
+        return {
+          link: item.attributes.video.data[0].attributes.url, // Assuming this is the video link
+          title: item.attributes.title,
+          description: item.attributes.desc,
+        };
+      });
+      setVideoData(formattedData); // Store the formatted data into videoData
+      console.log(videoData + "videoDATA")
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+fetchData();
+fetchVideoData();
 }, []);
 React.useEffect(() => {
   if (data.length > 0) {
@@ -180,7 +211,6 @@ React.useEffect(() => {
       setCourseScope(data[0].attributes.courseScope)
       setPurpose(data[0].attributes.purpose)
       setInsertTimes(data[0].attributes.insertTimes)
-      console.log(courseScope + "asdasd")
     } else {
       console.log("No attributes");
     }
@@ -188,6 +218,13 @@ React.useEffect(() => {
     console.log("Data is empty");
   }
 }, [data]);
+React.useEffect(() => {
+  if (videoData.length > 0) {
+    console.log(videoData, "videoDATA")
+  } else {
+    console.log("Data is empty");
+  }
+}, [videoData]);
   const theme = useTheme();
   const screen = route.name
   return(
@@ -317,6 +354,15 @@ React.useEffect(() => {
           </TouchableRipple>
           <Divider bold={true}></Divider>
           </Card>
+          {videoData && videoData.length > 0 && (
+        
+        <Video
+          source={{ uri: videoData[0].link }}
+          style={{ width: '100%', height: 300 }}
+          useNativeControls
+          resizeMode={Video.RESIZE_MODE_CONTAIN}
+        />
+      )}
         </View>
       </View>
     </ScrollView>
@@ -333,10 +379,10 @@ React.useEffect(() => {
     try {
       console.log(process.env.REACT_APP_API_URL + "flashcards")
       const res = await axios.get(
-        "https://airdb-u5up.onrender.com/api/flashcards" ,
+        "https://airdbnew.onrender.com/api/flashcards" ,
       {
         headers: {
-          Authorization: "bearer " + "4a47b960dbb6ee5a206f9e93a33e99865a0061acd0b8573a8caf40457d01c3060fad0851ab73ffd9f0fe9afbae69bea6205f7303734d79706bd6bce30f1a565ff880520efb9e2047cb643c6846a4d12bfbb67e0a732c2d411c9851a293e2f630aa0cf0b25d7390909ed050efb9d7bc8dda15500b5e0ee9f423c1a6b301f9af8e"
+          Authorization: "bearer " + "2f30ba70854a898c7ec8c7e9bec66d3a7365c62feeea4d12e540c6cacebc3f169b1db46cc6b2b7b9367e5a60bfdd8488c4866cb97f0dc80ac7356caafe17d927397d26b52669a2bf3be2160346eed23a6f3043b08749e7fffa0ed3f0dd3e6c35bdaa42a756258cd95a864b4136f295c02ed9e4a4aff8b0128118e53cc44085b9"
           /*{"77f8b9051e98185e8415940294a97ccfaa98676aaef1b5a728ff3cad09197502ddac6a2494767c24f4447d8ee68d56226ee8319849ab6074c8460c2d33d65972383838a7dc2a2ca2db871d658424547ec55a5df560b82568759f3d78161e12599c42363c91e23bef25aeffce1d81d671da1cc712e615236fe0bc61a4e17699bf"}**/,
         }
       }
@@ -423,10 +469,10 @@ export function Phase2Screen({ navigation, route }) {
     try {
       console.log(process.env.REACT_APP_API_URL + "flashcards")
       const res = await axios.get(
-        "https://airdb-u5up.onrender.com/api/airassaultflashcardphase2s" ,
+        "https://airdbnew.onrender.com/api/airassaultflashcardphase2s" ,
       {
         headers: {
-          Authorization: "bearer " + "4a47b960dbb6ee5a206f9e93a33e99865a0061acd0b8573a8caf40457d01c3060fad0851ab73ffd9f0fe9afbae69bea6205f7303734d79706bd6bce30f1a565ff880520efb9e2047cb643c6846a4d12bfbb67e0a732c2d411c9851a293e2f630aa0cf0b25d7390909ed050efb9d7bc8dda15500b5e0ee9f423c1a6b301f9af8e"
+          Authorization: "bearer " + "2f30ba70854a898c7ec8c7e9bec66d3a7365c62feeea4d12e540c6cacebc3f169b1db46cc6b2b7b9367e5a60bfdd8488c4866cb97f0dc80ac7356caafe17d927397d26b52669a2bf3be2160346eed23a6f3043b08749e7fffa0ed3f0dd3e6c35bdaa42a756258cd95a864b4136f295c02ed9e4a4aff8b0128118e53cc44085b9"
           /*{"77f8b9051e98185e8415940294a97ccfaa98676aaef1b5a728ff3cad09197502ddac6a2494767c24f4447d8ee68d56226ee8319849ab6074c8460c2d33d65972383838a7dc2a2ca2db871d658424547ec55a5df560b82568759f3d78161e12599c42363c91e23bef25aeffce1d81d671da1cc712e615236fe0bc61a4e17699bf"}**/,
         }
       }
