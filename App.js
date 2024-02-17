@@ -7,6 +7,8 @@ import { Searchbar } from 'react-native-paper';
 import * as rssParser from 'react-native-rss-parser';
 import Constants from "expo-constants"
 import * as SplashScreen from 'expo-splash-screen';
+import { MaterialIcons } from '@expo/vector-icons'; // Assuming you're using Expo icons
+
 import {
   NavigationContainer,
   DarkTheme as NavigationDarkTheme,
@@ -37,10 +39,9 @@ import {
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import * as NavigationBar from 'expo-navigation-bar';
+import { styles } from './styleSheet'; 
 
 /*import * as rssParser from 'react-native-rss-parser';*/
-
-
 import {AirAssaultScreen} from './AirAssaultHome.js';
 import {Phase1Screen} from './AirAssaultHome.js';
 import {Phase2Screen} from './AirAssaultHome.js';
@@ -730,6 +731,10 @@ function FeedbackScreen({ navigation, route }) {
   const [feedback, setFeedback] = useState('');
   const [school, setSchool] = useState('');
   const [title, setTitle] = useState('');
+  const [rating, setRating] = useState(0);
+  const [iconColors, setIconColors] = useState(['#ffcc01','#ffcc01','#ffcc01','#ffcc01','#ffcc01']);
+
+
   const handleFeedbackChange = (text) => {
     setFeedback(text);
   }
@@ -739,6 +744,10 @@ function FeedbackScreen({ navigation, route }) {
   const handleTitleChange = (text) => {
     setTitle(text);
   }
+  const handleRating = (value) => {
+    setRating(value);
+  };
+
   const submitFeedback = () => {
     if (!school || !title || !feedback) {
       alert('Incomplete Feedback, Please fill in all fields.');
@@ -769,34 +778,58 @@ function FeedbackScreen({ navigation, route }) {
       setSchool('');
       setTitle('');
   };
-  
   return (
+  <View style={styles.feedbackForm}>
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text style={{color:theme.colors.primary}}>Select a school to give feedback to</Text>
-      <Picker style={{ height: 20, width: 150, marginTop: 20, borderColor: theme.colors.primary, color:theme.colors.primary, fill:theme.colors.primary, backgroundColor:theme.colors.background}}
+      <Text style={{marginBottom: 15, fontWeight: 600, fontSize: 18}}>Select a school to give feedback to</Text>
+      <Picker style={styles.picker}
       onValueChange={handleSchoolChange}
       value={school}>
       <Picker.Item label="Select School" value="" />
+      <View style={styles.separator} />
       <Picker.Item label="Air Assault School" value="Air Assault School" />
+      <View style={styles.separator} />
       <Picker.Item label="Pathfinder School" value="Pathfinder School" />
+      <View style={styles.separator} />
       <Picker.Item label="Ranger School" value="Ranger School" />
       </Picker>
-      <Text style={{color:theme.colors.primary}}>Enter title</Text>
+      <Text style={{fontWeight: 600, marginTop: 20}}></Text>
       <TextInput
-        style={{ height: 40, width: 1000, borderColor: theme.colors.primary, borderWidth: 1, marginTop: 20, paddingHorizontal: 10 , color:theme.colors.primary,}}
-        placeholder="Title"
+        style={styles.titleBox}
+        placeholder="Please enter title"
         onChangeText={handleTitleChange}
         value={title}
       />
-      <Text style={{color:theme.colors.primary}}>Enter your Feedback</Text>
+      <Text style={{fontWeight: 500}}></Text>
       <TextInput
-        style={{ height: 200, width: 1000, borderColor: theme.colors.primary, borderWidth: 1, marginTop: 20, paddingHorizontal: 10 , color:theme.colors.primary}}
-        placeholder="Feedback"
+        style={styles.commentBox}
+        placeholder="Give your feedback here!"
         onChangeText={handleFeedbackChange}
         value={feedback}
       />
-      <Button title="Submit Feedback" onPress={submitFeedback}>Submit Feedback</Button>
+        <View  style={{marginTop: 20}}>
+          <Text style={{fontWeight: 600, marginTop: 40}}>Rate your experience:</Text>
+        </View>
+        <View style={styles.starContainer}>
+        {[1, 2, 3, 4, 5].map((star) => (
+          <TouchableOpacity
+          key={star}
+          onPress={() => handleRating(star)}
+          style={styles.starButton}
+        >
+          <MaterialIcons
+            name={star <= rating ? 'star' : 'star'}
+            size={30}
+            color={star <= rating ? '#ffcc01' : 'white'}
+          />
+        </TouchableOpacity>
+        ))}
+      </View>
+      <View style={styles.submitButton}>
+        <Button title="Submit Feedback" onPress={submitFeedback}><Text style={styles.primaryText}>Submit Feedback</Text></Button>
+      </View>
     </View>
+  </View>
   );
 }
 
@@ -1010,33 +1043,33 @@ export default function App() {
     );
   }
 
-      const styles = StyleSheet.create({
-        card: {
-          marginTop: 0,
-          justifyContent: 'center',
-          marginHorizontal: 0,
-        },
-        cardBtn: {
-          borderRadius: 10,
-          marginHorizontal: 10,
-        },
-        container: {
-          flex: 1,
-          paddingLeft: 8,
-          paddingRight: 8,
-          marginHorizontal: 0,
-        },
-        scrollView: {
-          marginHorizontal: 0,
-        },
-        newsImage: {
-          borderWidth: 2,
-          borderRadius: 8
-        },
-        rectangle: {
-          height: 8,
-          backgroundColor: '#ffcc01',
-          position: 'relative', 
-        },
-      });
+      // const styles = StyleSheet.create({
+      //   card: {
+      //     marginTop: 0,
+      //     justifyContent: 'center',
+      //     marginHorizontal: 0,
+      //   },
+      //   cardBtn: {
+      //     borderRadius: 10,
+      //     marginHorizontal: 10,
+      //   },
+      //   container: {
+      //     flex: 1,
+      //     paddingLeft: 8,
+      //     paddingRight: 8,
+      //     marginHorizontal: 0,
+      //   },
+      //   scrollView: {
+      //     marginHorizontal: 0,
+      //   },
+      //   newsImage: {
+      //     borderWidth: 2,
+      //     borderRadius: 8
+      //   },
+      //   rectangle: {
+      //     height: 8,
+      //     backgroundColor: '#ffcc01',
+      //     position: 'relative', 
+      //   },
+      // });
 
