@@ -15,10 +15,10 @@ const VideoComp = ({video,  handleAddToPlaylist, addedVideos, videoLinks, curren
   const navigation = useNavigation();
 
   return ( 
-    <View>
+    <View style={{display:'flex'}}>
       <View style={styles.videoCard}>    
-      <View style={styles.videoStyle}>
-        
+      <View>
+
         <TouchableOpacity onPress={() =>  {
         // navigation push will cause previous videos to continue playing and navigate just doesnt work
         // replace will replace the current stack with new, if navigating from video hub -> video player
@@ -42,7 +42,6 @@ const VideoComp = ({video,  handleAddToPlaylist, addedVideos, videoLinks, curren
               />
 
             </View>
-            {/* Don't remove the line below or the whole description box will be*/}
             <View style={{width: 345, height: 45, position: 'absolute', zIndex: 1, marginTop: 223}} >
               <View style={styles.videoStyle.videoDescriptionContainer}>
               <Text style={{ fontSize: 16, fontWeight: 'bold', alignSelf: 'center', padding: 5, flexDirection: 'start' }}>
@@ -120,7 +119,9 @@ export const VideoPlayerScreen = ({navigation, route}) =>{
               <Text style={{ fontSize: 16, fontWeight: 'bold', alignSelf: 'center', paddingTop: 5, paddingBottom:5, flexDirection: 'start' }}>
                       {title}
               </Text>
-              <View>
+          </View>
+
+          <View>
           <TouchableOpacity onPress={() => handleAdd(video)}  style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Text style={{ fontSize: 16, fontWeight: 'bold', alignSelf: 'center', padding: 5 }}>
                       { isAdded ? 'Remove from' :'Add to'}</Text>
@@ -131,9 +132,6 @@ export const VideoPlayerScreen = ({navigation, route}) =>{
           />
           </TouchableOpacity>
           </View>
-          </View>
-
-
 
         </View>
       </View>

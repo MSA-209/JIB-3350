@@ -15,9 +15,11 @@ export const styles = StyleSheet.create({
     },
 // Container for horizontal display
     container1: {
+        display: 'flex',
         flexDirection: 'row',
         flexWrap: 'wrap',
-        justifyContent: 'center',
+        marginLeft: 50,
+        marginRight: 50,
     },
 // VIDEO HUB SCREEN
     videoHubHeader: {
@@ -47,7 +49,8 @@ export const styles = StyleSheet.create({
         elevation: 5,
         borderColor: '#ffcc01',
         borderWidth: 2.5,
-        flexDirection: 'row,'
+        flexDirection: 'row',
+
     },
     videoStyle: {
         position: 'relative',
