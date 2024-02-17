@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Video } from 'expo-av';
 import {  
           LayoutAnimation,
           Linking,
@@ -513,58 +512,71 @@ export function VideoScreen({ navigation, route }) {
   const theme = useTheme();
   const screen = route.name;
   const source = route.params.source;
-// link STRAPI later
+  const [airAssaultVideos, setAirAssaultVideos] = React.useState([])
+  const [pathfinderVideos, setPathfinderVideos] = React.useState([])
   const [searchQuery, setSearchQuery] = React.useState('');
   const [isSearchVisible, setIsSearchVisible] = React.useState(false);
-  const videoLinksUsed = source === 'pathfinder' ? videoLinks2 : videoLinks;
+  const videoLinksUsed = source === 'pathfinder' ? pathfinderVideos : airAssaultVideos;
   const [filteredData, setFilteredData] = React.useState(videoLinksUsed); //created filteredData for search filtering
 
-  //TEsting strpi videos
-  const [videoData, setVideoData] = React.useState([])
-
+//Strapi Videos  
   React.useEffect(() => {
-    const fetchVideoData = async () => {
+    const fetchVideos = async () => {
       try {
-        console.log(process.env.REACT_APP_API_URL + "air-assault-videos")
-        const res = await axios.get(
-          "https://airdbnew.onrender.com/api/air-assault-videos?populate=video" ,
-        {
-          headers: {
-            Authorization: "bearer " + "2f30ba70854a898c7ec8c7e9bec66d3a7365c62feeea4d12e540c6cacebc3f169b1db46cc6b2b7b9367e5a60bfdd8488c4866cb97f0dc80ac7356caafe17d927397d26b52669a2bf3be2160346eed23a6f3043b08749e7fffa0ed3f0dd3e6c35bdaa42a756258cd95a864b4136f295c02ed9e4a4aff8b0128118e53cc44085b9"
+        const urls = [
+          "https://airdbnew.onrender.com/api/air-assault-videos?populate=video",
+          "https://airdbnew.onrender.com/api/pathfinder-videos?populate=video"
+        ];
+        const allRequests = urls.map(url =>
+          axios.get(url, {
+            headers: {
+              Authorization: "bearer " + "2f30ba70854a898c7ec8c7e9bec66d3a7365c62feeea4d12e540c6cacebc3f169b1db46cc6b2b7b9367e5a60bfdd8488c4866cb97f0dc80ac7356caafe17d927397d26b52669a2bf3be2160346eed23a6f3043b08749e7fffa0ed3f0dd3e6c35bdaa42a756258cd95a864b4136f295c02ed9e4a4aff8b0128118e53cc44085b9"
+            }
+          })
+        );
+        Promise.all(allRequests).then(responses => {
+          const airAssaultResponse = responses[0];
+          const pathfinderResponse = responses[1];
+  
+          if (airAssaultResponse.data && airAssaultResponse.data.data) {
+            const formattedData = airAssaultResponse.data.data.map((item) => {
+              return {
+                link: item.attributes.video.data[0].attributes.url,
+                title: item.attributes.title,
+                description: item.attributes.description,
+              };
+            });
+            console.log(formattedData + "air")
+            setAirAssaultVideos(formattedData);
           }
-        }
-      )
-      if (res.data && res.data.data) {
-        console.log(res.data.data)
-        
-        const formattedData = res.data.data.map((item) => {
-          return {
-            link: item.attributes.video.data[0].attributes.url, // Assuming this is the video link
-            title: item.attributes.title,
-            description: item.attributes.description,
   
-          };
+          if (pathfinderResponse.data && pathfinderResponse.data.data) {
+            const formattedData = pathfinderResponse.data.data.map((item) => {
+              return {
+                link: item.attributes.video.data[0].attributes.url,
+                title: item.attributes.title,
+                description: item.attributes.description,
+              };
+            });
+            console.log(formattedData + "pathfinder")
+            setPathfinderVideos(formattedData);
+          }
         });
-        setVideoData(formattedData); // Store the formatted data into videoData
-        console.log(videoData + "videoDATA")
+      } catch (err) {
+        console.log(err);
       }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  fetchVideoData();
-  }, []);
-  React.useEffect(() => {
-    if (videoData.length > 0) {
-      console.log(videoData, "videoDATA")
-    } else {
-      console.log("Data is empty");
-    }
-  }, [videoData]);
+    };
   
+    fetchVideos();
+  }, []);  
+  React.useEffect(() => {
+    setFilteredData(videoLinksUsed);
+  }, [videoLinksUsed]);  
   const onChangeSearch = query => { 
     setSearchQuery(query);
     const newFilteredData = videoLinksUsed.filter(videoLinks => videoLinks.title.toLowerCase().includes(query.toLowerCase()) || videoLinks.description.toLowerCase().includes(query.toLowerCase())); 
+    console.log(videoLinksUsed)
+    console.log("new", newFilteredData) // Changed this line
     setFilteredData(newFilteredData);
   } //filters the data by title or description based on the search query and updates the filteredData state
   return (
@@ -595,7 +607,7 @@ export function VideoScreen({ navigation, route }) {
       />
       </View>
       {/* Display video button with an array of video links */}
-        <VideoButton videoLinks={videoData} currentVideoID={null} />
+        <VideoButton videoLinks={filteredData} currentVideoID={null} />
          {/* changing filtered data to test videos, replace the videolinks with videodata from strapi */}
       <View style={{ marginBottom: 30 }}></View>
     </ScrollView>
@@ -605,40 +617,57 @@ export function VideoScreen({ navigation, route }) {
 import { AddedVideosContext } from './videoContext';
 
 export function PlaylistScreen({ navigation, route }) {
-  const [videoData, setVideoData] = React.useState([])
+  const [airAssaultVideos, setAirAssaultVideos] = React.useState([]);
+  const [pathfinderVideos, setPathfinderVideos] = React.useState([]);
 
   React.useEffect(() => {
-    const fetchVideoData = async () => {
+    const fetchVideos = async () => {
       try {
-        console.log(process.env.REACT_APP_API_URL + "air-assault-videos")
-        const res = await axios.get(
-          "https://airdbnew.onrender.com/api/air-assault-videos?populate=video" ,
-        {
-          headers: {
-            Authorization: "bearer " + "2f30ba70854a898c7ec8c7e9bec66d3a7365c62feeea4d12e540c6cacebc3f169b1db46cc6b2b7b9367e5a60bfdd8488c4866cb97f0dc80ac7356caafe17d927397d26b52669a2bf3be2160346eed23a6f3043b08749e7fffa0ed3f0dd3e6c35bdaa42a756258cd95a864b4136f295c02ed9e4a4aff8b0128118e53cc44085b9"
+        const urls = [
+          "https://airdbnew.onrender.com/api/air-assault-videos?populate=video",
+          "https://airdbnew.onrender.com/api/pathfinder-videos?populate=video"
+        ];
+        const allRequests = urls.map(url =>
+          axios.get(url, {
+            headers: {
+              Authorization: "bearer " + "2f30ba70854a898c7ec8c7e9bec66d3a7365c62feeea4d12e540c6cacebc3f169b1db46cc6b2b7b9367e5a60bfdd8488c4866cb97f0dc80ac7356caafe17d927397d26b52669a2bf3be2160346eed23a6f3043b08749e7fffa0ed3f0dd3e6c35bdaa42a756258cd95a864b4136f295c02ed9e4a4aff8b0128118e53cc44085b9"
+            }
+          })
+        );
+        Promise.all(allRequests).then(responses => {
+          const airAssaultResponse = responses[0];
+          const pathfinderResponse = responses[1];
+
+          if (airAssaultResponse.data && airAssaultResponse.data.data) {
+            const formattedData = airAssaultResponse.data.data.map((item) => {
+              return {
+                link: item.attributes.video.data[0].attributes.url,
+                title: item.attributes.title,
+                description: item.attributes.description,
+              };
+            });
+            setAirAssaultVideos(formattedData);
           }
-        }
-      )
-      if (res.data && res.data.data) {
-        console.log(res.data.data)
-        
-        const formattedData = res.data.data.map((item) => {
-          return {
-            link: item.attributes.video.data[0].attributes.url, // Assuming this is the video link
-            title: item.attributes.title,
-            description: item.attributes.description,
-  
-          };
+
+          if (pathfinderResponse.data && pathfinderResponse.data.data) {
+            const formattedData = pathfinderResponse.data.data.map((item) => {
+              return {
+                link: item.attributes.video.data[0].attributes.url,
+                title: item.attributes.title,
+                description: item.attributes.description,
+              };
+            });
+            setPathfinderVideos(formattedData);
+          }
         });
-        setVideoData(formattedData); // Store the formatted data into videoData
-        console.log(videoData + "videoDATA")
+      } catch (err) {
+        console.log(err);
       }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  fetchVideoData();
+    };
+
+    fetchVideos();
   }, []);
+
   React.useEffect(() => {
     if (videoData.length > 0) {
       console.log(videoData, "videoDATA")
@@ -650,8 +679,8 @@ export function PlaylistScreen({ navigation, route }) {
   const { addedVideos } = React.useContext(AddedVideosContext);
   const theme = useTheme();
   const screen = route.name;
-  //const allVideoLinks = [...videoLinks, ...videoLinks2];
-  const playlistVideoLinks = videoData.filter(video => addedVideos[video.link]);
+  const allVideoLinks = [...airAssaultVideos, ...pathfinderVideos];
+  const playlistVideoLinks = allVideoLinks.filter(video => addedVideos[video.link]);
 
   return (
     <ScrollView style={{ marginTop: -10, marginBottom: 0 }} showsVerticalScrollIndicator={true}>

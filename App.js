@@ -753,12 +753,31 @@ function FeedbackScreen({ navigation, route }) {
       alert('Incomplete Feedback, Please fill in all fields.');
       return;
     }
-    //Implement logic to handle submitted feedback
-    setFeedback('');
-    setSchool('');
-    setTitle('');
-    setRating(0);
-  }
+    const data = {
+      data: {
+          School: school,
+          Title: title,
+          FeedbackBody: feedback,
+      },
+    };
+    console.log(data)
+    //post feedback to STrapi
+
+    axios.post(
+      "https://airdbnew.onrender.com/api/feedbacks",
+      data,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: "bearer " + "2f30ba70854a898c7ec8c7e9bec66d3a7365c62feeea4d12e540c6cacebc3f169b1db46cc6b2b7b9367e5a60bfdd8488c4866cb97f0dc80ac7356caafe17d927397d26b52669a2bf3be2160346eed23a6f3043b08749e7fffa0ed3f0dd3e6c35bdaa42a756258cd95a864b4136f295c02ed9e4a4aff8b0128118e53cc44085b9",
+        },
+      }
+    )
+
+      setFeedback('');
+      setSchool('');
+      setTitle('');
+  };
   return (
   <View style={styles.feedbackForm}>
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
