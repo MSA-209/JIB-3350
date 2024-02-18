@@ -668,13 +668,6 @@ export function PlaylistScreen({ navigation, route }) {
     fetchVideos();
   }, []);
 
-  React.useEffect(() => {
-    if (videoData.length > 0) {
-      console.log(videoData, "videoDATA")
-    } else {
-      console.log("Data is empty");
-    }
-  }, [videoData]);
 
   const { addedVideos } = React.useContext(AddedVideosContext);
   const theme = useTheme();

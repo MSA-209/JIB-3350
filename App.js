@@ -746,6 +746,7 @@ function FeedbackScreen({ navigation, route }) {
   }
   const handleRating = (value) => {
     setRating(value);
+    console.log(rating)
   };
 
   const submitFeedback = () => {
@@ -778,58 +779,89 @@ function FeedbackScreen({ navigation, route }) {
       setSchool('');
       setTitle('');
   };
+  const submitRating = () => {
+    if (!rating) {
+      alert('Rating not filled');
+      return;
+    }
+    const data = {
+      data: {
+          rating: rating,
+      },
+    };
+    console.log(data)
+    //post feedback to STrapi
+
+    axios.post(
+      "https://airdbnew.onrender.com/api/ratings",
+      data,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: "bearer " + "2f30ba70854a898c7ec8c7e9bec66d3a7365c62feeea4d12e540c6cacebc3f169b1db46cc6b2b7b9367e5a60bfdd8488c4866cb97f0dc80ac7356caafe17d927397d26b52669a2bf3be2160346eed23a6f3043b08749e7fffa0ed3f0dd3e6c35bdaa42a756258cd95a864b4136f295c02ed9e4a4aff8b0128118e53cc44085b9",
+        },
+      }
+    )
+
+      setFeedback('');
+      setSchool('');
+      setTitle('');
+  };
   return (
-  <View style={styles.feedbackForm}>
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text style={{marginBottom: 15, fontWeight: 600, fontSize: 18}}>Select a school to give feedback to</Text>
-      <Picker style={styles.picker}
-      onValueChange={handleSchoolChange}
-      value={school}>
-      <Picker.Item label="Select School" value="" />
-      <View style={styles.separator} />
-      <Picker.Item label="Air Assault School" value="Air Assault School" />
-      <View style={styles.separator} />
-      <Picker.Item label="Pathfinder School" value="Pathfinder School" />
-      <View style={styles.separator} />
-      <Picker.Item label="Ranger School" value="Ranger School" />
-      </Picker>
-      <Text style={{fontWeight: 600, marginTop: 20}}></Text>
-      <TextInput
-        style={styles.titleBox}
-        placeholder="Please enter title"
-        onChangeText={handleTitleChange}
-        value={title}
-      />
-      <Text style={{fontWeight: 500}}></Text>
-      <TextInput
-        style={styles.commentBox}
-        placeholder="Give your feedback here!"
-        onChangeText={handleFeedbackChange}
-        value={feedback}
-      />
-        <View  style={{marginTop: 20}}>
-          <Text style={{fontWeight: 600, marginTop: 40}}>Rate your experience:</Text>
-        </View>
-        <View style={styles.starContainer}>
-        {[1, 2, 3, 4, 5].map((star) => (
-          <TouchableOpacity
-          key={star}
-          onPress={() => handleRating(star)}
-          style={styles.starButton}
-        >
-          <MaterialIcons
-            name={star <= rating ? 'star' : 'star'}
-            size={30}
-            color={star <= rating ? '#ffcc01' : 'white'}
-          />
-        </TouchableOpacity>
-        ))}
-      </View>
-      <View style={styles.submitButton}>
+    <View style={styles.feedbackForm}>
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text style={{marginBottom: 15, fontWeight: 600, fontSize: 18}}>Select a school to give feedback to</Text>
+        <Picker style={styles.picker}
+          onValueChange={handleSchoolChange}
+          value={school}>
+          <Picker.Item label="Select School" value="" />
+          <View style={styles.separator} />
+          <Picker.Item label="Air Assault School" value="Air Assault School" />
+          <View style={styles.separator} />
+          <Picker.Item label="Pathfinder School" value="Pathfinder School" />
+          <View style={styles.separator} />
+          <Picker.Item label="Ranger School" value="Ranger School" />
+        </Picker>
+        <Text style={{fontWeight: 600, marginTop: 20}}></Text>
+        <TextInput
+          style={styles.titleBox}
+          placeholder="Please enter title"
+          onChangeText={handleTitleChange}
+          value={title}
+        />
+        <Text style={{fontWeight: 500}}></Text>
+        <TextInput
+          style={styles.commentBox}
+          placeholder="Give your feedback here!"
+          onChangeText={handleFeedbackChange}
+          value={feedback}
+        />
+      <View style={[styles.submitButton, {marginTop: 20}]}> 
         <Button title="Submit Feedback" onPress={submitFeedback}><Text style={styles.primaryText}>Submit Feedback</Text></Button>
       </View>
+        <View style={{marginTop: 20, marginBottom: 20}}>
+          <Text style={{fontWeight: 600, marginTop: 20}}>Rate your experience:</Text>
+          <View style={styles.starContainer}>
+            {[1, 2, 3, 4, 5].map((star) => (
+              <TouchableOpacity
+                key={star}
+                onPress={() => handleRating(star)}
+                style={styles.starButton}
+              >
+                <MaterialIcons
+                  name={star <= rating ? 'star' : 'star'}
+                  size={30}
+                  color={star <= rating ? '#ffcc01' : 'white'}
+                />
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
+        <View style={styles.submitButton}>
+          <Button title="Submit Rating" onPress={submitRating}><Text style={styles.primaryText}>Submit Rating</Text></Button>
+        </View>
+      </View>
     </View>
-  </View>
   );
 }
 
