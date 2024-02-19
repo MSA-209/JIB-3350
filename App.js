@@ -732,10 +732,35 @@ function FeedbackScreen({ navigation, route }) {
   const [school, setSchool] = useState('');
   const [title, setTitle] = useState('');
   const [rating, setRating] = useState(0);
+  const [length, setLength] = useState('');
   const [iconColors, setIconColors] = useState(['#ffcc01','#ffcc01','#ffcc01','#ffcc01','#ffcc01']);
+  const [bold, setBold] = useState(false);
+  const [italic, setItalic] = useState(false);
+  const [underline, setUnderline] = useState(false);
 
+  const handleBold = () => {
+    setBold(!bold);
+    console.log(bold)
+  };
+
+  const handleItalic = () => {
+    setItalic(!italic);
+    console.log(italic)
+  };
+
+  const handleUnderline = () => {
+    setUnderline(!underline);
+    console.log(underline)
+  };
 
   const handleFeedbackChange = (text) => {
+    if (text.length < 50) {
+      setLength('short');
+    } else if (text.length < 100) {
+      setLength('medium');
+    } else {
+      setLength('long');
+    }
     setFeedback(text);
   }
   const handleSchoolChange = (value) => {
@@ -759,6 +784,7 @@ function FeedbackScreen({ navigation, route }) {
           School: school,
           Title: title,
           FeedbackBody: feedback,
+          length: length
       },
     };
     console.log(data)
@@ -807,6 +833,20 @@ function FeedbackScreen({ navigation, route }) {
       setSchool('');
       setTitle('');
   };
+  const TextStylingBar = ({ onBold, onItalic, onUnderline }) => (
+    <View style={styles.textStylingBar}>
+      <TouchableOpacity onPress={onBold}>
+        <MaterialIcons name="format-bold" size={24} color={bold ? 'blue' : 'black'} />
+      </TouchableOpacity>
+      <TouchableOpacity onPress={onItalic}>
+        <MaterialIcons name="format-italic" size={24} color={italic ? 'blue' : 'black'} />
+      </TouchableOpacity>
+      <TouchableOpacity onPress={onUnderline}>
+        <MaterialIcons name="format-underlined" size={24} color={underline ? 'blue' : 'black'} />
+      </TouchableOpacity>
+    </View>
+  );
+
   return (
     <View style={styles.feedbackForm}>
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -830,13 +870,25 @@ function FeedbackScreen({ navigation, route }) {
           value={title}
         />
         <Text style={{fontWeight: 500}}></Text>
-        <TextInput
-          style={styles.commentBox}
-          placeholder="Give your feedback here!"
-          onChangeText={handleFeedbackChange}
-          value={feedback}
+        <View style={styles.feedbackContainer}>
+        <TextStylingBar
+          onBold={handleBold}
+          onItalic={handleItalic}
+          onUnderline={handleUnderline}
         />
-      <View style={[styles.submitButton, {marginTop: 20}]}> 
+      <TextInput
+        style={[
+          styles.commentBox,
+          bold && styles.bold,
+          italic && styles.italic,
+          underline && styles.underline
+        ]}
+        placeholder="Give your feedback here!"
+        onChangeText={handleFeedbackChange}
+        value={feedback}
+      />
+        </View>
+                    <View style={[styles.submitButton, {marginTop: 20}]}> 
         <Button title="Submit Feedback" onPress={submitFeedback}><Text style={styles.primaryText}>Submit Feedback</Text></Button>
       </View>
         <View style={{marginTop: 20, marginBottom: 20}}>

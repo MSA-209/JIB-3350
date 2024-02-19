@@ -74,6 +74,29 @@ export const styles = StyleSheet.create({
         },
     },
 //FEEDBACK SCREEN
+    textStylingBar: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: 100,
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    },
+    feedbackContainer: {
+    position: 'relative',
+    },
+    text: {
+        fontSize: 16,
+      },
+      bold: {
+        fontWeight: 'bold',
+      },
+      italic: {
+        fontStyle: 'italic',
+      },
+      underline: {
+        textDecorationLine: 'underline',
+      },
     feedbackForm: {
         backgroundColor: '#b0afae',
         borderRadius: 10,
