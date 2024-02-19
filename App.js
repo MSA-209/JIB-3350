@@ -737,7 +737,7 @@ function FeedbackScreen({ navigation, route }) {
   const [bold, setBold] = useState(false);
   const [italic, setItalic] = useState(false);
   const [underline, setUnderline] = useState(false);
-
+  //styling
   const handleBold = () => {
     setBold(!bold);
     console.log(bold)
@@ -752,7 +752,6 @@ function FeedbackScreen({ navigation, route }) {
     setUnderline(!underline);
     console.log(underline)
   };
-
   const handleFeedbackChange = (text) => {
     if (text.length < 50) {
       setLength('short');
@@ -779,12 +778,34 @@ function FeedbackScreen({ navigation, route }) {
       alert('Incomplete Feedback, Please fill in all fields.');
       return;
     }
+    let formattedFeedback = feedback;
+    if (bold) {
+      formattedFeedback = `<bold>${formattedFeedback}</bold>`;
+    }
+
+    if (italic) {
+      formattedFeedback = `<italic>${formattedFeedback}</italic>`;
+    }
+
+    if (underline) {
+      formattedFeedback = `<underline>${formattedFeedback}</underline>`;
+    }
     const data = {
       data: {
-          School: school,
-          Title: title,
-          FeedbackBody: feedback,
-          length: length
+        School: school,
+        Title: title,
+        FeedbackBody: [
+          {
+            type: 'paragraph',
+            children: [
+              {
+                text: formattedFeedback,
+                type: 'text'
+              }
+            ]
+          }
+        ],
+        length: length
       },
     };
     console.log(data)
