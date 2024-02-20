@@ -14,4 +14,17 @@ To launch, simply clone the repository and launch using Expo.
 ### Known Issues
 * Mobile doesn't work with current video display
 * Playlist only works on air assault videos
+## Version 1.2.0
+### Features
+* Feature 1 ability for admins to add videos to video hub via strapi
+* Feature 2 feedback added to buttons on bottom of screen
+* Feature 3 feedback has ability to specify school
+* Feature 4 feedback has title and body section that has basic styling features to the whole text
+* Feature 5 feedback has rating system allowing users to rate 1-5 starts
+* Feature 6 feedback posted to strapi is categorized based on length
+### Bug Fixes
+* Fixed playlist only working on air assault videos
+* Fixed logo only displaying on some portions of the screen
+### Known Issues
+* Want to display add to playlist on videohub Screen
   
