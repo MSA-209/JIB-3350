@@ -2,13 +2,13 @@ import 'react-native-gesture-handler';
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Animated, Platform, Appearance, ImageBackground, Linking, Dimensions } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { Image, StyleSheet, View, TouchableOpacity, SafeAreaView, ScrollView, TextInput, Picker } from 'react-native';
+import { Image, StyleSheet, View, TouchableOpacity, ScrollView, TextInput, FlatList} from 'react-native';
 import { Searchbar } from 'react-native-paper';
-import * as rssParser from 'react-native-rss-parser';
 import Constants from "expo-constants"
 import * as SplashScreen from 'expo-splash-screen';
 import { MaterialIcons } from '@expo/vector-icons'; // Assuming you're using Expo icons
-
+import {Picker} from '@react-native-picker/picker';
+import 'react-native-svg'
 import {
   NavigationContainer,
   DarkTheme as NavigationDarkTheme,
@@ -870,12 +870,12 @@ function FeedbackScreen({ navigation, route }) {
 
   return (
     <View style={styles.feedbackForm}>
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text style={{marginBottom: 15, fontWeight: 600, fontSize: 18}}>Select a school to give feedback to</Text>
+      <View style={styles.schoolSelector}>
+        {/* <Text style={styles.pickerText}>Select a school to give feedback to</Text> */}
         <Picker style={styles.picker}
           onValueChange={handleSchoolChange}
           value={school}>
-          <Picker.Item label="Select School" value="" />
+          <Picker.Item label="Select school for feedback" value="" />
           <View style={styles.separator} />
           <Picker.Item label="Air Assault School" value="Air Assault School" />
           <View style={styles.separator} />
@@ -883,15 +883,15 @@ function FeedbackScreen({ navigation, route }) {
           <View style={styles.separator} />
           <Picker.Item label="Ranger School" value="Ranger School" />
         </Picker>
-        <Text style={{fontWeight: 600, marginTop: 20}}></Text>
+
         <TextInput
           style={styles.titleBox}
-          placeholder="Please enter title"
+          placeholder="Please enter title!"
           onChangeText={handleTitleChange}
           value={title}
         />
         <Text style={{fontWeight: 500}}></Text>
-        <View style={styles.feedbackContainer}>
+        <View style={[styles.feedbackContainer, {margin: 10}]}>
         <TextStylingBar
           onBold={handleBold}
           onItalic={handleItalic}
@@ -909,11 +909,11 @@ function FeedbackScreen({ navigation, route }) {
         value={feedback}
       />
         </View>
-                    <View style={[styles.submitButton, {marginTop: 20}]}> 
-        <Button title="Submit Feedback" onPress={submitFeedback}><Text style={styles.primaryText}>Submit Feedback</Text></Button>
+                    <View style={[styles.submitButton, {marginTop: 30}]}> 
+        <Button title="Submit Feedback" onPress={submitFeedback}><Text style={styles.buttonText}>Submit Feedback</Text></Button>
       </View>
         <View style={{marginTop: 20, marginBottom: 20}}>
-          <Text style={{fontWeight: 600, marginTop: 20}}>Rate your experience:</Text>
+          <Text style={[styles.buttonText, {marginTop: 10}]}>Rate your experience:</Text>
           <View style={styles.starContainer}>
             {[1, 2, 3, 4, 5].map((star) => (
               <TouchableOpacity
@@ -931,7 +931,7 @@ function FeedbackScreen({ navigation, route }) {
           </View>
         </View>
         <View style={styles.submitButton}>
-          <Button title="Submit Rating" onPress={submitRating}><Text style={styles.primaryText}>Submit Rating</Text></Button>
+          <Button title="Submit Rating" onPress={submitRating}><Text style={styles.buttonText}>Submit Rating</Text></Button>
         </View>
       </View>
     </View>
@@ -1035,7 +1035,7 @@ function AnimatedSplashScreen({ children }) {
 
   const onImageLoaded = useCallback(async () => {
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000)); // Change this to force minimum splash time
+      await new Promise(resolve => setTimeout(resolve, 5000)); // Change this to force minimum splash time
       await SplashScreen.hideAsync();
       // Load stuff
       await Promise.all([]);
@@ -1095,6 +1095,7 @@ export default function App() {
           <NavigationContainer theme={isDarkMode ? CombinedDarkTheme : CombinedDefaultTheme}>
           <StatusBar style="light" translucent={true} />
           <AnimatedSplashScreen>
+
           <Tab.Navigator
             initialRouteName='Home'
             screenOptions={{ headerShown: false }}
@@ -1148,33 +1149,4 @@ export default function App() {
     );
   }
 
-      // const styles = StyleSheet.create({
-      //   card: {
-      //     marginTop: 0,
-      //     justifyContent: 'center',
-      //     marginHorizontal: 0,
-      //   },
-      //   cardBtn: {
-      //     borderRadius: 10,
-      //     marginHorizontal: 10,
-      //   },
-      //   container: {
-      //     flex: 1,
-      //     paddingLeft: 8,
-      //     paddingRight: 8,
-      //     marginHorizontal: 0,
-      //   },
-      //   scrollView: {
-      //     marginHorizontal: 0,
-      //   },
-      //   newsImage: {
-      //     borderWidth: 2,
-      //     borderRadius: 8
-      //   },
-      //   rectangle: {
-      //     height: 8,
-      //     backgroundColor: '#ffcc01',
-      //     position: 'relative', 
-      //   },
-      // });
 
