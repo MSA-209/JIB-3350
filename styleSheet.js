@@ -1,5 +1,4 @@
-import { StyleSheet, Dimensions } from 'react-native';
-
+import { StyleSheet, Dimensions, View, Picker } from 'react-native';
 const screenDimension = Dimensions.get("screen");
 const isPhone = screenDimension.width < 1000; // Adjust the threshold as needed
 const videoWidth = isPhone ? screenDimension.width - 40 : 350; // Adjust the width for phone mode
@@ -11,7 +10,8 @@ export const styles = StyleSheet.create({
 // TEXT AND HEADERS
     primaryText: {
         fontSize: 16,
-        fontWeight: 600,
+        fontWeight: 400,
+        color: 'black',
     },
 // Container for horizontal display
     container1: {
@@ -87,32 +87,56 @@ export const styles = StyleSheet.create({
     },
     text: {
         fontSize: 16,
-      },
-      bold: {
+    },
+    bold: {
         fontWeight: 'bold',
-      },
-      italic: {
+    },
+    italic: {
         fontStyle: 'italic',
-      },
-      underline: {
+    },
+    underline: {
         textDecorationLine: 'underline',
-      },
+    },
     feedbackForm: {
         backgroundColor: '#b0afae',
         borderRadius: 10,
         margin: 50,
-        width: 1040,
-        paddingVertical: 60,
-        paddingHorizontal: 60,
+        width: isPhone? 350 : 1040,
+        height: isPhone? 630 : 'auto',
+        paddingVertical: isPhone? 15 : 40,
+        paddingHorizontal: isPhone? 10 :60,
         alignSelf: 'center',
     },
-    picker: {
+    picker: {                              
         height: 40,
         width: 300,
+        marginTop: isPhone? 20 : 'auto',
         marginBottom: 20,
         backgroundColor: '#ffcc01',
         borderRadius: 8,
-        fontWeight: '600',
+        fontWeight: 500,
+        fontSize: 17,
+        shadowOffset: 0.3,
+        shadowColor: 'black',
+        overflow: 'hidden',
+        opacity: 0.7,
+        paddingHorizontal: isPhone? 10 : 35,
+
+    },
+    pickerText: {
+        marginTop: isPhone? 15 : 5,
+        marginBottom: 15,
+        fontSize: isPhone? 16 : 20,
+    },
+    schoolSelector: {                      // school selector bar
+        justifyContent: 'center', 
+        alignItems: 'center',
+        overflow: 'hidden',
+        zIndex: isPhone? 1 : 0,
+    },
+    textScroll: {                           // select school text
+        fontWeight: 600, 
+        fontSize: 18,
     },
     separator: {
         borderBottomWidth: 1,
@@ -126,32 +150,46 @@ export const styles = StyleSheet.create({
     submitButton: {
         backgroundColor: '#ffcc01',
         paddingHorizontal: 10,
-        paddingVertical: 5,
+        paddingVertical: isPhone? 1 : 2,
         borderRadius: 8,
+        borderColor: '#525254', 
+        borderWidth: 1,
+        transitionDuration: '0.5s',
+        // cursor: 'pointer',
+        // transitionDuration: '0.3s',
+        // '&:hover': {
+        // transform: 'scale(1.3)',
+        // boxShadow: '0 10px 8px rgba(0, 0, 0, 0.5)',
+        // shadowOpacity: 0.4,
+        // shadowRadius: 4,
+        // },
+    },
+    buttonText: {
+        fontSize: isPhone? 14 : 16,
+        color: '#525254',
     },
     starContainer: {
-        marginBottom: 20,
+        marginBottom: 10,
         flexDirection: 'row',
         textDecorationColor: 'yellow',
     },
     titleBox: {
-        height: 50,
-        width: 920,
+        height: isPhone? 35 : 50,
+        width: isPhone? 300 : 920,
         backgroundColor: '#ffffff',
         borderRadius: 8,
         borderColor: '#525254', 
         textAlignVertical: 'top', 
-        marginTop: 10,
+        marginTop: isPhone? 15 : 10,
         borderWidth: 1,
-        padding: 15,
+        padding: isPhone? 0 : 15,
     },
     commentBox: {
-        height: 200,
-        width: 920,
+        height: isPhone? 150 : 200,
+        width: isPhone? 300 : 920,
         backgroundColor: '#ffffff',
         borderRadius: 8,
         borderColor: '#525254', 
-        textAlignVertical: 'top', 
         marginTop: 30,
         borderWidth: 1,
         padding: 15,

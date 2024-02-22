@@ -3,11 +3,10 @@ import { StyleSheet, View, Image, TouchableOpacity, Text, Linking, ScrollView , 
 import {IconButton} from 'react-native-paper'
 import { AddedVideosContext } from './videoContext';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
-import { useRoute } from '@react-navigation/native';
-import YoutubePlayer from "react-native-youtube-iframe";
 import { Video } from 'expo-av';
 import VideoThumbnail from 'react-video-thumbnail';
 import { styles } from './styleSheet'; 
+
 
 const screenDimension = Dimensions.get("screen")
 
@@ -44,7 +43,7 @@ const VideoComp = ({video,  handleAddToPlaylist, addedVideos, videoLinks, curren
           </View>
                 <View style={{width: 345, height: 45, position: 'absolute', zIndex: 1, marginTop: 223}} >
           <View style={styles.videoStyle.videoDescriptionContainer}>
-            <Text style={{ fontSize: 16, fontWeight: 'bold', alignSelf: 'center', padding: 5, flexDirection: 'start' }}>
+            <Text style={{ fontSize: 16, fontWeight: 'bold', alignSelf: 'center', padding: 5}}>
               {video.title}
             </Text>
             <TouchableOpacity onPress={() => handleAddToPlaylist(video)}  style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -133,7 +132,7 @@ const [showDescription, setShowDescription] = useState(false);
                   color="#000000"
                 />
               </TouchableOpacity>
-              <Text style={{ fontSize: 16, fontWeight: 'bold', alignSelf: 'center', paddingTop: 5, paddingBottom:5, flexDirection: 'start' }}>
+              <Text style={{ fontSize: 16, fontWeight: 'bold', alignSelf: 'center', paddingTop: 5, paddingBottom:5}}>
                 {title}
               </Text>
             </View>
