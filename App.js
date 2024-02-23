@@ -8,7 +8,9 @@ import Constants from "expo-constants"
 import * as SplashScreen from 'expo-splash-screen';
 import { MaterialIcons } from '@expo/vector-icons'; // Assuming you're using Expo icons
 import {Picker} from '@react-native-picker/picker';
+import { SafeAreaView } from 'react-native';
 import 'react-native-svg'
+
 import {
   NavigationContainer,
   DarkTheme as NavigationDarkTheme,
@@ -50,9 +52,9 @@ import {RangerScreen} from './RangerHome.js';
 import {VideoScreen} from './AirAssaultHome.js';
 import { PlaylistScreen } from './AirAssaultHome.js';
 import { VideoPlayerScreen } from './VideoButton.js';
-//import {TestScreen} from './AirAssaultHome.js';
-
 import { AddedVideosContext } from './videoContext.js';
+import {SlingloadScreen} from './slingload.js';
+
 // import {FeedbackScreen} from './feedbackScreen.js';
 //version output
 const version = Constants.manifest.version
@@ -966,6 +968,9 @@ function HomeStackScreen({navigation, route}) {
       <Stack.Screen name='Video Hub' component={VideoScreen} />
       <Stack.Screen name='Your Playlist' component={PlaylistScreen} />
       <Stack.Screen name='Video Player' component={VideoPlayerScreen}/>
+      <Stack.Screen name='Sling' component={VideoScreen} />
+      <Stack.Screen name='Slingload Integration' component={SlingloadScreen} />
+
 
     </Stack.Navigator>
     </AddedVideosContext.Provider>
