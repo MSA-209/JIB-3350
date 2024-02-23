@@ -301,6 +301,7 @@ React.useEffect(() => {
                 {insertTimes}
               </Text>
             </Card.Content>
+            <Divider bold={true}></Divider>
             <TouchableRipple
               onPress={() => {
                 navigation.navigate('Video Hub',{ 
@@ -318,6 +319,28 @@ React.useEffect(() => {
               />
           </TouchableRipple>
           <Divider bold={true}></Divider>
+          <TouchableRipple
+              onPress={() => {
+                navigation.navigate('Slingload Integration',{ 
+                  source: 'airassault' // or 'airassault' for airassaulthome.js
+                  });
+              }}
+              borderless={true}
+              style={{ borderRadius: 0 }}
+            >
+              <Card.Title
+                title="Slingload Integration"
+                titleVariant="titleLarge"
+                left={(props) => <Image source={require("./assets/AssaultBadgeClear.png")} 
+                style={{
+                  width: 35,
+                  height: 20,
+                  resizeMode:"contain",
+                  marginLeft: 5
+                  }}/>}
+                right={(props) => <Icon name='chevron-right' color={theme.colors.primary} size={24} style={{ marginRight: 32 }} />}
+              />
+          </TouchableRipple>
           </Card>
           {/* {videoData && videoData.length > 0 && (
         <Video
@@ -508,6 +531,7 @@ export function Phase2Screen({ navigation, route }) {
 import VideoButton from './VideoButton';
 import videoLinks from './videoLinks'
 import videoLinks2 from './videoLinks2'
+
 export function VideoScreen({ navigation, route }) {
   const theme = useTheme();
   const screen = route.name;

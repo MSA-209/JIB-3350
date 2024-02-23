@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Linking, Image, StyleSheet, View, TouchableOpacity, SafeAreaView, ScrollView } from 'react-native';
+import { Linking, Image, StyleSheet, View, TouchableOpacity, SafeAreaView, ScrollView, ImageBackground } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import {   
   ActivityIndicator,
