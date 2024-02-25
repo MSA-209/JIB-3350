@@ -53,7 +53,7 @@ import {VideoScreen} from './AirAssaultHome.js';
 import { PlaylistScreen } from './AirAssaultHome.js';
 import { VideoPlayerScreen } from './VideoButton.js';
 import { AddedVideosContext } from './videoContext.js';
-import {SlingloadScreen} from './slingload.js';
+import {SlingloadScreen, PlacardScreen, PlacardSequence, PlacardVideo, ApexScreen, ApexVideo, ApexSequence} from './slingload.js';
 
 // import {FeedbackScreen} from './feedbackScreen.js';
 //version output
@@ -970,8 +970,12 @@ function HomeStackScreen({navigation, route}) {
       <Stack.Screen name='Video Player' component={VideoPlayerScreen}/>
       <Stack.Screen name='Sling' component={VideoScreen} />
       <Stack.Screen name='Slingload Integration' component={SlingloadScreen} />
-
-
+      <Stack.Screen name='Placard' component={PlacardScreen} />
+      <Stack.Screen name='Placard Video' component={PlacardVideo} />
+      <Stack.Screen name='Placard Sequence' component={PlacardSequence} />
+      <Stack.Screen name='Apex' component={ApexScreen} />
+      <Stack.Screen name='Apex Video' component={ApexVideo} />
+      <Stack.Screen name='Apex Sequence' component={ApexSequence} />
     </Stack.Navigator>
     </AddedVideosContext.Provider>
   );
