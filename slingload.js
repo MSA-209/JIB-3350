@@ -632,49 +632,6 @@ export function BotLateralC1Sequence({ navigation, route }) {
   <View style={{alignItems: 'center', backgroundColor: "#221f20", height: 45, borderTopWidth: 5, borderBottomWidth: 3, borderColor: "#ffcc01"}}>
     <Text style={{color:"#FFFFFF", fontSize: 20}} variant='headlineLarge'>Slingload Simulator</Text>
   </View>
-  <SlingloadSequence inspectionSteps="Bottom Lateral C1 instructions 1. asd" navigation={navigation} videoName="BotLateralC1 Video" nextItem = "BotLateralC1" />
-  </View>
-</ScrollView>  
-  );
-}
-
-export function BotLateralC1Screen({ navigation, route }) {
-  const theme = useTheme();
-  return (
-  <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}> 
-  <View style={{marginTop: -10, marginBottom: 8}}>
-  <View style={{alignItems: 'center', backgroundColor: "#221f20", height: 45, borderTopWidth: 5, borderBottomWidth: 3, borderColor: "#ffcc01"}}>
-    <Text style={{color:"#FFFFFF", fontSize: 20}} variant='headlineLarge'>Slingload Simulator</Text>
-  </View>
-      <SlingloadTitle title="Bottom Lateral C1" navigation={navigation} videoName="BotLateralC1 Video" sequenceName = "BotLateralC1 Sequence" />
-  </View>
-</ScrollView>  
-  );
-}
-
-export function BotLateralC1Video({ navigation, route }) {
-  const theme = useTheme();
-  return (
-  <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}> 
-  <View style={{marginTop: -10, marginBottom: 8}}>
-  <View style={{alignItems: 'center', backgroundColor: "#221f20", height: 45, borderTopWidth: 5, borderBottomWidth: 3, borderColor: "#ffcc01"}}>
-    <Text style={{color:"#FFFFFF", fontSize: 20}} variant='headlineLarge'>Slingload Simulator</Text>
-  </View>
-  <SlingloadVideo  navigation={navigation} videoName="BotLateralC1 Video url" sequenceName = "BotdLateralC1 Sequence" />
-  </View>
-</ScrollView>  
-  );
-}
-
-
-export function BotLateralC1Sequence({ navigation, route }) {
-  const theme = useTheme();
-  return (
-  <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}> 
-  <View style={{marginTop: -10, marginBottom: 8}}>
-  <View style={{alignItems: 'center', backgroundColor: "#221f20", height: 45, borderTopWidth: 5, borderBottomWidth: 3, borderColor: "#ffcc01"}}>
-    <Text style={{color:"#FFFFFF", fontSize: 20}} variant='headlineLarge'>Slingload Simulator</Text>
-  </View>
   <SlingloadSequence inspectionSteps="Bottom Lateral C1 instructions 1. asd" navigation={navigation} videoName="BotLateralC1 Video" nextItem = "Slingload Integration" />
   </View>
 </ScrollView>  
