@@ -56,9 +56,8 @@ import { AddedVideosContext } from './videoContext.js';
 import {SlingloadScreen, PlacardScreen, PlacardSequence, PlacardVideo, ApexScreen, 
 ApexVideo, ApexSequence, GrabhookScreen, GrabhookVideo, GrabhookSequence, ChainClevisScreen, 
 ChainClevisVideo, ChainClevisSequence, MediumClevisScreen,MediumClevisSequence,
-MediumClevisVideo, Suspension1Screen,Suspension1Video, Suspension1Video,
- Suspension2Screen, Suspension2Sequence, Suspension2Video, Suspension2Sequence,
-  Suspension3Screen, Suspension3Video,Suspension3Sequence, Suspension4Screen, Suspension4Sequence, Suspension4Video,
+MediumClevisVideo, Suspension1Screen,Suspension1Video, Suspension1Sequence, Suspension2Screen, Suspension2Sequence, Suspension2Video, 
+ Suspension3Screen, Suspension3Video,Suspension3Sequence, Suspension4Screen, Suspension4Sequence, Suspension4Video,
 SusStrapOrderScreen,SusStrapOrderSequence,SusStrapOrderVideo, 
 TopLateralC1Screen, TopLateralC1Sequence, TopLateralC1Video, MidLateralC1Screen, MidLateralC1Sequence, MidLateralC1Video,
 BotLateralC1Screen, BotLateralC1Sequence, BotLateralC1Video} from './slingload.js';
