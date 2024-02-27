@@ -53,7 +53,10 @@ import {VideoScreen} from './AirAssaultHome.js';
 import { PlaylistScreen } from './AirAssaultHome.js';
 import { VideoPlayerScreen } from './VideoButton.js';
 import { AddedVideosContext } from './videoContext.js';
-import {SlingloadScreen, PlacardScreen, PlacardSequence, PlacardVideo, ApexScreen, ApexVideo, ApexSequence} from './slingload.js';
+import {SlingloadScreen, PlacardScreen, PlacardSequence, PlacardVideo, ApexScreen, 
+ApexVideo, ApexSequence, GrabhookScreen, GrabhookVideo, GrabhookSequence, ChainClevisScreen, 
+ChainClevisVideo, ChainClevisSequence, MediumClevisScreen,MediumClevisSequence,
+MediumClevisVideo, Suspension1Screen,Suspension1Video, Suspension1Video, Suspension2Screen, Suspension2Sequence, Suspension2Video, Suspension1Sequence} from './slingload.js';
 
 // import {FeedbackScreen} from './feedbackScreen.js';
 //version output
@@ -976,6 +979,21 @@ function HomeStackScreen({navigation, route}) {
       <Stack.Screen name='Apex' component={ApexScreen} />
       <Stack.Screen name='Apex Video' component={ApexVideo} />
       <Stack.Screen name='Apex Sequence' component={ApexSequence} />
+      <Stack.Screen name='Grabhook' component={GrabhookScreen} />
+      <Stack.Screen name='Grabhook Video' component={GrabhookVideo} />
+      <Stack.Screen name='Grabhook Sequence' component={GrabhookSequence} />
+      <Stack.Screen name='ChainClevis' component={ChainClevisScreen} />
+      <Stack.Screen name='ChainClevis Video' component={ChainClevisVideo} />
+      <Stack.Screen name='ChainClevis Sequence' component={ChainClevisSequence} />
+      <Stack.Screen name='MediumClevis' component={MediumClevisScreen} />
+      <Stack.Screen name='MediumClevis Video' component={MediumClevisVideo} />
+      <Stack.Screen name='MediumClevis Sequence' component={MediumClevisSequence} />
+      <Stack.Screen name='Suspension1' component={Suspension1Screen} />
+      <Stack.Screen name='Suspension1 Video' component={Suspension1Video} />
+      <Stack.Screen name='Suspension1 Sequence' component={Suspension1Sequence} />
+      <Stack.Screen name='Suspension2' component={Suspension2Screen} />
+      <Stack.Screen name='Suspension2 Video' component={Suspension2Video} />
+      <Stack.Screen name='Suspension2 Sequence' component={Suspension2Sequence} />
     </Stack.Navigator>
     </AddedVideosContext.Provider>
   );
