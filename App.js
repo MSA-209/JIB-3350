@@ -219,7 +219,7 @@ function CustomNavigationBar({ navigation, back, route, isDarkMode, toggleDarkMo
         onPress={toggleDarkMode}
         color={'#FFFFFF'}
       />
-      {(screen == ("Home") || screen == ("News") || screen == ("About") || screen == ("Video Hub") || screen  == ("Your Playlist") || screen == ("Video Player")|| screen == ("Feedback")) && <TouchableRipple
+      {(screen == ("Home") || screen == ("News") || screen == ("About") || screen == ("Video Hub") || screen  == ("Your Playlist") || screen == ("Video Player")|| screen == ("Feedback") ) && <TouchableRipple
         onPress={() => navigation.navigate('Home')}
         style={{
           height: 75,
@@ -240,7 +240,7 @@ function CustomNavigationBar({ navigation, back, route, isDarkMode, toggleDarkMo
           resizeMode:"contain"
           }}/>
       </TouchableRipple>}
-      {(screen == ("Air Assault Program") || screen == ("Air Assault Program: Phase I") || screen == ("Air Assault Program: Phase II")) && <TouchableRipple
+      {(screen == ("Air Assault Program") || screen == ("Air Assault Program: Phase I") || screen == ("Air Assault Program: Phase II") || screen == ("Slingload Integration")) && <TouchableRipple
         onPress={() => navigation.navigate('Home')}
         style={{
           height: 75,
