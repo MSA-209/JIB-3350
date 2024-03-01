@@ -2,12 +2,16 @@ import 'react-native-gesture-handler';
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Image, StyleSheet, View, TouchableOpacity, ScrollView, TextInput, FlatList, screen} from 'react-native';
 import 'react-native-svg'
-import { Card, Provider, Text, useTheme } from 'react-native-paper';
+import { Card, Provider, Text, useTheme, Menu, Appbar, Divider, Button } from 'react-native-paper';
 import { styles } from './styleSheet';
 import {SlingloadTitle} from './slingloadTitle.js';
 import {SlingloadVideo} from './slingloadVideo.js';
 import {SlingloadSequence} from './slingloadSequence.js';
 export function SlingloadScreen({ navigation, route }) {
+  const screen = route.name
+  const [menuVisible, setMenuVisible] = useState(false);
+  const openMenu = () => setMenuVisible(true);
+  const closeMenu = () => setMenuVisible(false);
   const theme = useTheme();
   return (
     <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}> 
@@ -19,8 +23,44 @@ export function SlingloadScreen({ navigation, route }) {
             }}/>
         </View>       */}
         <View style={{marginTop: -10, marginBottom: 8}}>
-        <View style={{alignItems: 'center', backgroundColor: "#221f20", height: 45, borderTopWidth: 5, borderBottomWidth: 3, borderColor: "#ffcc01"}}>
-          <Text style={{color:"#FFFFFF", fontSize: 20}} variant='headlineLarge'>Slingload Simulator</Text>
+        <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor: "#221f20", height: 45, borderTopWidth: 5, borderBottomWidth: 3, borderColor: "#ffcc01"}}>
+        <Text style={{color:"#FFFFFF", fontSize: 20}} variant='headlineLarge'>{screen}</Text>
+        <Menu
+          visible={menuVisible}
+          onDismiss={closeMenu}
+          anchor={<Button icon="menu" onPress={openMenu} backgroundColor={"#FFFFFF"}  />}
+          style={{position: "absolute", marginTop: 48, left: '75%'}}
+        >
+          <Divider style= {{backgroundColor: "#ffcc01", height: 3}}></Divider>
+          <Menu.Item onPress={() => { navigation.navigate('Placard'); closeMenu(); }} title="Placard" />
+          <Divider></Divider>
+          <Menu.Item onPress={() => { navigation.navigate('Apex'); closeMenu(); }} title="Apex" />
+          <Divider></Divider>
+          <Menu.Item onPress={() => { navigation.navigate('Grabhook'); closeMenu(); }} title="Grabhook" />
+          <Divider></Divider>
+          <Menu.Item onPress={() => { navigation.navigate('ChainClevis'); closeMenu(); }} title="ChainClevis" />
+          <Divider></Divider>
+          <Menu.Item onPress={() => { navigation.navigate('MediumClevis'); closeMenu(); }} title="MediumClevis" />
+          <Divider></Divider>
+          <Menu.Item onPress={() => { navigation.navigate('Suspension1'); closeMenu(); }} title="Suspension1" />
+          <Divider></Divider>
+          <Menu.Item onPress={() => { navigation.navigate('Suspension2'); closeMenu(); }} title="Suspension2" />
+          <Divider></Divider>
+          <Menu.Item onPress={() => { navigation.navigate('Suspension3'); closeMenu(); }} title="Suspension3" />
+          <Divider></Divider>
+          <Menu.Item onPress={() => { navigation.navigate('Suspension4'); closeMenu(); }} title="Suspension4" />
+          <Divider></Divider>
+          <Menu.Item onPress={() => { navigation.navigate('SusStrapOrder'); closeMenu(); }} title="SusStrapOrder" />
+          <Divider></Divider>
+          <Menu.Item onPress={() => { navigation.navigate('S1P2'); closeMenu(); }} title="S1P2" />
+          <Divider></Divider>
+          <Menu.Item onPress={() => { navigation.navigate('TopLateralC1'); closeMenu(); }} title="TopLateralC1" />
+          <Divider></Divider>
+          <Menu.Item onPress={() => { navigation.navigate('MidLateralC1'); closeMenu(); }} title="MidLateralC1" />
+          <Divider></Divider>
+          <Menu.Item onPress={() => { navigation.navigate('BotLateralC1'); closeMenu(); }} title="BotLateralC1" />
+          <Divider style= {{backgroundColor: "#ffcc01", height: 3, marginBottom: -10}}></Divider>
+        </Menu>
         </View>
         <View style={styles.card}>
         <TouchableOpacity onPress={() => navigation.navigate('Placard')}>
