@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useRef } from 'react';
 import { StyleSheet, View, Image, TouchableOpacity, Text, Linking, ScrollView , Alert, Button, Dimensions} from 'react-native';
-import {IconButton} from 'react-native-paper'
+import {IconButton} from 'react-native-paper';
 import { AddedVideosContext } from './videoContext';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { Video } from 'expo-av';
@@ -150,7 +150,7 @@ const [showDescription, setShowDescription] = useState(false);
             </View>
           </View>
         </View>
-        <View style = {{ marginBottom: 50, width: resolution*(screenDimension.width), alignSelf: 'center'}}>
+        <View style = {{ backgroundColor: '#ffcc01', borderRadius:8, marginBottom: 50, width: resolution*(screenDimension.width), alignSelf: 'center'}}>
           {showDescription &&  <Text> {description}</Text> }
         </View>
         <View>

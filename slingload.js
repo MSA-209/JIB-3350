@@ -7,6 +7,7 @@ import { styles } from './styleSheet';
 import {SlingloadTitle} from './slingloadTitle.js';
 import {SlingloadVideo} from './slingloadVideo.js';
 import {SlingloadSequence} from './slingloadSequence.js';
+import ModelComp from './ModelComp';
 export function SlingloadScreen({ navigation, route }) {
   const screen = route.name
   const [menuVisible, setMenuVisible] = useState(false);
@@ -70,7 +71,7 @@ export function PlacardVideo({ navigation, route }) {
   );
 }
 
-
+import placardArray from './placardArray.js';
 export function PlacardSequence({ navigation, route }) {
   const theme = useTheme();
   return (
@@ -82,6 +83,7 @@ export function PlacardSequence({ navigation, route }) {
   </View>
   <SlingloadSequence inspectionSteps="Placard instructions 1. asd" navigation={navigation} videoName="Placard Video" nextItem = 'Apex' />
   </View>
+  <ModelComp imageArray = {placardArray}/>
 </ScrollView>  
   );
 }
