@@ -50,7 +50,7 @@ export function PlacardScreen({ navigation, route }) {
     <Text style={{color:"#FFFFFF", fontSize: 20}} variant='headlineLarge'>Slingload Simulator</Text>
     <SlingloadDropdown/>
   </View>
-      <SlingloadTitle title="Placard" navigation={navigation} videoName="Placard Video" sequenceName = "Placard Sequence" />
+      <SlingloadTitle title="Placard" navigation={navigation} videoName="Placard" sequenceName = "Placard Sequence" />
   </View>
 </ScrollView>  
   );
