@@ -1,0 +1,11 @@
+Model Information:
+* title:	Vintage Dining Chair / Винтажный обеденный стул
+* source:	https://sketchfab.com/3d-models/vintage-dining-chair-d606c9831c364885a2c4c0f410de9cea
+* author:	ak.komov (https://sketchfab.com/ak.komov)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Vintage Dining Chair / Винтажный обеденный стул" (https://sketchfab.com/3d-models/vintage-dining-chair-d606c9831c364885a2c4c0f410de9cea) by ak.komov (https://sketchfab.com/ak.komov) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

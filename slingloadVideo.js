@@ -5,7 +5,7 @@ import { Card, Provider, Text, useTheme } from 'react-native-paper';
 import { styles } from './styleSheet'; 
 import { Video } from 'expo-av';
 const videoSources = {
-  'Placard': require('/assets/placard_video.mp4')
+  'Placard': require('./assets/placard_video.mp4')
 };
 
 
