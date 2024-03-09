@@ -112,7 +112,7 @@ export function ApexVideo({ navigation, route }) {
     <Text style={{color:"#FFFFFF", fontSize: 20}} variant='headlineLarge'>Slingload Simulator</Text>
     <SlingloadDropdown/>
   </View>
-  <SlingloadVideo  navigation={navigation} videoName="Apex Video url" sequenceName = "Apex Sequence" />
+  <SlingloadVideo  navigation={navigation} videoName="Apex" sequenceName = "Apex Sequence" />
   </View>
 </ScrollView>  
   );
@@ -158,7 +158,7 @@ export function GrabhookVideo({ navigation, route }) {
     <Text style={{color:"#FFFFFF", fontSize: 20}} variant='headlineLarge'>Slingload Simulator</Text>
     <SlingloadDropdown/>
   </View>
-  <SlingloadVideo  navigation={navigation} videoName="Grabhook Video url" sequenceName = "Grabhook Sequence" />
+  <SlingloadVideo  navigation={navigation} videoName="Grabhook" sequenceName = "Grabhook Sequence" />
   </View>
 </ScrollView>  
   );
@@ -204,7 +204,7 @@ export function ChainClevisVideo({ navigation, route }) {
     <Text style={{color:"#FFFFFF", fontSize: 20}} variant='headlineLarge'>Slingload Simulator</Text>
     <SlingloadDropdown/>
   </View>
-  <SlingloadVideo  navigation={navigation} videoName="ChainClevis Video url" sequenceName = "ChainClevis Sequence" />
+  <SlingloadVideo  navigation={navigation} videoName="ChainClevis" sequenceName = "ChainClevis Sequence" />
   </View>
 </ScrollView>  
   );
@@ -251,7 +251,7 @@ export function MediumClevisVideo({ navigation, route }) {
     <Text style={{color:"#FFFFFF", fontSize: 20}} variant='headlineLarge'>Slingload Simulator</Text>
     <SlingloadDropdown/>
   </View>
-  <SlingloadVideo  navigation={navigation} videoName="MediumClevis Video url" sequenceName = "MediumClevis Sequence" />
+  <SlingloadVideo  navigation={navigation} videoName="MediumClevis" sequenceName = "MediumClevis Sequence" />
   </View>
 </ScrollView>  
   );
@@ -297,7 +297,7 @@ export function Suspension1Video({ navigation, route }) {
     <Text style={{color:"#FFFFFF", fontSize: 20}} variant='headlineLarge'>Slingload Simulator</Text>
     <SlingloadDropdown/>
   </View>
-  <SlingloadVideo  navigation={navigation} videoName="Suspension1 Video url" sequenceName = "Suspension1 Sequence" />
+  <SlingloadVideo  navigation={navigation} videoName="Suspension1" sequenceName = "Suspension1 Sequence" />
   </View>
 </ScrollView>  
   );
@@ -343,7 +343,7 @@ export function Suspension2Video({ navigation, route }) {
     <Text style={{color:"#FFFFFF", fontSize: 20}} variant='headlineLarge'>Slingload Simulator</Text>
     <SlingloadDropdown/>
   </View>
-  <SlingloadVideo  navigation={navigation} videoName="Suspension2 Video url" sequenceName = "Suspension2 Sequence" />
+  <SlingloadVideo  navigation={navigation} videoName="Suspension2" sequenceName = "Suspension2 Sequence" />
   </View>
 </ScrollView>  
   );
@@ -389,7 +389,7 @@ export function Suspension3Video({ navigation, route }) {
     <Text style={{color:"#FFFFFF", fontSize: 20}} variant='headlineLarge'>Slingload Simulator</Text>
     <SlingloadDropdown/>
   </View>
-  <SlingloadVideo  navigation={navigation} videoName="Suspension3 Video url" sequenceName = "Suspension3 Sequence" />
+  <SlingloadVideo  navigation={navigation} videoName="Suspension3" sequenceName = "Suspension3 Sequence" />
   </View>
 </ScrollView>  
   );
@@ -435,7 +435,7 @@ export function Suspension4Video({ navigation, route }) {
     <Text style={{color:"#FFFFFF", fontSize: 20}} variant='headlineLarge'>Slingload Simulator</Text>
     <SlingloadDropdown/>
   </View>
-  <SlingloadVideo  navigation={navigation} videoName="Suspension4 Video url" sequenceName = "Suspension4 Sequence" />
+  <SlingloadVideo  navigation={navigation} videoName="Suspension4" sequenceName = "Suspension4 Sequence" />
   </View>
 </ScrollView>  
   );
@@ -481,7 +481,7 @@ export function SusStrapOrderVideo({ navigation, route }) {
     <Text style={{color:"#FFFFFF", fontSize: 20}} variant='headlineLarge'>Slingload Simulator</Text>
     <SlingloadDropdown/>
   </View>
-  <SlingloadVideo  navigation={navigation} videoName="SusStrapOrder Video url" sequenceName = "SusStrapOrder Sequence" />
+  <SlingloadVideo  navigation={navigation} videoName="SusStrapOrder" sequenceName = "SusStrapOrder Sequence" />
   </View>
 </ScrollView>  
   );
@@ -497,12 +497,56 @@ export function SusStrapOrderSequence({ navigation, route }) {
     <Text style={{color:"#FFFFFF", fontSize: 20}} variant='headlineLarge'>Slingload Simulator</Text>
     <SlingloadDropdown/>
   </View>
-  <SlingloadSequence inspectionSteps="Sus. Strap Order instructions 1. asd" navigation={navigation} videoName="SusStrapOrder Video" nextItem = "S1P2" />
+  <SlingloadSequence inspectionSteps="Sus. Strap Order instructions 1. asd" navigation={navigation} videoName="SusStrapOrder Video" nextItem = "StrapSide" />
+  </View>
+</ScrollView>  
+  );
+}
+export function StrapSideScreen({ navigation, route }) {
+  const theme = useTheme();
+  return (
+  <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}> 
+  <View style={{marginTop: -10, marginBottom: 8}}>
+  <View style={{alignItems: 'center', backgroundColor: "#221f20", height: 45, borderTopWidth: 5, borderBottomWidth: 3, borderColor: "#ffcc01"}}>
+    <Text style={{color:"#FFFFFF", fontSize: 20}} variant='headlineLarge'>Slingload Simulator</Text>
+    <SlingloadDropdown/>
+  </View>
+      <SlingloadTitle title="188 in Strap Side 1" navigation={navigation} videoName="StrapSide Video" sequenceName = "StrapSide Sequence" />
   </View>
 </ScrollView>  
   );
 }
 
+export function StrapSideVideo({ navigation, route }) {
+  const theme = useTheme();
+  return (
+  <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}> 
+  <View style={{marginTop: -10, marginBottom: 8}}>
+  <View style={{alignItems: 'center', backgroundColor: "#221f20", height: 45, borderTopWidth: 5, borderBottomWidth: 3, borderColor: "#ffcc01"}}>
+    <Text style={{color:"#FFFFFF", fontSize: 20}} variant='headlineLarge'>Slingload Simulator</Text>
+    <SlingloadDropdown/>
+  </View>
+  <SlingloadVideo  navigation={navigation} videoName="StrapSide" sequenceName = "StrapSide Sequence" />
+  </View>
+</ScrollView>  
+  );
+}
+
+
+export function StrapSideSequence({ navigation, route }) {
+  const theme = useTheme();
+  return (
+  <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}> 
+  <View style={{marginTop: -10, marginBottom: 8}}>
+  <View style={{alignItems: 'center', backgroundColor: "#221f20", height: 45, borderTopWidth: 5, borderBottomWidth: 3, borderColor: "#ffcc01"}}>
+    <Text style={{color:"#FFFFFF", fontSize: 20}} variant='headlineLarge'>Slingload Simulator</Text>
+    <SlingloadDropdown/>
+  </View>
+  <SlingloadSequence inspectionSteps="StrapSide instructions 1. asd" navigation={navigation} videoName="StrapSide" nextItem = "S1P2" />
+  </View>
+</ScrollView>  
+  );
+}
 export function S1P2Screen({ navigation, route }) {
   const theme = useTheme();
   return (
@@ -512,7 +556,7 @@ export function S1P2Screen({ navigation, route }) {
     <Text style={{color:"#FFFFFF", fontSize: 20}} variant='headlineLarge'>Slingload Simulator</Text>
     <SlingloadDropdown/>
   </View>
-      <SlingloadTitle title="188 S1 P2" navigation={navigation} videoName="S1P2 Video" sequenceName = "S1P2 Sequence" />
+      <SlingloadTitle title="188 in S1 P2" navigation={navigation} videoName="S1P2 Video" sequenceName = "S1P2 Sequence" />
   </View>
 </ScrollView>  
   );
@@ -527,7 +571,7 @@ export function S1P2Video({ navigation, route }) {
     <Text style={{color:"#FFFFFF", fontSize: 20}} variant='headlineLarge'>Slingload Simulator</Text>
     <SlingloadDropdown/>
   </View>
-  <SlingloadVideo  navigation={navigation} videoName="S1P2 Video url" sequenceName = "S1P2 Sequence" />
+  <SlingloadVideo  navigation={navigation} videoName="S1P2" sequenceName = "S1P2 Sequence" />
   </View>
 </ScrollView>  
   );
@@ -573,7 +617,7 @@ export function TopLateralC1Video({ navigation, route }) {
     <Text style={{color:"#FFFFFF", fontSize: 20}} variant='headlineLarge'>Slingload Simulator</Text>
     <SlingloadDropdown/>
   </View>
-  <SlingloadVideo  navigation={navigation} videoName="TopLateralC1 Video url" sequenceName = "TopLateralC1 Sequence" />
+  <SlingloadVideo  navigation={navigation} videoName="TopLateralC1" sequenceName = "TopLateralC1 Sequence" />
   </View>
 </ScrollView>  
   );
@@ -619,7 +663,7 @@ export function MidLateralC1Video({ navigation, route }) {
     <Text style={{color:"#FFFFFF", fontSize: 20}} variant='headlineLarge'>Slingload Simulator</Text>
     <SlingloadDropdown/>
   </View>
-  <SlingloadVideo  navigation={navigation} videoName="MidLateralC1 Video url" sequenceName = "MidLateralC1 Sequence" />
+  <SlingloadVideo  navigation={navigation} videoName="MidLateralC1" sequenceName = "MidLateralC1 Sequence" />
   </View>
 </ScrollView>  
   );
@@ -665,7 +709,7 @@ export function BotLateralC1Video({ navigation, route }) {
     <Text style={{color:"#FFFFFF", fontSize: 20}} variant='headlineLarge'>Slingload Simulator</Text>
     <SlingloadDropdown/>
   </View>
-  <SlingloadVideo  navigation={navigation} videoName="BotLateralC1 Video url" sequenceName = "BotdLateralC1 Sequence" />
+  <SlingloadVideo  navigation={navigation} videoName="BotLateralC1" sequenceName = "BotdLateralC1 Sequence" />
   </View>
 </ScrollView>  
   );
@@ -722,6 +766,9 @@ const SlingloadDropdown = ({ navigation }) => {
           <Menu.Item onPress={() => { navigation.navigate('Suspension4'); closeMenu(); }} title="Suspension4" />
           <Divider></Divider>
           <Menu.Item onPress={() => { navigation.navigate('SusStrapOrder'); closeMenu(); }} title="SusStrapOrder" />
+          <Divider></Divider>
+          <Divider></Divider>
+          <Menu.Item onPress={() => { navigation.navigate('StrapSide'); closeMenu(); }} title="StrapSide" />
           <Divider></Divider>
           <Menu.Item onPress={() => { navigation.navigate('S1P2'); closeMenu(); }} title="S1P2" />
           <Divider></Divider>

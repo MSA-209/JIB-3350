@@ -60,7 +60,7 @@ MediumClevisVideo, Suspension1Screen,Suspension1Video, Suspension1Sequence, Susp
  Suspension3Screen, Suspension3Video,Suspension3Sequence, Suspension4Screen, Suspension4Sequence, Suspension4Video,
 SusStrapOrderScreen,SusStrapOrderSequence,SusStrapOrderVideo, 
 TopLateralC1Screen, TopLateralC1Sequence, TopLateralC1Video, MidLateralC1Screen, MidLateralC1Sequence, MidLateralC1Video,
-BotLateralC1Screen, BotLateralC1Sequence, BotLateralC1Video} from './slingload.js';
+BotLateralC1Screen, BotLateralC1Sequence, BotLateralC1Video, StrapSideScreen, StrapSideSequence, StrapSideVideo} from './slingload.js';
 
 // import {FeedbackScreen} from './feedbackScreen.js';
 //version output
@@ -1006,6 +1006,9 @@ function HomeStackScreen({navigation, route}) {
       <Stack.Screen name='SusStrapOrder' component={SusStrapOrderScreen} />
       <Stack.Screen name='SusStrapOrder Video' component={SusStrapOrderVideo} />
       <Stack.Screen name='SusStrapOrder Sequence' component={SusStrapOrderSequence} />
+      <Stack.Screen name='StrapSide' component={StrapSideScreen} />
+      <Stack.Screen name='StrapSide Video' component={StrapSideVideo} />
+      <Stack.Screen name='StrapSide Sequence' component={StrapSideSequence} />
       <Stack.Screen name='S1P2' component={SusStrapOrderScreen} />
       <Stack.Screen name='S1P2 Video' component={SusStrapOrderVideo} />
       <Stack.Screen name='S1P2 Sequence' component={SusStrapOrderSequence} />
