@@ -26,20 +26,45 @@ const videoSources = {
 export function SlingloadVideo({ navigation, videoName, sequenceName }) {
     const theme = useTheme();
     const videoSource = videoSources[videoName];
+    const videoRef = React.useRef(null);
+    const [skipText, setSkipText] = useState('Skip');
+    const handlePlaybackStatusUpdate = (playbackStatus) => {
+      if (playbackStatus.didJustFinish) {
+        setSkipText('Next');
+      }
+    };
+    const handleSkip = async () => {
+      if (videoRef.current) {
+        await videoRef.current.stopAsync();
+      }
+      navigation.navigate(sequenceName);
+    };
+    const handleReplay = async () => {
+      if (videoRef.current) {
+        await videoRef.current.replayAsync();
+      }
+    };
     return (
       <View>
         <View style={styles.card}>
-                <View style={{alignItems: 'center', marginTop: 10}}>
+            <View style={{alignItems: 'center', marginTop: 10}}>
               <Video 
+              ref={videoRef}
               source={videoSource}
               style={styles.videoStyle}
               useNativeControls
               resizeMode={Video.RESIZE_MODE_CONTAIN}
+              onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
             />   
             </View>
-          <TouchableOpacity onPress={() => navigation.navigate(sequenceName)}>
-            <Text style={{color:theme.colors.primary, fontSize: 20}}>Skip </Text>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <TouchableOpacity onPress={handleReplay}>
+            <Text style={{color:theme.colors.primary, fontSize: 20}}>Replay</Text>
           </TouchableOpacity>
+          <TouchableOpacity onPress={handleSkip}>
+            <Text style={{color:theme.colors.primary, fontSize: 20}}>{skipText}</Text>
+          </TouchableOpacity>
+        </View>
         </View>
       </View>
     );
