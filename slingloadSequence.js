@@ -6,7 +6,7 @@ import { Card, Provider, Text, useTheme } from 'react-native-paper';
 import { styles } from './styleSheet';
 import { FontAwesome } from '@expo/vector-icons'; 
 
-export function SlingloadSequence({navigation, inspectionSteps, videoName, nextItem }) {
+export function SlingloadSequence({navigation, inspectionSteps, videoName, nextItem, extraTitle, extraInfo, extraPhoto }) {
   const theme = useTheme();
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [stepList, setStepList] = useState('');
