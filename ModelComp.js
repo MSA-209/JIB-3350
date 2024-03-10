@@ -34,7 +34,6 @@ const ModelComp = ({imageArray}) => {
     } 
     return(
         <View >
-            <Text style = {{color: 'white'}}>{images[currentRow][currentCol]}</Text>
             <View style={{borderBottomWidth: 3, borderBottomColor: "#ffcc01"}}>
               <Image source={images[currentRow][currentCol]}
                 style={{

@@ -122,10 +122,9 @@ export function PlacardSequence({ navigation, route }) {
     <View style={{width: 40}}>
     </View>
   </View>
-  <SlingloadSequence inspectionSteps="Placard instructions 1. asd" navigation={navigation} videoName="Placard Video" nextItem = 'Apex'
+  <SlingloadSequence inspectionSteps="Placard instructions 1. asd" navigation={navigation} itemName="Placard" videoName="Placard Video" nextItem = 'Apex'
   extraTitle="Check the load: A-22" extraInfo="Ensure the load listed is for the correct mission" />
   </View>
-  <ModelComp imageArray = "Placard"/>
 </ScrollView>  
   );
 }
