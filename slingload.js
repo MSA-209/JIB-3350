@@ -187,7 +187,7 @@ export function ApexSequence({ navigation, route }) {
     <View style={{width: 40}}>
     </View>
   </View>
-  <SlingloadSequence inspectionSteps="Apex instructions 1. asd" navigation={navigation} videoName="Apex Video" nextItem = "Grabhook"
+  <SlingloadSequence inspectionSteps="Apex instructions 1. asd" navigation={navigation} itemName= 'Apex' videoName="Apex Video" nextItem = "Grabhook"
   extraTitle="Check Aluminum Spacer" extraPhoto= "/assets/Apex_Extra.png"
   extraInfo="If the Aircraft is a UH-60, the 10k apex must have an aluminum spacer.\n Another deficiency can exist if a 25k aluminum spacer is rigged on a 10 apex. The 25k spacer is not only a bigger thank the 10k spacer, but when the rigger to the 10k apex and gets shaken, it'll sound like a cow bell." />
   </View>
@@ -253,7 +253,7 @@ export function GrabhookSequence({ navigation, route }) {
     <View style={{width: 40}}>
     </View>
   </View>
-  <SlingloadSequence inspectionSteps="Grabhook instructions 1. asd" navigation={navigation} videoName="Grabhook Video" nextItem = "ChainClevis"
+  <SlingloadSequence inspectionSteps="Grabhook instructions 1. asd" navigation={navigation} itemName= 'Grabhook' videoName="Grabhook Video" nextItem = "ChainClevis"
   extraTitle="Ensure link count of 3" extraInfo="Ensure the 3rd link is secure into the keeper" extraPhoto="/assets/Grabhook_Extra.png"/>
   </View>
 </ScrollView>  
@@ -318,7 +318,7 @@ export function ChainClevisSequence({ navigation, route }) {
     <View style={{width: 40}}>
     </View>
   </View>
-  <SlingloadSequence inspectionSteps="ChainClevis instructions 1. asd" navigation={navigation} videoName="MediumClevis Video" nextItem = "MediumClevis"
+  <SlingloadSequence inspectionSteps="ChainClevis instructions 1. asd" navigation={navigation} itemName='ChainClevis' videoName="MediumClevis Video" nextItem = "MediumClevis"
    extraTitle="Ensure the chain can slide freely through the clevis"/>
   </View>
 </ScrollView>  
@@ -384,7 +384,7 @@ export function MediumClevisSequence({ navigation, route }) {
     <View style={{width: 40}}>
     </View>
   </View>
-  <SlingloadSequence inspectionSteps="MediumClevis instructions 1. asd" navigation={navigation} videoName="MediumClevis Video" nextItem = "Suspension1"
+  <SlingloadSequence inspectionSteps="MediumClevis instructions 1. asd" navigation={navigation} itemName = 'MediumClevis' videoName="MediumClevis Video" nextItem = "Suspension1"
     extraTitle="Ensure nut and bolt are taped" extraPhoto="/assets/MedClevis_Extra.png" />
   </View>
 </ScrollView>  
@@ -449,7 +449,7 @@ export function Suspension1Sequence({ navigation, route }) {
     <View style={{width: 40}}>
     </View>
   </View>
-  <SlingloadSequence inspectionSteps="Suspension1 instructions 1. asd" navigation={navigation} videoName="Suspension1 Video" nextItem = "Suspension2" />
+  <SlingloadSequence inspectionSteps="Suspension1 instructions 1. asd" navigation={navigation} itemName= 'Suspension1' videoName="Suspension1 Video" nextItem = "Suspension2" />
   </View>
 </ScrollView>  
   );
@@ -513,7 +513,7 @@ export function Suspension2Sequence({ navigation, route }) {
     <View style={{width: 40}}>
     </View>
   </View>
-  <SlingloadSequence inspectionSteps="Suspension2 instructions 1. asd" navigation={navigation} videoName="Suspension2 Video" nextItem = "Suspension3" />
+  <SlingloadSequence inspectionSteps="Suspension2 instructions 1. asd" navigation={navigation} itemName= 'Suspension2-4' videoName="Suspension2 Video" nextItem = "Suspension3" />
   </View>
 </ScrollView>  
   );
@@ -577,7 +577,7 @@ export function Suspension3Sequence({ navigation, route }) {
     <View style={{width: 40}}>
     </View>
   </View>
-  <SlingloadSequence inspectionSteps="Suspension3 instructions 1. asd" navigation={navigation} videoName="Suspension3 Video" nextItem = "Suspension4" />
+  <SlingloadSequence inspectionSteps="Suspension3 instructions 1. asd" navigation={navigation} itemName= 'Suspension2-4' videoName="Suspension3 Video" nextItem = "Suspension4" />
   </View>
 </ScrollView>  
   );
@@ -641,7 +641,7 @@ export function Suspension4Sequence({ navigation, route }) {
     <View style={{width: 40}}>
     </View>
   </View>
-  <SlingloadSequence inspectionSteps="Suspension4 instructions 1. asd" navigation={navigation} videoName="Suspension4 Video" nextItem = "SusStrapOrder" />
+  <SlingloadSequence inspectionSteps="Suspension4 instructions 1. asd" navigation={navigation} itemName= 'Suspension2-4' videoName="Suspension4 Video" nextItem = "SusStrapOrder" />
   </View>
 </ScrollView>  
   );
@@ -705,7 +705,7 @@ export function SusStrapOrderSequence({ navigation, route }) {
     <View style={{width: 40}}>
     </View>
   </View>
-  <SlingloadSequence inspectionSteps="Sus. Strap Order instructions 1. asd" navigation={navigation} videoName="SusStrapOrder Video" nextItem = "StrapSide"
+  <SlingloadSequence inspectionSteps="Sus. Strap Order instructions 1. asd" navigation={navigation} itemName= 'SusStrapOrder' videoName="SusStrapOrder Video" nextItem = "StrapSide"
     extraTitle="Ensure straps are in clockwise or counterclockwise order." extraPhoto="/assets/SusOrder_Extra.png" />
   </View>
 </ScrollView>  
@@ -769,7 +769,7 @@ export function StrapSideSequence({ navigation, route }) {
     <View style={{width: 40}}>
     </View>
   </View>
-  <SlingloadSequence inspectionSteps="StrapSide instructions 1. asd" navigation={navigation} videoName="StrapSide" nextItem = "S1P2" />
+  <SlingloadSequence inspectionSteps="StrapSide instructions 1. asd" navigation={navigation} itemName = 'StrapSide1&2' videoName="StrapSide" nextItem = "S1P2" />
   </View>
 </ScrollView>  
   );
@@ -832,7 +832,7 @@ export function S1P2Sequence({ navigation, route }) {
     <View style={{width: 40}}>
     </View>
   </View>
-  <SlingloadSequence inspectionSteps="188 S1 P2 instructions 1. asd" navigation={navigation} videoName="S1P2 Video" nextItem = "TopLateralC1" />
+  <SlingloadSequence inspectionSteps="188 S1 P2 instructions 1. asd" navigation={navigation} itemName = 'StrapSide1&2' videoName="S1P2 Video" nextItem = "TopLateralC1" />
   </View>
 </ScrollView>  
   );
@@ -896,7 +896,7 @@ export function TopLateralC1Sequence({ navigation, route }) {
     <View style={{width: 40}}>
     </View>
   </View>
-  <SlingloadSequence inspectionSteps="TopLateralC1 instructions 1. asd" navigation={navigation} videoName="TopLateralC1 Video" nextItem = "MidLateralC1"
+  <SlingloadSequence inspectionSteps="TopLateralC1 instructions 1. asd" navigation={navigation} itemName = 'TopLateralC1' videoName="TopLateralC1 Video" nextItem = "MidLateralC1"
    extraPhoto="/assets/TopLateralC1_Extra.png" extraTitle="Trace strap and ensure it is not twisted"/>
   </View>
 </ScrollView>  
@@ -961,7 +961,7 @@ export function MidLateralC1Sequence({ navigation, route }) {
     <View style={{width: 40}}>
     </View>
   </View>
-  <SlingloadSequence inspectionSteps="Middle Lateral C1 instructions 1. asd" navigation={navigation} videoName="MidLateralC1 Video" nextItem = "LateralC1"
+  <SlingloadSequence inspectionSteps="Middle Lateral C1 instructions 1. asd" navigation={navigation} itemName= 'MidLateralC1' videoName="MidLateralC1 Video" nextItem = "LateralC1"
      extraPhoto="/assets/TopLateralC1_Extra.png" extraTitle="Trace strap and ensure it is not twisted" />
   </View>
 </ScrollView>  
@@ -1026,7 +1026,7 @@ export function BotLateralC1Sequence({ navigation, route }) {
     <View style={{width: 40}}>
     </View>
   </View>
-  <SlingloadSequence inspectionSteps="Bottom Lateral C1 instructions 1. asd" navigation={navigation} videoName="BotLateralC1 Video" nextItem = "Slingload Integration" 
+  <SlingloadSequence inspectionSteps="Bottom Lateral C1 instructions 1. asd" navigation={navigation} itemName = 'BotLateralC1' videoName="BotLateralC1 Video" nextItem = "Slingload Integration" 
      extraPhoto="/assets/TopLateralC1_Extra.png" extraTitle="Trace strap and ensure it is not twisted"/>
   </View>
 </ScrollView>  

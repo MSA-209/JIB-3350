@@ -317,5 +317,12 @@ export const styles = StyleSheet.create({
         color: 'white',
         fontSize: 16,
       },
+      // Model Component
+      ModelCompDirections:{
+            padding:5,
+            backgroundColor: '#ffcc01', 
+            borderRadius:8, 
+            alignSelf:'flex-start'
+      },
 
 });
