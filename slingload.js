@@ -108,8 +108,6 @@ export function PlacardVideo({ navigation, route }) {
 
 
 import placardArray from './placardArray.js';
-import { color } from 'react-native-reanimated';
-import { Color } from 'three';
 export function PlacardSequence({ navigation, route }) {
   const theme = useTheme();
   return (
@@ -127,7 +125,7 @@ export function PlacardSequence({ navigation, route }) {
   </View>
   <SlingloadSequence inspectionSteps="Placard instructions 1. asd" navigation={navigation} videoName="Placard Video" nextItem = 'Apex' />
   </View>
-  <ModelComp imageArray = {placardArray}/>
+  <ModelComp imageArray = "Placard"/>
 </ScrollView>  
   );
 }
