@@ -215,11 +215,107 @@ export const styles = StyleSheet.create({
     },
     newsImage: {
         borderWidth: 2,
-        borderRadius: 8
+        borderRadius: 8,
     },
     rectangle: {
         height: 8,
         backgroundColor: '#ffcc01',
         position: 'relative', 
     },
+//slingload.js
+    walkThrough: {
+        flexDirection: 'row',
+        alignContent: 'center',
+        alignItems:'center',
+        backgroundColor: '#7A7878',
+        borderColor: '#000000',
+        borderWidth: 1,
+        height: 40, 
+        width: 200,
+        borderRadius: 15,
+        shadowColor: '#FFFFFF',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.3, 
+        shadowRadius: 6, 
+        elevation: 5,
+    },
+    walkThroughText: {
+        color: '#000000',
+        fontSize: 18,
+        alignSelf: 'center',
+        textAlignVertical: 'center',
+        marginTop: 8,
+    },
+    innerBox: {
+        width: 160,
+        height: 40,
+        color: '#FFFFFF',
+        alignSelf: 'center',
+        borderColor: '#000000',
+        // left: 1,
+        borderWidth: 1,
+        borderRadius: 13,
+        backgroundColor: 'rgba(210, 210, 210, 1)',
+        paddingLeft: 20,
+        paddingRight: 20,
+    },
+    headerTitleContainer: {
+        flexDirection: 'row', 
+        alignItems: 'center', 
+        backgroundColor: "#221f20", 
+        height: 45, 
+        borderTopWidth: 5, 
+        borderBottomWidth: 3, 
+        borderColor: "#ffcc01",
+    },
+    titleText: {
+        color:"#FFFFFF", 
+        fontSize: 20, 
+        zIndex: 1
+    },
+    titleTextBox: {
+        flex: 1, 
+        alignItems: 'center', 
+        alignSelf: 'center', 
+        zIndex: 1,
+    },
+    chevronButton: {
+        width:35, 
+        height: 35, 
+        borderRadius: 35, 
+        backgroundColor: 'transparent', 
+        borderWidth: 2, 
+        alignItems:'center',
+    },  button: {
+        backgroundColor: 'blue',
+        borderRadius: 50,
+        width: 50,
+        height: 50,
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+      container3: {
+        alignItems: 'center',
+        marginTop: 20,
+      },
+      button3: {
+        backgroundColor: 'blue',
+        padding: 10,
+        borderRadius: 5,
+      },
+      buttonText3: {
+        color: 'white',
+        fontSize: 16,
+      },
+      infoBox: {
+        backgroundColor: 'black',
+        padding: 10,
+        marginTop: 10,
+        borderRadius: 5,
+      },
+      infoText: {
+        color: 'white',
+        fontSize: 16,
+      },
+
 });
