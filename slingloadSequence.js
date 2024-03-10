@@ -5,8 +5,9 @@ import 'react-native-svg'
 import { Card, Provider, Text, useTheme } from 'react-native-paper';
 import { styles } from './styleSheet';
 import { FontAwesome } from '@expo/vector-icons'; 
+import ModelComp from './ModelComp';
 
-export function SlingloadSequence({navigation, inspectionSteps, videoName, nextItem }) {
+export function SlingloadSequence({navigation, itemName, inspectionSteps, videoName, nextItem, extraTitle, extraInfo, extraPhoto }) {
   const theme = useTheme();
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [stepList, setStepList] = useState('');
@@ -63,7 +64,8 @@ export function SlingloadSequence({navigation, inspectionSteps, videoName, nextI
           </TouchableOpacity>
         </View>
       </View>
-      <View style={{marginTop: '60%', marginBottom: 10, marginLeft: '70%' }}>
+      <ModelComp imageArray = {itemName}/>
+      <View style={{marginTop: 0, marginBottom: 10, marginLeft: '70%' }}>
         <TouchableOpacity onPress={() => navigation.navigate(nextItem)}>
           <Text style={{color:theme.colors.primary, fontSize: 20}}>Next </Text>
         </TouchableOpacity>
