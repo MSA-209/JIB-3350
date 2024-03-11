@@ -297,8 +297,6 @@ export const styles = StyleSheet.create({
         alignSelf: 'center', 
         padding: 10,
         borderRadius: 5,
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
       },
       buttonText3: {
         color: 'white',
@@ -323,22 +321,3 @@ export const styles = StyleSheet.create({
       },
 
 });
-=======
-=======
->>>>>>> Stashed changes
-        borderWidth: 1,
-        borderColor: 'gray',
-        zIndex: 9999, 
-    },
-    closeButton: {
-        position: 'absolute',
-        top: 5,
-        right: 5,
-        zIndex: 1, 
-    },
-<<<<<<< Updated upstream
-});
->>>>>>> Stashed changes
-=======
-});
->>>>>>> Stashed changes

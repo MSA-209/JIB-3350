@@ -191,7 +191,7 @@ export function ApexSequence({ navigation, route }) {
   </View>
   <SlingloadSequence inspectionSteps={["1. Check Aluminum Spacer", "2. Check BCC's", "3. Bolt", "4. Castellated Nut", "5. Cotter Pin"]} navigation={navigation} itemName= 'Apex' videoName="Apex Video" nextItem = "Grabhook"
 
-  extraTitle="Check Aluminum Spacer" extraPhoto= "/assets/Apex_Extra.png"
+  extraTitle="Check Aluminum Spacer" extraPhoto= "Apex"
   extraInfo="If the Aircraft is a UH-60, the 10k apex must have an aluminum spacer.\n Another deficiency can exist if a 25k aluminum spacer is rigged on a 10 apex. The 25k spacer is not only a bigger thank the 10k spacer, but when the rigger to the 10k apex and gets shaken, it'll sound like a cow bell." />
 
   </View>
@@ -261,7 +261,7 @@ export function GrabhookSequence({ navigation, route }) {
 
   <SlingloadSequence inspectionSteps={["1. Ensure the link from the grabhook has a count of 3", "2. Ensure the grabhook is not inverted", "3. Ensure the dome nut/locking nut is present", "4. Check Snap Ring is present"]} navigation={navigation} itemName= 'Grabhook' videoName="Grabhook Video" nextItem = "ChainClevis"
 
-  extraTitle="Ensure link count of 3" extraInfo="Ensure the 3rd link is secure into the keeper" extraPhoto="/assets/Grabhook_Extra.png"/>
+  extraTitle="Ensure link count of 3" extraInfo="Ensure the 3rd link is secure into the keeper" extraPhoto="Grabhook"/>
 
   </View>
 </ScrollView>  
@@ -401,7 +401,7 @@ export function MediumClevisSequence({ navigation, route }) {
 
   <SlingloadSequence inspectionSteps={["1. Ensure the nut and bolt are taped", "2. Grab the clevis like a coffee cup and check"]} navigation={navigation} itemName = 'MediumClevis' videoName="MediumClevis Video" nextItem = "Suspension1"
 
-    extraTitle="Ensure nut and bolt are taped" extraPhoto="/assets/MedClevis_Extra.png" />
+    extraTitle="Ensure nut and bolt are taped" extraPhoto="MedClevis" />
 
   </View>
 </ScrollView>  
@@ -735,7 +735,7 @@ export function SusStrapOrderSequence({ navigation, route }) {
 
   <SlingloadSequence inspectionSteps={["1. Ensure the straps are in clockwise or", "2. Strap 1 - Front of Load", "3. Strap 2 - Left of Load", "4. Strap 3 - Across the Load", "5. Strap 4 - Right of load"]} navigation={navigation} itemName= 'SusStrapOrder' videoName="SusStrapOrder Video" nextItem = "StrapSide"
 
-    extraTitle="Ensure straps are in clockwise or counterclockwise order." extraPhoto="/assets/SusOrder_Extra.png" />
+    extraTitle="Ensure straps are in clockwise or counterclockwise order." extraPhoto="SusOrder" />
 
   </View>
 </ScrollView>  
@@ -933,7 +933,7 @@ export function TopLateralC1Sequence({ navigation, route }) {
 
   <SlingloadSequence inspectionSteps={["1. Trace Step and ensure it is not twisted", "2. Friction Adapter should be GGMG", "3. Ensure Excess is secured with tape", "4. Ensure Excess is not secured over FA"]} navigation={navigation} itemName = 'TopLateralC1' videoName="TopLateralC1 Video" nextItem = "MidLateralC1"
 
-   extraPhoto="/assets/TopLateralC1_Extra.png" extraTitle="Trace strap and ensure it is not twisted"/>
+   extraPhoto="TopLateralC1" extraTitle="Trace strap and ensure it is not twisted"/>
 
   </View>
 </ScrollView>  
@@ -1001,7 +1001,7 @@ export function MidLateralC1Sequence({ navigation, route }) {
 
   <SlingloadSequence inspectionSteps={["1. Trace Step and ensure it is not twisted", "2. Friction Adapter should be GGMG", "3. Ensure Excess is secured with tape", "4. Ensure Excess is not secured over FA", "5. Ensure strap is not routed behind lacing"]} navigation={navigation} itemName= 'MidLateralC1' videoName="MidLateralC1 Video" nextItem = "LateralC1"
 
-     extraPhoto="/assets/TopLateralC1_Extra.png" extraTitle="Trace strap and ensure it is not twisted" />
+     extraPhoto="TopLateralC1_Extra" extraTitle="Trace strap and ensure it is not twisted" />
 
   </View>
 </ScrollView>  
@@ -1069,7 +1069,7 @@ export function BotLateralC1Sequence({ navigation, route }) {
 
   <SlingloadSequence inspectionSteps={["1. Trace Step and ensure it is not twisted", "2. Friction Adapter should be GGMG", "3. Ensure Excess is secured with tape", "4. Ensure Excess is not secured over FA", "5. Ensure strap is not routed behind lacing"]} navigation={navigation} itemName = 'BotLateralC1' videoName="BotLateralC1 Video" nextItem = "Slingload Integration" 
 
-     extraPhoto="/assets/TopLateralC1_Extra.png" extraTitle="Trace strap and ensure it is not twisted"/>
+     extraPhoto="TopLateralC1_Extra" extraTitle="Trace strap and ensure it is not twisted"/>
 
   </View>
 </ScrollView>  

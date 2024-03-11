@@ -6,11 +6,18 @@ import { Card, Provider, Text, useTheme } from 'react-native-paper';
 import { styles } from './styleSheet';
 import { FontAwesome } from '@expo/vector-icons'; 
 import ModelComp from './ModelComp';
-
+const imageSources = {
+  'Apex': require('/assets/Apex_Extra.png'), 
+  'Grabhook' :require('/assets/Grabhook_Extra.png'),
+  'MedClevis' :require('/assets/MedClevis_Extra.png'),
+  'SusOrder' :require('/assets/SusOrder_Extra.png'),
+  'TopLateralC1' :require('/assets/TopLateralC1_Extra.png'),
+};
 export function SlingloadSequence({navigation, itemName, inspectionSteps, videoName, nextItem, extraTitle, extraInfo, extraPhoto }) {
   const theme = useTheme();
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [stepList, setStepList] = useState('');
+  const imageSource = imageSources[extraPhoto];
   
   if (stepList.length == 0) {
     setStepList(stepList + inspectionSteps[currentStepIndex] + '\n');
@@ -40,8 +47,10 @@ export function SlingloadSequence({navigation, itemName, inspectionSteps, videoN
   const handleCloseBox = () => {
     setIsBoxVisible(false);
   };
-
-
+  if (extraInfo) {
+    extraInfo = '• ' + extraInfo.replace(/\n/g, '\n• ');
+  }
+  console.log(extraPhoto)
   return (
     <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
       <View style={{padding: 3, marginLeft: 20, marginTop: 30, marginRight: 20, backgroundColor: '#000000', borderRadius: 10}}>
@@ -61,8 +70,17 @@ export function SlingloadSequence({navigation, itemName, inspectionSteps, videoN
           </TouchableOpacity>
           {/* Text content */}
           <View style={{fontSize: 18, color: 'red', alignSelf: 'center'}}>
-            <Text>CONTENT OF THE BOX</Text>
-          </View>
+          {extraTitle && <Text>1.{extraTitle}</Text>}
+          {extraInfo && <Text>{extraInfo}</Text>}
+          {extraPhoto && 
+            <Image source={imageSource}
+              style={{
+                width: 'auto',
+                height: 230,
+              }}
+            />
+          }
+        </View>
         </View>
       )}
 <View style={{flexDirection: 'row', alignItems: 'stretch', marginTop: 20, marginLeft: 15, marginRight: 15, padding: 20, gap: 0, backgroundColor: 'rgba(173, 173, 173, 0.3)', borderRadius: 10, marginLeft: 20, }}>
@@ -104,7 +122,9 @@ export function SlingloadSequence({navigation, itemName, inspectionSteps, videoN
           <TouchableOpacity onPress={goPreviousStep}>
             <View style={{flexDirection: 'flex-end', position: 'relative'}}>
               <View style={{alignSelf: 'center', marginTop: 5, marginLeft: 5}}>
+              <TouchableOpacity onPress={() => navigation.navigate(videoName)}>
                 <FontAwesome name="video-camera" size={25} color={theme.colors.primary} />
+                </TouchableOpacity>
               </View>
             <View>
               <Text style={{color:theme.colors.secondary, fontSize: 13, marginTop: 3}}></Text>
