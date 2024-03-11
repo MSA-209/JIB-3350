@@ -53,37 +53,57 @@ export function SlingloadSequence({navigation, itemName, inspectionSteps, videoN
   console.log(extraPhoto)
   return (
     <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
-      <View style={{padding: 3, marginLeft: 20, marginTop: 30, marginRight: 20, backgroundColor: '#000000', borderRadius: 10}}>
+      <View style={{flexDirection: 'row', marginTop: 30, marginLeft: 20}}>
+      <View style={{flex: 0.7}}><Text style={{color: theme.colors.primary, fontSize: 25, fontWeight: 600}}>{itemName}</Text></View>
+      <View style={{marginRight: -5, marginBottom: 10, flex: 0.3}}>
+        <TouchableOpacity onPress={() => navigation.navigate(nextItem)}>
+          <View style={{flexDirection: 'row'}}>
+            <Text style={{color:theme.colors.primary, fontSize: 25}}>Next </Text>
+            <View style={{marginTop: 5}}>
+            <FontAwesome name="chevron-right" size={20} color={theme.colors.primary} />
+          </View>
+          </View>
+        </TouchableOpacity>
+      </View>
+      </View>
+      <View style={{padding: 3, marginLeft: 20, marginTop: 10, marginRight: 20, borderRadius: 10}}>
         <View style={{flex: 1, resizeMode: 'contain'}}>
           <ModelComp imageArray = {itemName}/>
         </View>
       </View>
 
+
     {/* THIS IS THE BOX FOR EXTRA INFORMATION */}
       {isBoxVisible && (
-        <View style={styles.boxContainer}>
+        <View style={styles.infoBox}>
           {/* Close button */}
-          <TouchableOpacity onPress={handleCloseBox} style={styles.closeButton}>
-            <View style={{borderColor: '#ffffff', alignItems: 'center', width: 25, height: 25, margin: 3, borderWidth: 1}}>
-              <Text style={{color: '#ffffff', alignSelf: 'center', fontSize: 20}}>X</Text>
+          <TouchableOpacity onPress={handleCloseBox}>
+            <View style={styles.xBox}>
+              <Text style={styles.xStyle}>X</Text>
             </View>
           </TouchableOpacity>
+          <View style={{backgroundColor: '#ffcc01', height:1}}></View>
           {/* Text content */}
-          <View style={{fontSize: 18, color: 'red', alignSelf: 'center'}}>
-          {extraTitle && <Text>1.{extraTitle}</Text>}
-          {extraInfo && <Text>{extraInfo}</Text>}
-          {extraPhoto && 
-            <Image source={imageSource}
-              style={{
-                width: 'auto',
-                height: 230,
-              }}
-            />
-          }
-        </View>
+          {extraTitle || extraInfo || extraPhoto ? (
+          <View>
+            {extraTitle && <Text style={styles.infoText}>1.{extraTitle}</Text>}
+            {extraInfo && <Text style={styles.infoText}>{extraInfo}</Text>}
+            {extraPhoto && 
+              <Image 
+                source={imageSource}
+                style={{
+                  width: 'auto',
+                  height: 230,
+                  zIndex: 5,
+                  resizeMode: 'contain',
+                }}
+              />
+            }
+          </View>
+        ) : (<View></View>)}
         </View>
       )}
-<View style={{flexDirection: 'row', alignItems: 'stretch', marginTop: 20, marginLeft: 15, marginRight: 15, padding: 20, gap: 0, backgroundColor: 'rgba(173, 173, 173, 0.3)', borderRadius: 10, marginLeft: 20, }}>
+<View style={styles.inspectionBox}>
     <View style={{flex: 0.25, marginTop: 45}}>
         <View style={{flexDirection: 'row'}}>
           <TouchableOpacity onPress={goPreviousStep}>
@@ -114,11 +134,13 @@ export function SlingloadSequence({navigation, itemName, inspectionSteps, videoN
         </View>
         
         <View style={{flexDirection: 'row', marginTop: 10, marginRight: 5}}>
+        {extraTitle || extraInfo || extraPhoto ? (        
         <TouchableOpacity onPress={toggleBoxVisibility}>
             <View style={[styles.chevronButton, {borderColor: theme.colors.primary, marginRight: 5}]}>
             <Text style={{color:theme.colors.primary, fontSize: 20, fontWeight: 700, marginTop: 2}}>?</Text>
             </View>     
-          </TouchableOpacity>
+          </TouchableOpacity>) : (<View></View>)}
+
           <TouchableOpacity onPress={goPreviousStep}>
             <View style={{flexDirection: 'flex-end', position: 'relative'}}>
               <View style={{alignSelf: 'center', marginTop: 5, marginLeft: 5}}>
@@ -142,26 +164,13 @@ export function SlingloadSequence({navigation, itemName, inspectionSteps, videoN
         <View style={{flexDirection: 'row'}}>
           <View style={{borderLeftWidth: 2, paddingRight: 5, borderColor: theme.colors.primary}}>
         </View>
-        <View>
-            <Text style={{color: theme.colors.secondary, fontSize: 18, flexGrow: 'wrap', marginVertical: 5}}>{stepList}</Text>
+        <View style={{flexWrap: 'wrap', width: 250, marginLeft: 5}}>
+            <Text style={{color: theme.colors.secondary, fontSize: 18, flexWrap: 'wrap', marginVertical: 5}}>{stepList}</Text>
             </View>
 
         </View>
       </View>
     </View>
-
-      <View style={{marginTop: 0, marginBottom: 10, marginLeft: '80%'}}>
-        <TouchableOpacity onPress={() => navigation.navigate(nextItem)}>
-          <View style={{flexDirection: 'row', marginTop: 40}}>
-            <Text style={{color:theme.colors.primary, fontSize: 20}}>Next </Text>
-            <View style={{marginTop: 5}}>
-            <FontAwesome name="chevron-right" size={15} color={theme.colors.primary} />
-          </View>
-          </View>
-        </TouchableOpacity>
-      </View>
-
-
 
       <View>
       {/* Button to toggle box visibility */}

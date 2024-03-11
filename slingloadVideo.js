@@ -49,11 +49,11 @@ export function SlingloadVideo({ navigation, videoName, sequenceName }) {
     return (
       <View>
         <View>
-            <View style={{alignItems: 'center', marginTop: 10}}>
+            <View>
               <Video 
               ref={videoRef}
               source={videoSource}
-              style={styles.videoCard}
+              style={styles.videoStyle}
               useNativeControls
               resizeMode={Video.RESIZE_MODE_CONTAIN}
               onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
