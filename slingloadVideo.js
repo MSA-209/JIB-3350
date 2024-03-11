@@ -4,6 +4,8 @@ import 'react-native-svg'
 import { Card, Provider, Text, useTheme } from 'react-native-paper';
 import { styles } from './styleSheet'; 
 import { Video } from 'expo-av';
+import { FontAwesome } from '@expo/vector-icons'; 
+
 const videoSources = {
   'Placard': require('/assets/placard_video.mp4'), 
   'Apex' :require('/assets/Apex.mp4'),
@@ -46,12 +48,12 @@ export function SlingloadVideo({ navigation, videoName, sequenceName }) {
     };
     return (
       <View>
-        <View style={styles.card}>
+        <View>
             <View style={{alignItems: 'center', marginTop: 10}}>
               <Video 
               ref={videoRef}
               source={videoSource}
-              style={styles.videoStyle}
+              style={styles.videoCard}
               useNativeControls
               resizeMode={Video.RESIZE_MODE_CONTAIN}
               onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
@@ -59,13 +61,27 @@ export function SlingloadVideo({ navigation, videoName, sequenceName }) {
             </View>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <TouchableOpacity onPress={handleReplay}>
-            <Text style={{color:theme.colors.primary, fontSize: 20}}>Replay</Text>
+            <View style={{marginLeft: 20, flexDirection: 'row'}}>
+              <View>
+                <Text style={{color:theme.colors.primary, fontSize: 20}}>Replay</Text>
+              </View>
+              {/* <View>
+              <FontAwesome name="undo" size={20} color={theme.colors.primary} />
+              </View> */}
+            </View>
           </TouchableOpacity>
           <TouchableOpacity onPress={handleSkip}>
+            <View style={{marginRight: 20}}>
             <Text style={{color:theme.colors.primary, fontSize: 20}}>{skipText}</Text>
+            </View>
           </TouchableOpacity>
         </View>
         </View>
       </View>
     );
   }
+
+
+
+
+
