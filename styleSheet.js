@@ -280,28 +280,25 @@ export const styles = StyleSheet.create({
         zIndex: 1,
     },
     chevronButton: {
-        width:35, 
-        height: 35, 
+        width:30, 
+        height: 30, 
         borderRadius: 35, 
         backgroundColor: 'transparent', 
         borderWidth: 2, 
         alignItems:'center',
-    },  button: {
-        backgroundColor: 'blue',
-        borderRadius: 50,
-        width: 50,
-        height: 50,
-        alignItems: 'center',
-        justifyContent: 'center',
-      },
-      container3: {
-        alignItems: 'center',
-        marginTop: 20,
-      },
-      button3: {
-        backgroundColor: 'blue',
+    },  
+    boxContainer: {
+        position: 'absolute',
+        backgroundColor: 'rgba(0, 0, 0, 0.9)',
+        top: '55%', 
+        width: 300,
+        borderRadius: 10,
+        height: 230,
+        alignSelf: 'center', 
         padding: 10,
         borderRadius: 5,
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
       },
       buttonText3: {
         color: 'white',
@@ -326,3 +323,22 @@ export const styles = StyleSheet.create({
       },
 
 });
+=======
+=======
+>>>>>>> Stashed changes
+        borderWidth: 1,
+        borderColor: 'gray',
+        zIndex: 9999, 
+    },
+    closeButton: {
+        position: 'absolute',
+        top: 5,
+        right: 5,
+        zIndex: 1, 
+    },
+<<<<<<< Updated upstream
+});
+>>>>>>> Stashed changes
+=======
+});
+>>>>>>> Stashed changes
