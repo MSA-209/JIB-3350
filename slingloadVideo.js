@@ -55,7 +55,7 @@ export function SlingloadVideo({ navigation, videoName, sequenceName }) {
               source={videoSource}
               style={styles.videoStyle}
               useNativeControls
-              resizeMode={Video.RESIZE_MODE_CONTAIN}
+              resizeMode="contain"
               onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
             />   
             </View>
