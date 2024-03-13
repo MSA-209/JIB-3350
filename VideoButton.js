@@ -74,7 +74,7 @@ const screen = route.name;
 const [showDescription, setShowDescription] = useState(false);
   const resolution = 9/16;
   const video = {link, id, description, title}; // create video item for playlist button
-  const videoRef = useRef(null); // Add this line
+  const videoRef = useRef(null);
 
   const showDesc = () => {
     setShowDescription(!showDescription);
@@ -87,7 +87,6 @@ const [showDescription, setShowDescription] = useState(false);
     setIsAdded(!isAdded);
   }
 
-  // Add these two functions
   const handleFullScreen = async () => {
     await videoRef.current.presentFullscreenPlayer();
   };
@@ -112,7 +111,7 @@ const [showDescription, setShowDescription] = useState(false);
         <View>
           <View style={{marginTop: 50, justifyContent: 'center', alignItems:'center'}}>
             <Video 
-              ref={videoRef} // Add this line
+              ref={videoRef}
               source={{ uri: link}}
               style={styles.videoStyle}
               useNativeControls

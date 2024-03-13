@@ -9,6 +9,7 @@ import {SlingloadVideo} from './slingloadVideo.js';
 import {SlingloadSequence} from './slingloadSequence.js';
 import ModelComp from './ModelComp';
 import { FontAwesome } from '@expo/vector-icons'; 
+import { useNavigation } from '@react-navigation/native';
 
 export function SlingloadScreen({ navigation, route }) {
   const screen = route.name
@@ -1078,12 +1079,12 @@ export function BotLateralC1Sequence({ navigation, route }) {
 
 
 
-const SlingloadDropdown = ({ navigation }) => {
+const SlingloadDropdown = () => {
   const [menuVisible, setMenuVisible] = useState(false);
 
   const openMenu = () => setMenuVisible(true);
   const closeMenu = () => setMenuVisible(false);
-
+  const navigation = useNavigation();
   return (
     <Menu
       visible={menuVisible}
