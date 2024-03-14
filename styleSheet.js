@@ -279,50 +279,84 @@ export const styles = StyleSheet.create({
         alignSelf: 'center', 
         zIndex: 1,
     },
+//slingloadSequence.js
     chevronButton: {
-        width:35, 
-        height: 35, 
+        width:30, 
+        height: 30, 
         borderRadius: 35, 
         backgroundColor: 'transparent', 
         borderWidth: 2, 
         alignItems:'center',
-    },  button: {
-        backgroundColor: 'blue',
-        borderRadius: 50,
-        width: 50,
-        height: 50,
-        alignItems: 'center',
-        justifyContent: 'center',
-      },
-      container3: {
-        alignItems: 'center',
+    },  
+    boxContainer: {
+        backgroundColor: 'rgba(34, 31, 32, 1)',
+        width: 350,
+        height: 'auto',
+        alignSelf: 'center', 
+        padding: 10,
+        marginTop: 50,
+        position: 'absolute',
+        borderTopLeftRadius: 10, 
+        borderTopRightRadius: 10,
+    },
+    buttonText3: {
+        color: 'white',
+        fontSize: 16,
+    },
+    infoBox: {
+        backgroundColor: 'rgba(34, 31, 32, 1)',
+        padding: 20,
         marginTop: 20,
-      },
-      button3: {
-        backgroundColor: 'blue',
-        padding: 10,
-        borderRadius: 5,
-      },
-      buttonText3: {
+        width: 350,
+        // borderBottomLeftRadius: 10,
+        // borderBottomRightRadius: 10,
+        height: 'auto',
+        zIndex: 2,
+        alignSelf: 'center',
+        padding: 20,
+        // position: 'absolute',
+        borderRadius: 10,
+    },
+    infoText: {
         color: 'white',
         fontSize: 16,
-      },
-      infoBox: {
-        backgroundColor: 'black',
-        padding: 10,
-        marginTop: 10,
-        borderRadius: 5,
-      },
-      infoText: {
-        color: 'white',
-        fontSize: 16,
-      },
-      // Model Component
-      ModelCompDirections:{
-            padding:5,
-            backgroundColor: '#ffcc01', 
-            borderRadius:8, 
-            alignSelf:'flex-start'
-      },
+        marginTop: 20,
+        
+    },
+    xBox: {
+        alignItems: 'center', 
+        width: 25, 
+        height: 25, 
+        margin: 3, 
+        borderWidth: 1,
+        borderRadius: 2,
+        borderColor: '#ffcc01',
+        marginBottom: 5, 
+    },
+    xStyle: {
+        alignSelf: 'center', 
+        fontSize: 20,
+        color: '#ffcc01',
+    },
+    imageBox: {
+        backgroundColor: '#1a3b5c',
+        padding: 15,
+        borderRadius: 10,
+        height: 'auto', 
+    },
+
+    inspectionBox: {
+        flexDirection: 'row', 
+        alignItems: 'stretch', 
+        marginTop: 20,
+        marginLeft: 15, 
+        marginRight: 15, 
+        padding: 20, 
+        gap: 0,
+        backgroundColor: 'rgba(173, 173, 173, 0.3)', 
+        borderRadius: 10, 
+        marginLeft: 20,
+    },
+
 
 });

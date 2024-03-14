@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useRef } from 'react';
 import { StyleSheet, View, Image, TouchableOpacity, Text, Linking, ScrollView , Alert, Button, Dimensions} from 'react-native';
 import { styles } from './styleSheet'; 
+import { FontAwesome } from '@expo/vector-icons'; 
 
 const imageSources = {
     "Placard" : [[ require('/assets/placard_Left_Top.png'), require('/assets/placard_Center_Top.png'), require('/assets/placard_Right_Top.png')],
@@ -67,27 +68,53 @@ const ModelComp = ({imageArray}) => {
         }
     } 
     return(
-        <View >
-            <View style={{borderBottomWidth: 3, borderBottomColor: "#ffcc01"}}>
-              <Image source={images[currentRow][currentCol]}
-                style={{
-                  width: 'auto',
-                  height: 230,
+        <View  style={styles.imageBox}>
+            <View>
+            <Image source={images[currentRow][currentCol]}
+            style={{
+                width: 'auto',
+                height: 350,
+                resizeMode: 'contain',
                 }}
-              />
+            />
             </View>
-            
-            <View style ={{ flexDirection: 'row', alignItems: 'center'}}>
-            <TouchableOpacity onPress={() => changeImage('Left')} style ={styles.ModelCompDirections}><Text>Left</Text></TouchableOpacity>
-            <View style ={{alignItems:"center"}}>
-            <TouchableOpacity onPress={() => changeImage('Up')} style ={styles.ModelCompDirections}><Text>Up</Text></TouchableOpacity>
-            <TouchableOpacity onPress={() => changeImage('Home')} style ={styles.ModelCompDirections}><Text>Home</Text></TouchableOpacity>
-            <TouchableOpacity onPress={() => changeImage('Down')} style ={styles.ModelCompDirections}><Text>Down</Text></TouchableOpacity>
+        <View>
+        <View style ={{alignItems: 'center', marginTop: 30, transform: [{ translateX: 100 }, { translateY: -10 }]}}>
+            <View>
+            <TouchableOpacity onPress={() => changeImage('Up')}>
+                <View>
+                    <FontAwesome name="arrow-up" size={25} color="#ffcc01"/>
+                </View>
+            </TouchableOpacity>
+
             </View>
-            <TouchableOpacity onPress={() => changeImage('Right')} style ={styles.ModelCompDirections}><Text>Right</Text></TouchableOpacity>
+            <View style={{flexDirection: 'row', gap :10, marginTop: 5, marginBottom: 5}}>
+            <TouchableOpacity onPress={() => changeImage('Left')}>
+                <View>
+                    <FontAwesome name="arrow-left" size={25} color="#ffcc01"/>
+                </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => changeImage('Home')}>
+                <View>
+                    <FontAwesome name="circle" size={25} color="#ffcc01"/>
+                </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => changeImage('Right')}>
+                <View>
+                    <FontAwesome name="arrow-right" size={25} color="#ffcc01"/>
+                </View>
+            </TouchableOpacity>
+            </View>
+            <View>
+            <TouchableOpacity onPress={() => changeImage('Down')}>
+                <View>
+                    <FontAwesome name="arrow-down" size={25} color="#ffcc01"/>
+                </View>
+            </TouchableOpacity>
             </View>
         </View>
-    )
-}
+    </View>
+    </View>
+)}
 
 export default ModelComp;
