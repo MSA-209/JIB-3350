@@ -2,7 +2,7 @@ import 'react-native-gesture-handler';
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Image, StyleSheet, View, TouchableOpacity, ScrollView, TextInput, FlatList, screen} from 'react-native';
 import 'react-native-svg'
-import { Card, Provider, Text, useTheme, Menu, Appbar, Divider, Button, TouchableWithoutFeedback} from 'react-native-paper';
+import { Card, Provider, Text, useTheme, Menu, Appbar,Divider, Button, TouchableWithoutFeedback} from 'react-native-paper';
 import { styles } from './styleSheet';
 import {SlingloadTitle} from './slingloadTitle.js';
 import {SlingloadVideo} from './slingloadVideo.js';
@@ -10,6 +10,7 @@ import {SlingloadSequence} from './slingloadSequence.js';
 import ModelComp from './ModelComp';
 import { FontAwesome } from '@expo/vector-icons'; 
 import { useNavigation } from '@react-navigation/native';
+import {SlingloadQuizScreen} from './slingloadQuiz.js';
 
 export function SlingloadScreen({ navigation, route }) {
   const screen = route.name
@@ -26,19 +27,19 @@ export function SlingloadScreen({ navigation, route }) {
             resizeMode:"contain"
             }}/>
         </View>       */}
+    
       <View style={{marginTop: -10, marginBottom: 8}}>
-        <View style={styles.headerTitleContainer}>
-          <View style={{left: '0%'}}>
+      <View style={{flexDirection: 'row', alignItems: 'center', backgroundColor: "#221f20", height: 45, borderTopWidth: 5, borderBottomWidth: 3, borderColor: "#ffcc01" }}>
+          <View style={{left: '0%', flex: 0.33}}>
             <SlingloadDropdown/>
         </View>
-          <View style={styles.titleTextBox}>
-            <Text style={styles.titleText} variant='headlineLarge'>{screen}</Text>
+          <View style={{alignSelf: 'center',flex: 0.33}}>
+          <Text style={{alignSelf: 'center', color:"#FFFFFF", fontSize: 20}} variant='headlineLarge'>Slingload Simulator</Text>
           </View>
         {/* don't remove the empty view container, it keep the title center */}
-        <View style={{ width: 40 }}></View> 
+        <View style={{ width: 40, flex: 0.33}}></View> 
       </View>
 
-      </View>
         <View style={{alignSelf: 'center', marginTop: 50}}>
           <TouchableOpacity onPress={() => navigation.navigate('Placard')}>
             <View style={styles.walkThrough}>
@@ -50,7 +51,19 @@ export function SlingloadScreen({ navigation, route }) {
               </View>
             </View>
           </TouchableOpacity>
+        <View style={{marginBottom: 30}}></View>
+        <TouchableOpacity onPress={() => navigation.navigate('Slingload Quiz')}>
+            <View style={styles.walkThrough}>
+              <View style={styles.innerBox}>
+                <Text style={styles.walkThroughText}>Taking Quiz</Text>
+              </View>
+              <View style={{paddingLeft: 11}}>
+                <FontAwesome name="chevron-right" size={16} color="#ffcc01" />
+              </View>
+            </View>
+          </TouchableOpacity>
       </View>
+    </View>
     </ScrollView>
   );
 }
@@ -147,7 +160,7 @@ export function ApexScreen({ navigation, route }) {
     <View style={{width: 40}}>
     </View>
   </View>
-      <SlingloadTitle title="Apex" navigation={navigation} videoName="Apex Video" sequenceName = "Apex Sequence" />
+      <SlingloadTitle title="APEX" navigation={navigation} videoName="Apex Video" sequenceName = "Apex Sequence" />
   </View>
 </ScrollView>  
   );
@@ -215,7 +228,7 @@ export function GrabhookScreen({ navigation, route }) {
     <View style={{width: 40}}>
     </View>
   </View>
-      <SlingloadTitle title="Grabhook" navigation={navigation} videoName="Grabhook Video" sequenceName = "Grabhook Sequence" />
+      <SlingloadTitle title="GRABHOOK" navigation={navigation} videoName="Grabhook Video" sequenceName = "Grabhook Sequence" />
   </View>
 </ScrollView>  
   );
@@ -284,7 +297,7 @@ export function ChainClevisScreen({ navigation, route }) {
     <View style={{width: 40}}>
     </View>
   </View>
-      <SlingloadTitle title="Chain-Clevis" navigation={navigation} videoName="ChainClevis Video" sequenceName = "ChainClevis Sequence" />
+      <SlingloadTitle title="CHAIN-CLEVIS" navigation={navigation} videoName="ChainClevis Video" sequenceName = "ChainClevis Sequence" />
   </View>
 </ScrollView>  
   );
@@ -355,7 +368,7 @@ export function MediumClevisScreen({ navigation, route }) {
     <View style={{width: 40}}>
     </View>
   </View>
-      <SlingloadTitle title="Medium Clevis" navigation={navigation} videoName="MediumClevis Video" sequenceName = "MediumClevis Sequence" />
+      <SlingloadTitle title="MEDIUM CLEVIS" navigation={navigation} videoName="MediumClevis Video" sequenceName = "MediumClevis Sequence" />
   </View>
 </ScrollView>  
   );
@@ -424,7 +437,7 @@ export function Suspension1Screen({ navigation, route }) {
     <View style={{width: 40}}>
     </View>
   </View>
-      <SlingloadTitle title="Suspension Strap 1" navigation={navigation} videoName="Suspension1 Video" sequenceName = "Suspension1 Sequence" />
+      <SlingloadTitle title="SUSPENSION STRAP 1" navigation={navigation} videoName="Suspension1 Video" sequenceName = "Suspension1 Sequence" />
   </View>
 </ScrollView>  
   );
@@ -491,7 +504,7 @@ export function Suspension2Screen({ navigation, route }) {
     <View style={{width: 40}}>
     </View>
   </View>
-      <SlingloadTitle title="Suspension Strap 2" navigation={navigation} videoName="Suspension2 Video" sequenceName = "Suspension2 Sequence" />
+      <SlingloadTitle title="SUSPENSION STRAP 2" navigation={navigation} videoName="Suspension2 Video" sequenceName = "Suspension2 Sequence" />
   </View>
 </ScrollView>  
   );
@@ -558,7 +571,7 @@ export function Suspension3Screen({ navigation, route }) {
     <View style={{width: 40}}>
     </View>
   </View>
-      <SlingloadTitle title="Suspension Strap 3" navigation={navigation} videoName="Suspension3 Video" sequenceName = "Suspension3 Sequence" />
+      <SlingloadTitle title="SUSPENSION STRAP 3" navigation={navigation} videoName="Suspension3 Video" sequenceName = "Suspension3 Sequence" />
   </View>
 </ScrollView>  
   );
@@ -624,7 +637,7 @@ export function Suspension4Screen({ navigation, route }) {
     <View style={{width: 40}}>
     </View>
   </View>
-      <SlingloadTitle title="Suspension Strap 4" navigation={navigation} videoName="Suspension4 Video" sequenceName = "Suspension4 Sequence" />
+      <SlingloadTitle title="SUSPENSION STRAP 4" navigation={navigation} videoName="Suspension4 Video" sequenceName = "Suspension4 Sequence" />
   </View>
 </ScrollView>  
   );
@@ -690,7 +703,7 @@ export function SusStrapOrderScreen({ navigation, route }) {
     <View style={{width: 40}}>
     </View>
   </View>
-      <SlingloadTitle title="Sus. Strap Order" navigation={navigation} videoName="SusStrapOrder Video" sequenceName = "SusStrapOrder Sequence" />
+      <SlingloadTitle title="SUS. STRAP ORDER" navigation={navigation} videoName="SusStrapOrder Video" sequenceName = "SusStrapOrder Sequence" />
   </View>
 </ScrollView>  
   );
@@ -757,7 +770,7 @@ export function StrapSideScreen({ navigation, route }) {
     <View style={{width: 40}}>
     </View>
   </View>
-      <SlingloadTitle title="188 in Strap Side 1" navigation={navigation} videoName="StrapSide Video" sequenceName = "StrapSide Sequence" />
+      <SlingloadTitle title="188 IN STRAP SIDE 1" navigation={navigation} videoName="StrapSide Video" sequenceName = "StrapSide Sequence" />
   </View>
 </ScrollView>  
   );
@@ -888,7 +901,7 @@ export function TopLateralC1Screen({ navigation, route }) {
     <View style={{width: 40}}>
     </View>
   </View>
-      <SlingloadTitle title="Top Lateral C1" navigation={navigation} videoName="TopLateralC1 Video" sequenceName = "TopLateralC1 Sequence" />
+      <SlingloadTitle title="TOP LATERAL C1" navigation={navigation} videoName="TopLateralC1 Video" sequenceName = "TopLateralC1 Sequence" />
   </View>
 </ScrollView>  
   );
@@ -956,7 +969,7 @@ export function MidLateralC1Screen({ navigation, route }) {
     <View style={{width: 40}}>
     </View>
   </View>
-      <SlingloadTitle title="Middle Lateral C1" navigation={navigation} videoName="MidLateralC1 Video" sequenceName = "MidLateralC1 Sequence" />
+      <SlingloadTitle title="MIDDLE LATERAL C1" navigation={navigation} videoName="MidLateralC1 Video" sequenceName = "MidLateralC1 Sequence" />
   </View>
 </ScrollView>  
   );
@@ -1024,7 +1037,7 @@ export function BotLateralC1Screen({ navigation, route }) {
     <View style={{width: 40}}>
     </View>
   </View>
-      <SlingloadTitle title="Bottom Lateral C1" navigation={navigation} videoName="BotLateralC1 Video" sequenceName = "BotLateralC1 Sequence" />
+      <SlingloadTitle title="BOTTOM LATERAL C1" navigation={navigation} videoName="BotLateralC1 Video" sequenceName = "BotLateralC1 Sequence" />
   </View>
 </ScrollView>  
   );

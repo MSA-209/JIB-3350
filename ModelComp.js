@@ -1,7 +1,9 @@
 import React, { useState, useCallback, useRef } from 'react';
-import { StyleSheet, View, Image, TouchableOpacity, Text, Linking, ScrollView , Alert, Button, Dimensions} from 'react-native';
+import { StyleSheet, View, Image,TouchableOpacity, Text, Linking, ScrollView , Alert, Button, Dimensions} from 'react-native';
 import { styles } from './styleSheet'; 
 import { FontAwesome } from '@expo/vector-icons'; 
+const screenDimension = Dimensions.get("screen");
+const isPhone = screenDimension.width < 1000; // Adjust the threshold as needed
 
 const imageSources = {
     "Placard" : [[ require('/assets/placard_Left_Top.png'), require('/assets/placard_Center_Top.png'), require('/assets/placard_Right_Top.png')],
@@ -68,22 +70,24 @@ const ModelComp = ({imageArray}) => {
         }
     } 
     return(
-        <View  style={styles.imageBox}>
-            <View>
+        <View style={styles.imageBox}>
+            <View style= {styles.objectSize}>
             <Image source={images[currentRow][currentCol]}
             style={{
                 width: 'auto',
-                height: 350,
+                height: 450,
                 resizeMode: 'contain',
+                marginTop: 50,
+                marginBottom: 10
                 }}
             />
             </View>
         <View>
-        <View style ={{alignItems: 'center', marginTop: 30, transform: [{ translateX: 100 }, { translateY: -10 }]}}>
+        <View style ={styles.navigationButton}>
             <View>
             <TouchableOpacity onPress={() => changeImage('Up')}>
                 <View>
-                    <FontAwesome name="arrow-up" size={25} color="#ffcc01"/>
+                    <FontAwesome name="arrow-up" size={isPhone? 25 : 40} color='#d2d2d2'/>
                 </View>
             </TouchableOpacity>
 
@@ -91,24 +95,24 @@ const ModelComp = ({imageArray}) => {
             <View style={{flexDirection: 'row', gap :10, marginTop: 5, marginBottom: 5}}>
             <TouchableOpacity onPress={() => changeImage('Left')}>
                 <View>
-                    <FontAwesome name="arrow-left" size={25} color="#ffcc01"/>
+                    <FontAwesome name="arrow-left" size={isPhone? 25 : 40} color='#d2d2d2'/>
                 </View>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => changeImage('Home')}>
                 <View>
-                    <FontAwesome name="circle" size={25} color="#ffcc01"/>
+                    <FontAwesome name="circle" size={isPhone? 25 : 40} color='#d2d2d2'/>
                 </View>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => changeImage('Right')}>
                 <View>
-                    <FontAwesome name="arrow-right" size={25} color="#ffcc01"/>
+                    <FontAwesome name="arrow-right" size={isPhone? 25 : 40} color='#d2d2d2'/>
                 </View>
             </TouchableOpacity>
             </View>
             <View>
             <TouchableOpacity onPress={() => changeImage('Down')}>
                 <View>
-                    <FontAwesome name="arrow-down" size={25} color="#ffcc01"/>
+                    <FontAwesome name="arrow-down" size={isPhone? 25 : 40} color='#d2d2d2'/>
                 </View>
             </TouchableOpacity>
             </View>
