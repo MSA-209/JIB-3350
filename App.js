@@ -61,6 +61,7 @@ MediumClevisVideo, Suspension1Screen,Suspension1Video, Suspension1Sequence, Susp
 SusStrapOrderScreen,SusStrapOrderSequence,SusStrapOrderVideo, 
 TopLateralC1Screen, TopLateralC1Sequence, TopLateralC1Video, MidLateralC1Screen, MidLateralC1Sequence, MidLateralC1Video,
 BotLateralC1Screen, BotLateralC1Sequence, BotLateralC1Video, StrapSideScreen, StrapSideSequence, StrapSideVideo} from './slingload.js';
+import {SlingloadQuizScreen} from './slingloadQuiz.js';
 
 // import {FeedbackScreen} from './feedbackScreen.js';
 //version output
@@ -240,7 +241,7 @@ function CustomNavigationBar({ navigation, back, route, isDarkMode, toggleDarkMo
           resizeMode:"contain"
           }}/>
       </TouchableRipple>}
-      {(screen == ("Air Assault Program") || screen == ("Air Assault Program: Phase I") || screen == ("Air Assault Program: Phase II") || screen == ("Slingload Integration")) && <TouchableRipple
+      {(screen == ("Air Assault Program") || screen == ("Air Assault Program: Phase I") || screen == ("Air Assault Program: Phase II")) && <TouchableRipple
         onPress={() => navigation.navigate('Home')}
         style={{
           height: 75,
@@ -303,7 +304,27 @@ function CustomNavigationBar({ navigation, back, route, isDarkMode, toggleDarkMo
           resizeMode:"contain"
           }}/>
       </TouchableRipple>}
-
+      {(screen == "Slingload Integration" || screen == "Slingload Quiz" || screen == "Placard" || screen == "Apex") && <TouchableRipple
+        onPress={() => navigation.navigate('Air Assault Program')}
+        style={{
+          height: 75,
+          backgroundColor: "#221f20",
+          borderColor: "#221f20",
+          justifyContent: "flex-end",
+          borderRadius: 0,
+          borderBottomWidth: 32,
+          borderBottomLeftRadius: 32,
+          borderBottomRightRadius: 32,
+        }}>
+        <Image source={require("./assets/AssaultBadgeClear.png")} style={{
+          marginLeft: 10,
+          marginRight: 10,
+          marginBottom: -20,
+          width: 100,
+          height: 45,
+          resizeMode:"contain"
+          }}/>
+      </TouchableRipple>}
     </Appbar.Header>
   );
 }  
@@ -1021,6 +1042,7 @@ function HomeStackScreen({navigation, route}) {
       <Stack.Screen name='BotLateralC1' component={BotLateralC1Screen} />
       <Stack.Screen name='BotLateralC1 Video' component={BotLateralC1Video} />
       <Stack.Screen name='BotLateralC1 Sequence' component={BotLateralC1Sequence} />
+      <Stack.Screen name="Slingload Quiz" component={SlingloadQuizScreen} />
     </Stack.Navigator>
     </AddedVideosContext.Provider>
   );
