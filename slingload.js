@@ -55,7 +55,7 @@ export function SlingloadScreen({ navigation, route }) {
         <TouchableOpacity onPress={() => navigation.navigate('Slingload Quiz')}>
             <View style={styles.walkThrough}>
               <View style={styles.innerBox}>
-                <Text style={styles.walkThroughText}>Taking Quiz</Text>
+                <Text style={styles.walkThroughText}>Practical Tests</Text>
               </View>
               <View style={{paddingLeft: 11}}>
                 <FontAwesome name="chevron-right" size={16} color="#ffcc01" />
