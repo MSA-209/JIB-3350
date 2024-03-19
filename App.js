@@ -61,7 +61,7 @@ MediumClevisVideo, Suspension1Screen,Suspension1Video, Suspension1Sequence, Susp
 SusStrapOrderScreen,SusStrapOrderSequence,SusStrapOrderVideo, 
 TopLateralC1Screen, TopLateralC1Sequence, TopLateralC1Video, MidLateralC1Screen, MidLateralC1Sequence, MidLateralC1Video,
 BotLateralC1Screen, BotLateralC1Sequence, BotLateralC1Video, StrapSideScreen, StrapSideSequence, StrapSideVideo} from './slingload.js';
-import {SlingloadQuizScreen} from './slingloadQuiz.js';
+import {SlingloadQuizScreen, UntimedQuizScreen, endQuizScreen} from './slingloadQuiz.js';
 
 // import {FeedbackScreen} from './feedbackScreen.js';
 //version output
@@ -1043,6 +1043,8 @@ function HomeStackScreen({navigation, route}) {
       <Stack.Screen name='BotLateralC1 Video' component={BotLateralC1Video} />
       <Stack.Screen name='BotLateralC1 Sequence' component={BotLateralC1Sequence} />
       <Stack.Screen name="Slingload Quiz" component={SlingloadQuizScreen} />
+      <Stack.Screen name="Untimed Quiz" component={UntimedQuizScreen} />
+      <Stack.Screen name="End Quiz" component={endQuizScreen} />
     </Stack.Navigator>
     </AddedVideosContext.Provider>
   );
