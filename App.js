@@ -61,7 +61,7 @@ MediumClevisVideo, Suspension1Screen,Suspension1Video, Suspension1Sequence, Susp
 SusStrapOrderScreen,SusStrapOrderSequence,SusStrapOrderVideo, 
 TopLateralC1Screen, TopLateralC1Sequence, TopLateralC1Video, MidLateralC1Screen, MidLateralC1Sequence, MidLateralC1Video,
 BotLateralC1Screen, BotLateralC1Sequence, BotLateralC1Video, StrapSideScreen, StrapSideSequence, StrapSideVideo} from './slingload.js';
-import {SlingloadQuizScreen, UntimedQuizScreen, endQuizScreen} from './slingloadQuiz.js';
+import {SlingloadQuizScreen, UntimedQuizScreen, EndQuizScreen, QuizScoresScreen} from './slingloadQuiz.js';
 
 // import {FeedbackScreen} from './feedbackScreen.js';
 //version output
@@ -304,7 +304,7 @@ function CustomNavigationBar({ navigation, back, route, isDarkMode, toggleDarkMo
           resizeMode:"contain"
           }}/>
       </TouchableRipple>}
-      {(screen == "Slingload Integration" || screen == "Slingload Quiz" || screen == "Placard" || screen == "Apex") && <TouchableRipple
+      {(screen == "Slingload Integration" || screen == "Slingload Quiz" || screen == "Placard" || screen == "Apex" || screen == "Untimed Quiz" || screen == "Quiz Scores") && <TouchableRipple
         onPress={() => navigation.navigate('Air Assault Program')}
         style={{
           height: 75,
@@ -1044,7 +1044,8 @@ function HomeStackScreen({navigation, route}) {
       <Stack.Screen name='BotLateralC1 Sequence' component={BotLateralC1Sequence} />
       <Stack.Screen name="Slingload Quiz" component={SlingloadQuizScreen} />
       <Stack.Screen name="Untimed Quiz" component={UntimedQuizScreen} />
-      <Stack.Screen name="End Quiz" component={endQuizScreen} />
+      <Stack.Screen name="End Quiz" component={EndQuizScreen} />
+      <Stack.Screen name="Quiz Scores" component={QuizScoresScreen} />
     </Stack.Navigator>
     </AddedVideosContext.Provider>
   );
