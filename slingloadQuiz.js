@@ -53,7 +53,20 @@ export function UntimedQuizScreen({ navigation, route }) {
     const [currentItem, setCurrentItem] = useState('placard');
     const [deficiencyTitle, setDeficiencyTitle] = useState('Deficiency');
     const [nextTitle, setNextTitle] = useState('Next');
+    const [elapsedTime, setElapsedTime] = useState(0);
+    const [running, setRunning] = useState(true);
     //iterates through items when deficiency/next is pressed and if last item is pressed goes to end screen
+    useEffect(() => {
+        let interval;
+        if (running) {
+            interval = setInterval(() => {
+                setElapsedTime(prevTime => prevTime + 1);
+            }, 1000);
+        } else {
+            clearInterval(interval);
+        }
+        return () => clearInterval(interval);
+    }, [running]);
     useEffect(() => {
         if (items[currentItem] !== null) {
             const itemKeys = Object.keys(items);
@@ -102,6 +115,9 @@ export function UntimedQuizScreen({ navigation, route }) {
     const handleNextPress = () => {
         setItems(prevItems => ({ ...prevItems, [currentItem]: false }));
     };
+    const toggleStopwatch = () => {
+        setRunning(prevRunning => !prevRunning);
+    }
     return (
         <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}> 
             <View style={{marginTop: -9, marginBottom: 8}}>
@@ -120,11 +136,18 @@ export function UntimedQuizScreen({ navigation, route }) {
                     <Button title={deficiencyTitle} color="red" onPress={handleDeficiencyPress} />
                     <Button title={nextTitle} color="green" onPress={handleNextPress} />
                 </View>
+                <View style={{alignItems: 'center'}}>
+                    <Text style={{fontSize: 20, fontWeight: 'bold'}}>{formatTime(elapsedTime)}</Text>
+                </View>
             </View>
         </ScrollView>
     );
 }
-
+const formatTime = (timeInSeconds) => {
+    const minutes = Math.floor(timeInSeconds / 60);
+    const seconds = timeInSeconds % 60;
+    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+};
 
 
 export function EndQuizScreen({ navigation, route }) {
