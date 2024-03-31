@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { Image, StyleSheet, View, TouchableOpacity, Menu, ScrollView, TextInput, FlatList, screen, Button, Dimensions} from 'react-native';
+import { Image, StyleSheet, View, TouchableOpacity, ScrollView, TextInput, FlatList, screen, Button, Dimensions} from 'react-native';
 import 'react-native-svg'
 import { Card, Provider, Text, useTheme} from 'react-native-paper';
 import { styles } from './styleSheet';
@@ -9,7 +9,6 @@ import { LineChart } from 'react-native-chart-kit';
 import SlingloadDropdown from './slingload';
 const screenDimension = Dimensions.get("screen");
 const isPhone = screenDimension.width < 900;
-
 
 const deficientImages = [
                        {key: 'Apex' , image: require('./assets/DeficientApex_CotterPin.png'),trueValue: true, userAnswer: null },
@@ -43,7 +42,6 @@ const normalImages = [{key: 'Apex' ,image: require('./assets/Apex_Bottom.png'),t
                        {key: 'Suspension 2' ,image: require('./assets/Suspension2_Center_Top.png'),trueValue: false, userAnswer: null },
                        {key: 'Suspension Strap Order' ,image: require('./assets/SusStrapOrder_Center_Top.png'),trueValue: false, userAnswer: null },
                        {key: 'Top Lateral C1' ,image: require('./assets/TopLateralC1_Center.png'),trueValue: false, userAnswer: null }]
-
 
 function shuffleArray(array){
     for (let i = array.length - 1; i > 0; i--) {
@@ -110,7 +108,6 @@ export function SlingloadQuizScreen({ navigation, route }) {
 export function UntimedQuizScreen({ navigation, route }) {
 
 
-
     const [QuizImages, setQuizImages] = useState(() => {
         let images = [];
         let imagesLength = Math.floor(Math.random() * (13)) + 4;
@@ -127,11 +124,7 @@ export function UntimedQuizScreen({ navigation, route }) {
         }
         return images;
     });
-
     console.log(QuizImages)
-    const theme = useTheme();
-
-
     const theme = useTheme();
 
 
@@ -148,9 +141,7 @@ export function UntimedQuizScreen({ navigation, route }) {
     const [nextTitle, setNextTitle] = useState('Next');
     const [elapsedTime, setElapsedTime] = useState(0);
     const [running, setRunning] = useState(true);
-
     const [currentArrayIndex, setCurrentArrayIndex] = useState(0)
-
     //iterates through items when deficiency/next is pressed and if last item is pressed goes to end screen
     useEffect(() => {
         let interval;
@@ -163,7 +154,6 @@ export function UntimedQuizScreen({ navigation, route }) {
         }
         return () => clearInterval(interval);
     }, [running]);
-
     const handleDeficiencyPress = () => {
         setItems(prevItems => {
             const updatedItems = { ...prevItems };
@@ -187,7 +177,6 @@ export function UntimedQuizScreen({ navigation, route }) {
             setCurrentItem(itemKeys[currentIndex + 1]);
         } else {
             navigation.navigate('End Quiz');
-
         }
     }, [currentArrayIndex]);
     
@@ -205,11 +194,9 @@ export function UntimedQuizScreen({ navigation, route }) {
     }, [items, currentItem]);
     const handleLeftPress = () => {
         const itemKeys = Object.keys(items);
-
         if (currentArrayIndex > 0) {
             setCurrentItem(itemKeys[currentArrayIndex - 1]);
             setCurrentArrayIndex(prevIndex => prevIndex - 1);
-
 
         }
         console.log(itemKeys[currentArrayIndex])
@@ -245,31 +232,6 @@ export function UntimedQuizScreen({ navigation, route }) {
     const handleItemClick = (element) => {
       setCurrentState(element);
     };
-
-    const toggleStopwatch = () => {
-        setRunning(prevRunning => !prevRunning);
-    }
-    const [menuVisible, setMenuVisible] = useState(false);
-
-    const handleHamburgerClick = () => {
-      setMenuVisible(!menuVisible);
-    };
-    const elements = ['Element 1', 'Element 2', 'Element 3', 'Element 4', 'Element 5', 'Element 6'];
-
-    // Initialize result array to store mark colors
-    const initialResults = Array(elements.length).fill('unmarked');
-    const [result, setResult] = useState(initialResults);
-
-    const initialButtonState = Array(elements.length).fill('unmarked');
-    const [buttonStates, setButtonStates] = useState(initialButtonState);
-  
-    // Initialize current state to first element
-    const [currentState, setCurrentState] = useState(elements[0]);
-  
-    const handleItemClick = (element) => {
-      setCurrentState(element);
-    };
-
   
     const handleButtonClick = (buttonType) => {
       const currentIndex = elements.indexOf(currentState);
