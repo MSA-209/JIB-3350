@@ -1,11 +1,14 @@
 import 'react-native-gesture-handler';
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { Image, StyleSheet, View, TouchableOpacity, ScrollView, TextInput, FlatList, screen, Button, Dimensions} from 'react-native';
+import { Image, StyleSheet, View, TouchableOpacity, Menu, ScrollView, TextInput, FlatList, screen, Button, Dimensions} from 'react-native';
 import 'react-native-svg'
 import { Card, Provider, Text, useTheme} from 'react-native-paper';
 import { styles } from './styleSheet';
 import { FontAwesome } from '@expo/vector-icons'; 
 import { LineChart } from 'react-native-chart-kit';
+import SlingloadDropdown from './slingload';
+const screenDimension = Dimensions.get("screen");
+const isPhone = screenDimension.width < 900;
 
 const deficientImages = [require('./assets/DeficientApex_CotterPin.png'),require('./assets/DeficientApex_InvertedNut.png'),require('./assets/DeficientApex_NutMissing.png'),
                         require('./assets/DeficientApex_SpacerMissing.png'),require('./assets/DeficientBag1.png'),require('./assets/DeficientBag2.png'),
@@ -27,6 +30,7 @@ function shuffleArray(array){
     }
 }
 export function SlingloadQuizScreen({ navigation, route }) {
+    const theme = useTheme();
     return (
     <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}> 
         <View style={{marginTop: -9, marginBottom: 8}}>
@@ -35,32 +39,53 @@ export function SlingloadQuizScreen({ navigation, route }) {
                 <Text style={{alignSelf: 'center', color:"#FFFFFF", fontSize: 20}} variant='headlineLarge'>QUIZZES</Text>
                 </View>
             </View>
-            <TouchableOpacity onPress={() => navigation.navigate('Untimed Quiz')}>
-            <View style={styles.walkThrough}>
-              <View style={styles.innerBox}>
-                <Text style={styles.walkThroughText}>Untimed Tests</Text>
-              </View>
-              <View style={{paddingLeft: 11}}>
-                <FontAwesome name="chevron-right" size={16} color="#ffcc01" />
-              </View>
+
+            <View>
+            <Text style={[styles.inspectorTitle, {marginTop: isPhone? 15 : 30, marginBottom: isPhone? 15 : 30}]}>PRACTICAL TEST</Text>
             </View>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Quiz Scores')}>
-            <View style={styles.walkThrough}>
-              <View style={styles.innerBox}>
-                <Text style={styles.walkThroughText}>Your scores</Text>
-              </View>
-              <View style={{paddingLeft: 11}}>
-                <FontAwesome name="chevron-right" size={16} color="#ffcc01" />
-              </View>
+        <View style={styles.slTestR1}>
+            <View style={styles.slTestR1C1}>
+            <View>
+                <Text style={{fontSize: isPhone? 20 : 35, alignSelf: 'center', marginBottom: 10}}>A-22 Cargo Bag</Text>
+                <View style={[styles.slTestR1B, {backgroundColor: theme.colors.backdrop, borderColor: theme.colors.onSurfaceVariant}]}>
+                    <Image source={require("./assets/Bag 1.png")} 
+                        style={{
+                        width: 'auto',
+                        height: isPhone? 180 : 250,
+                        resizeMode: 'contain',
+                        }}/>
+                </View>
+
             </View>
-          </TouchableOpacity>
+            </View>
+            <View style={[styles.slTestR1VerticalBar, {borderColor: theme.colors.onSurfaceVariant}]}>
+            </View>
+            <View style={styles.slTestR1C2}>
+                <TouchableOpacity onPress={() => navigation.navigate('Untimed Quiz')}>
+                    <View style={[styles.basicButton, {backgroundColor: theme.colors.backdrop, borderColor: theme.colors.onSurfaceVariant}]}>
+                        <Text style={styles.slButtonText}>Untimed Tests</Text>
+                    </View>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('Untimed Quiz')}>
+                    <View style={[styles.basicButton, {backgroundColor: theme.colors.backdrop, borderColor: theme.colors.onSurfaceVariant}]}>
+                        <Text style={styles.slButtonText}>Timed Tests</Text>
+                    </View>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('Quiz Scores')}>
+                    <View style={[styles.basicButton, {backgroundColor: theme.colors.backdrop, borderColor: theme.colors.inverseSurface}]}>
+                        <Text style={styles.slButtonText}>Your scores</Text>
+                    </View>
+                </TouchableOpacity>
+            </View>
+        </View>
+
         </View>
     </ScrollView>
     );
 }
 
 export function UntimedQuizScreen({ navigation, route }) {
+
 
     const QuizImages = []
     if (QuizImages.length !== 0){
@@ -83,6 +108,9 @@ export function UntimedQuizScreen({ navigation, route }) {
     console.log(deficientImages)
     console.log(QuizImages)
 
+    const theme = useTheme();
+
+
     //truth table for items should match with pictures
     const [items, setItems] = useState({
         placard: null,
@@ -94,7 +122,20 @@ export function UntimedQuizScreen({ navigation, route }) {
     const [currentItem, setCurrentItem] = useState('placard');
     const [deficiencyTitle, setDeficiencyTitle] = useState('Deficiency');
     const [nextTitle, setNextTitle] = useState('Next');
+    const [elapsedTime, setElapsedTime] = useState(0);
+    const [running, setRunning] = useState(true);
     //iterates through items when deficiency/next is pressed and if last item is pressed goes to end screen
+    useEffect(() => {
+        let interval;
+        if (running) {
+            interval = setInterval(() => {
+                setElapsedTime(prevTime => prevTime + 1);
+            }, 1000);
+        } else {
+            clearInterval(interval);
+        }
+        return () => clearInterval(interval);
+    }, [running]);
     useEffect(() => {
         if (items[currentItem] !== null) {
             const itemKeys = Object.keys(items);
@@ -129,6 +170,7 @@ export function UntimedQuizScreen({ navigation, route }) {
         const currentIndex = itemKeys.indexOf(currentItem);
         if (currentIndex > 0) {
             setCurrentItem(itemKeys[currentIndex - 1]);
+
         }
         console.log(itemKeys[currentIndex])
     };
@@ -143,6 +185,63 @@ export function UntimedQuizScreen({ navigation, route }) {
     const handleNextPress = () => {
         setItems(prevItems => ({ ...prevItems, [currentItem]: false }));
     };
+    const toggleStopwatch = () => {
+        setRunning(prevRunning => !prevRunning);
+    }
+    const [menuVisible, setMenuVisible] = useState(false);
+
+    const handleHamburgerClick = () => {
+      setMenuVisible(!menuVisible);
+    };
+    const elements = ['Element 1', 'Element 2', 'Element 3', 'Element 4', 'Element 5', 'Element 6'];
+
+    // Initialize result array to store mark colors
+    const initialResults = Array(elements.length).fill('unmarked');
+    const [result, setResult] = useState(initialResults);
+
+    const initialButtonState = Array(elements.length).fill('unmarked');
+    const [buttonStates, setButtonStates] = useState(initialButtonState);
+  
+    // Initialize current state to first element
+    const [currentState, setCurrentState] = useState(elements[0]);
+  
+    const handleItemClick = (element) => {
+      setCurrentState(element);
+    };
+  
+    const handleButtonClick = (buttonType) => {
+      const currentIndex = elements.indexOf(currentState);
+      if (buttonType === 'unmark') {
+        // Reset mark color for current element
+        const updatedResult = [...result];
+        updatedResult[currentIndex] = 'unmarked';
+        setResult(updatedResult);
+  
+        // Restore buttons to original state
+        const updatedButtonStates = [...buttonStates];
+        updatedButtonStates[currentIndex] = buttonType;
+        setButtonStates(updatedButtonStates);
+      } else if (currentIndex < elements.length) {
+        // Toggle mark color for current element
+        const updatedResult = [...result];
+        updatedResult[currentIndex] = buttonType === 'deficiency' ? 'red' : 'green';
+        setResult(updatedResult);
+  
+        // Toggle button state for current element
+        const updatedButtonStates = [...buttonStates];
+        updatedButtonStates[currentIndex] = buttonType === 'deficiency' ? 'deficiency' : 'unmark';
+            if (buttonType === 'unmark') {
+                        // Reset mark color for current element
+            updatedResult[currentIndex] = 'unmarked';
+            setResult(updatedResult);
+            }
+        // setButtonStates(updatedButtonStates);
+  
+        // Move to next element
+        setCurrentState(elements[currentIndex + 1]);
+      }
+    };
+  
     return (
         
         <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}> 
@@ -153,21 +252,98 @@ export function UntimedQuizScreen({ navigation, route }) {
                         <Text style={{alignSelf: 'center', color:"#FFFFFF", fontSize: 20}} variant='headlineLarge'>Untimed Test</Text>
                     </View>
                 </View>
-                <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                    <TouchableOpacity onPress={handleLeftPress}>
-                        <FontAwesome name="chevron-left" size={16} color="#ffcc01" />
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={handleRightPress}>
-                        <FontAwesome name="chevron-right" size={16} color="#ffcc01" />
-                    </TouchableOpacity>
-                    <Button title={deficiencyTitle} color="red" onPress={handleDeficiencyPress} />
-                    <Button title={nextTitle} color="green" onPress={handleNextPress} />
+
+                <View style={{flexDirection: 'row', justifyContent: 'space-between', backgroundColor: theme.colors.backdrop, height: '100vh', width: '100wh'}}>
+                    <View style={[styles.untimedTestC1, {alignItems: 'center'}]}>
+                        <View style={{alignItems: 'center'}}>
+                            <Text style={styles.timer}>{formatTime(elapsedTime)}</Text>
+                        </View>
+                        <View style={[styles.deficiencyButton]}>
+                            <TouchableOpacity onPress={handleDeficiencyPress}>
+                                <Text style={{fontSize: isPhone? 20 : 35, color: '#E8E2D9'}}>{deficiencyTitle}</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={[styles.nextUntimedTestButton]}>
+                            <TouchableOpacity onPress={handleNextPress}>
+                                <Text style={{fontSize: isPhone? 20 : 35, color: '#E8E2D9'}}>{nextTitle}</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={[styles.endTestButton]}>
+                            <TouchableOpacity onPress={handleNextPress}>
+                                <Text style={{fontSize: isPhone? 18 : 22, color: '#E8E2D9'}}>End Test</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    <View style={styles.untimedTestC2}>
+                    
+                        <TouchableOpacity onPress={handleLeftPress}>
+                            <FontAwesome name="chevron-left" size={16} color="#ffcc01" />
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={handleRightPress}>
+                            <FontAwesome name="chevron-right" size={16} color="#ffcc01" />
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={handleHamburgerClick}>
+                            <FontAwesome name="bars" size={isPhone? 24 : 50} color="black" />
+                        </TouchableOpacity>
+
+<View style={{ flexDirection: 'column', flex: isPhone? 1 : 0.3, width: isPhone? 'auto' : 420, marginTop: isPhone? 5 : -15, marginLeft: isPhone? 5 : '60%'}}>
+      {/* Menu box */}
+        {menuVisible && (<View style={{justifyContent: 'flex-end', backgroundColor: 'rgba(0, 0, 0, 0.7)', width: 'auto', paddingLeft: isPhone? 'none' : 25}}>
+        {/* Menu items */}
+        <View style={{backgroundColor: theme.colors.backdrop, marginTop: isPhone? 10: -70, height: isPhone? 'auto': 100, padding: isPhone? 1 : 15, width: isPhone? 150 : 420, justifyContent: 'center', marginLeft: isPhone? 'auto' : -25, marginBottom: isPhone? 5 : -25}}>
+                <Text style={{marginLeft: isPhone? 'auto' : 45, zIndex: 3, color: '#E8E2D9', fontSize: isPhone? 20 : 30, marginBottom: isPhone? 5 : 15}}>SECTION MENU</Text>
+            </View>
+        {elements.map((element, index) => (
+          <TouchableOpacity key={index} onPress={() => handleItemClick(element)} style={{ padding: 10, flexDirection: 'row'}}>
+
+            <View style={{ width: 300, height: 55, borderRadius: 10, borderWidth: 3, borderColor: 'rgba(232, 226, 217, 0.4)', justifyContent: 'center', margin: 5,}}>
+            {result[index] === 'red' && (
+                <View style={{justifyContent: 'center', marginRight: isPhone? 5 : 25, marginLeft: isPhone? 5 : 20}}>
+                <Text style={{color: 'red', fontSize: isPhone? 18 : 30, fontWeight: 600}}>X</Text>
+                </View>
+            //   <FontAwesome name="check" size={16} color="red" style={{ marginLeft: 10 , backgroundColor: 'red'}} />
+            )}
+            <View style={{justifyContent: 'center', marginLeft: isPhone? 5 : 20, marginRight: isPhone? 5 : 25}}>
+            {result[index] === 'green' && (
+                <View style={{backgroundColor: 'green', width: 25, height: 25, borderRadius: 25}}></View>
+            //   <FontAwesome name="check" size={16} color="green" style={{ marginLeft: 10 }} />
+            )}
+            </View>
+            <View style={{marginLeft: 60, position: 'absolute', paddingVertical: 2}}>
+                <Text style={{fontSize: isPhone? 18 : 30, color: '#E8E2D9'}}>{element}</Text>
+            </View>
+            </View>
+
+          </TouchableOpacity>
+        ))}
+      </View>
+        )}
+      {/* Buttons to toggle item states */}
+      <View style={{marginLeft: isPhone? 10 : '-80%', zIndex: 5, marginTop: isPhone? 0 : '-90%'}}>
+      <View style={styles.deficiencyButton}>
+      <TouchableOpacity onPress={() => handleButtonClick('deficiency')}>
+        <Text style={{ color: 'white' , fontSize: isPhone? 18 : 25}}>{buttonStates[elements.indexOf(currentState)] === 'deficiency' ? 'Unmark' : 'Deficiency'}</Text>
+      </TouchableOpacity>
+      </View>
+      <View style={styles.nextUntimedTestButton}>
+      <TouchableOpacity onPress={() => handleButtonClick('next')}>
+        <Text style={{ color: 'white' , fontSize: isPhone? 18 : 25}}>{buttonStates[elements.indexOf(currentState)] === 'next' ? 'Unmark' : 'Next'}</Text>
+      </TouchableOpacity>
+      </View>
+      </View>
+
+    </View>
+                    </View>                   
                 </View>
             </View>
         </ScrollView>
     );
 }
-
+const formatTime = (timeInSeconds) => {
+    const minutes = Math.floor(timeInSeconds / 60);
+    const seconds = timeInSeconds % 60;
+    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+};
 
 
 export function EndQuizScreen({ navigation, route }) {
