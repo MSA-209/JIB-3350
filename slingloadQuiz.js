@@ -167,14 +167,6 @@ export function UntimedQuizScreen({ navigation, route }) {
             setCurrentArrayIndex(prevIndex => prevIndex + 1);
         }
     };
-    
-    
-    useEffect(() => {
-        const itemKeys = Object.keys(items);
-        const currentIndex = itemKeys.indexOf(currentItem);
-        if (currentIndex < itemKeys.length - 1) {
-            setCurrentItem(itemKeys[currentIndex + 1]);
-        }
     }, [currentArrayIndex]);
     
     useEffect(() => {
