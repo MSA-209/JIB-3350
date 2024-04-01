@@ -3,6 +3,18 @@ Educational application designated for the Sabaluski Air Assault School located 
 App is functional on any mobile device with the launch of Expo Go, native Android devices with the app package, and websites using the Metro Go Bundler.
 To launch, simply clone the repository and launch using Expo.
 # Release Notes Section
+## Version 1.4.0
+### Features
+* Feature 1 slingload untimed quiz screen
+* Feature 2 slingload timed quiz screen
+* Feature 3 slingload randomly choosing deficient/normal images for quiz
+* Feature 4 slingload quiz timer
+* Feature 5 slingload sling quiz dropdown keeps track of markings
+* Feature 6 slingload quiz scores screen
+### Bug Fixes
+* fixed expo tunnel so it works on mobile
+### Known Issues
+* clicking opposite button on umark doesn't make the opposite button unmark
 ## Version 1.3.0
 ### Features
 * Feature 1 slingload navigation in air assault screen
