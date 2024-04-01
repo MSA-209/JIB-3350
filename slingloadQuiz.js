@@ -11,37 +11,37 @@ const screenDimension = Dimensions.get("screen");
 const isPhone = screenDimension.width < 900;
 
 const deficientImages = [
-                       {key: 'Apex' , image: require('/assets/DeficientApex_CotterPin.png'),trueAnswer: true, userAnswer: null },
-                       {key: 'Apex' ,image: require('/assets/DeficientApex_InvertedNut.png'),trueAnswer: true, userAnswer: null },
-                       {key: 'Apex' ,image: require('/assets/DeficientApex_NutMissing.png'),trueAnswer: true, userAnswer: null },
-                       {key: 'Apex' ,image: require('/assets/DeficientApex_SpacerMissing.png'),trueAnswer: true, userAnswer: null },
-                       {key: 'Bag' ,image: require('/assets/DeficientBag1.png'),trueAnswer: true, userAnswer: null },
-                       {key: 'Bag' ,image: require('/assets/DeficientBag2.png'),trueAnswer: true, userAnswer: null },
-                       {key: 'Bag' ,image: require('/assets/DeficientBag3.png'),trueAnswer: true, userAnswer: null },
-                       {key: 'Bag' ,image: require('/assets/DeficientBag4.png'),trueAnswer: true, userAnswer: null },
-                       {key: 'Bag' ,image: require('/assets/DeficientBag5.png'),trueAnswer: true, userAnswer: null },
-                       {key: 'Chain Clevis' ,image: require('/assets/DeficientChainClevis.png'),trueAnswer: true, userAnswer: null },
-                       {key: 'GrabHook' ,image: require('/assets/DeficientGrabhook_DomeNutMissing.png'),trueAnswer: true, userAnswer: null },
-                       {key: 'GrabHook' ,image: require('/assets/DeficientGrabhook_ExtraLink.png'),trueAnswer: true, userAnswer: null },
-                       {key: 'GrabHook' ,image: require('/assets/DeficientGrabhook_Inverted.png'),trueAnswer: true, userAnswer: null },
-                       {key: 'GrabHook' ,image: require('/assets/DeficientGrabhook_Inverted2.png'),trueAnswer: true, userAnswer: null },
-                       {key: 'GrabHook' ,image: require('/assets/DeficientGrabhook_LockNutMissing.png'),trueAnswer: true, userAnswer: null },
-                       {key: 'GrabHook' ,image: require('/assets/DeficientGrabhook_MissingLink.png'),trueAnswer: true, userAnswer: null },
-                       {key: 'Placard' ,image: require('/assets/DeficientPlacard_Tight.png'),trueAnswer: true, userAnswer: null },
-                       {key: 'Placard' ,image: require('/assets/DeficientPlacard_Weight.png'),trueAnswer: true, userAnswer: null }]
+                       {key: 'Apex' , image: require('./assets/DeficientApex_CotterPin.png'),trueAnswer: true, userAnswer: null },
+                       {key: 'Apex' ,image: require('./assets/DeficientApex_InvertedNut.png'),trueAnswer: true, userAnswer: null },
+                       {key: 'Apex' ,image: require('./assets/DeficientApex_NutMissing.png'),trueAnswer: true, userAnswer: null },
+                       {key: 'Apex' ,image: require('./assets/DeficientApex_SpacerMissing.png'),trueAnswer: true, userAnswer: null },
+                       {key: 'Bag' ,image: require('./assets/DeficientBag1.png'),trueAnswer: true, userAnswer: null },
+                       {key: 'Bag' ,image: require('./assets/DeficientBag2.png'),trueAnswer: true, userAnswer: null },
+                       {key: 'Bag' ,image: require('./assets/DeficientBag3.png'),trueAnswer: true, userAnswer: null },
+                       {key: 'Bag' ,image: require('./assets/DeficientBag4.png'),trueAnswer: true, userAnswer: null },
+                       {key: 'Bag' ,image: require('./assets/DeficientBag5.png'),trueAnswer: true, userAnswer: null },
+                       {key: 'Chain Clevis' ,image: require('./assets/DeficientChainClevis.png'),trueAnswer: true, userAnswer: null },
+                       {key: 'GrabHook' ,image: require('./assets/DeficientGrabhook_DomeNutMissing.png'),trueAnswer: true, userAnswer: null },
+                       {key: 'GrabHook' ,image: require('./assets/DeficientGrabhook_ExtraLink.png'),trueAnswer: true, userAnswer: null },
+                       {key: 'GrabHook' ,image: require('./assets/DeficientGrabhook_Inverted.png'),trueAnswer: true, userAnswer: null },
+                       {key: 'GrabHook' ,image: require('./assets/DeficientGrabhook_Inverted2.png'),trueAnswer: true, userAnswer: null },
+                       {key: 'GrabHook' ,image: require('./assets/DeficientGrabhook_LockNutMissing.png'),trueAnswer: true, userAnswer: null },
+                       {key: 'GrabHook' ,image: require('./assets/DeficientGrabhook_MissingLink.png'),trueAnswer: true, userAnswer: null },
+                       {key: 'Placard' ,image: require('./assets/DeficientPlacard_Tight.png'),trueAnswer: true, userAnswer: null },
+                       {key: 'Placard' ,image: require('./assets/DeficientPlacard_Weight.png'),trueAnswer: true, userAnswer: null }]
 
-const normalImages = [{key: 'Apex' ,image: require('/assets/Apex_Bottom.png'),trueAnswer: false, userAnswer: null },
-                        {key: 'Bottom Lateral C1' ,image: require('/assets/BotLateralC1_Center.png'),trueAnswer: false, userAnswer: null },
-                        {key: 'Chain Clevis' ,image: require('/assets/ChainClevis_Left_Top.png'),trueAnswer: false, userAnswer: null },
-                        {key: 'GrabHook' ,image: require('/assets/GrabHook_Left.png'),trueAnswer: false, userAnswer: null },
-                        {key: 'Medium Clevis' ,image: require('/assets/MediumClevis_Center.png'),trueAnswer: false, userAnswer: null },
-                        {key: 'Middle Lateral C1' ,image: require('/assets/MidLateralC1_Center.png'),trueAnswer: false, userAnswer: null },
-                       {key: 'Placard' ,image: require('/assets/placard_Center.png'),trueAnswer: false, userAnswer: null },
-                       {key: 'Strap Side' ,image: require('/assets/StrapSide_Right_Top.png'),trueAnswer: false, userAnswer: null },
-                       {key: 'Suspension 1' ,image: require('/assets/Suspension1_Center.png'),trueAnswer: false, userAnswer: null },
-                       {key: 'Suspension 2' ,image: require('/assets/Suspension2_Center_Top.png'),trueAnswer: false, userAnswer: null },
-                       {key: 'Suspension Strap Order' ,image: require('/assets/SusStrapOrder_Center_Top.png'),trueAnswer: false, userAnswer: null },
-                       {key: 'Top Lateral C1' ,image: require('/assets/TopLateralC1_Center.png'),trueAnswer: false, userAnswer: null }]
+const normalImages = [{key: 'Apex' ,image: require('./assets/Apex_Bottom.png'),trueAnswer: false, userAnswer: null },
+                        {key: 'Bottom Lateral C1' ,image: require('./assets/BotLateralC1_Center.png'),trueAnswer: false, userAnswer: null },
+                        {key: 'Chain Clevis' ,image: require('./assets/ChainClevis_Left_Top.png'),trueAnswer: false, userAnswer: null },
+                        {key: 'GrabHook' ,image: require('./assets/GrabHook_Left.png'),trueAnswer: false, userAnswer: null },
+                        {key: 'Medium Clevis' ,image: require('./assets/MediumClevis_Center.png'),trueAnswer: false, userAnswer: null },
+                        {key: 'Middle Lateral C1' ,image: require('./assets/MidLateralC1_Center.png'),trueAnswer: false, userAnswer: null },
+                       {key: 'Placard' ,image: require('./assets/placard_Center.png'),trueAnswer: false, userAnswer: null },
+                       {key: 'Strap Side' ,image: require('./assets/StrapSide_Right_Top.png'),trueAnswer: false, userAnswer: null },
+                       {key: 'Suspension 1' ,image: require('./assets/Suspension1_Center.png'),trueAnswer: false, userAnswer: null },
+                       {key: 'Suspension 2' ,image: require('./assets/Suspension2_Center_Top.png'),trueAnswer: false, userAnswer: null },
+                       {key: 'Suspension Strap Order' ,image: require('./assets/SusStrapOrder_Center_Top.png'),trueAnswer: false, userAnswer: null },
+                       {key: 'Top Lateral C1' ,image: require('./assets/TopLateralC1_Center.png'),trueAnswer: false, userAnswer: null }]
 
 function shuffleArray(array){
     for (let i = array.length - 1; i > 0; i--) {
@@ -155,7 +155,8 @@ export function UntimedQuizScreen({ navigation, route }) {
         }
         if (timed === true ) {
             if (elapsedTime > 120) {
-                navigation.navigate('End Quiz', { imageArray: QuizImages })
+                navigation.navigate('End Quiz', { imageArray: QuizImages, elapsedTime: elapsedTime - 1})
+                clearInterval(interval);
             }
         }
         return () => {
@@ -284,7 +285,7 @@ export function UntimedQuizScreen({ navigation, route }) {
                             </TouchableOpacity>
                         </View>
                         <View style={[styles.endTestButton]}>
-                            <TouchableOpacity onPress={() => navigation.navigate('End Quiz', { imageArray: QuizImages })}>
+                            <TouchableOpacity onPress={() => navigation.navigate('End Quiz', { imageArray: QuizImages, elapsedTime: elapsedTime })}>
                                 <Text style={{fontSize: isPhone? 18 : 22, color: '#E8E2D9'}}>End Test</Text>
                             </TouchableOpacity>
                         </View>
@@ -362,8 +363,21 @@ const formatTime = (timeInSeconds) => {
 
 
 export function EndQuizScreen({ navigation, route}) {
-    const { imageArray } = route.params; // This is your QuizImages array
-    console.log(imageArray)
+    const { imageArray, elapsedTime } = route.params; // This is your QuizImages array
+    const deficienciesTotal = imageArray.length;;
+    const deficienciesCorrect = imageArray.filter(question => question.userAnswer === question.trueAnswer).length;
+    const deficienciesIdentified = `${deficienciesCorrect} / ${deficienciesTotal}`;
+    const passStatus = (deficienciesCorrect / deficienciesTotal) * 100 >= 70 ? "PASS" : "FAIL";
+    const [clickedQuestions, setClickedQuestions] = useState([]);
+    const handleQuestionClick = (index) => {
+        if (!clickedQuestions.includes(index)) {
+            setClickedQuestions([...clickedQuestions, index]);
+        } else {
+            const updatedClickedQuestions = clickedQuestions.filter((clickedIndex) => clickedIndex !== index);
+            setClickedQuestions(updatedClickedQuestions);
+        }
+    };
+    
     return (
     <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}> 
         <View style={{marginTop: -9, marginBottom: 8}}>
@@ -371,6 +385,30 @@ export function EndQuizScreen({ navigation, route}) {
                 <View style={{alignSelf: 'center', display: 'flex', flex: 1}}>
                 <Text style={{alignSelf: 'center', color:"#FFFFFF", fontSize: 20}} variant='headlineLarge'>End Screen stat</Text>
                 </View>
+            </View>
+            <View style={{ padding: 20 }}>
+                    <Text>Total Time: {formatTime(elapsedTime)}</Text>
+                    <Text>{passStatus}</Text>
+                    <Text>Deficiencies Identified: {deficienciesIdentified}</Text>
+                    <Text style={{ marginTop: 10, fontWeight: 'bold' }}>Questions:</Text>
+                    {imageArray.map((question, index) => (
+                        <View key={index} style={{ marginTop: 5 }}>
+                            <TouchableOpacity onPress={() => handleQuestionClick(index)}>
+                                <Text style={{ fontWeight: 'bold' }}>Question {(index + 1)} : {question.key}</Text>
+                            </TouchableOpacity>
+                            <Text>User Answer: {question.userAnswer === null ? 'No answer' : question.userAnswer ? 'True' : 'False'}</Text>
+                            <Text>Correct Answer: {question.trueAnswer ? 'True' : 'False'}</Text>
+                            {/* Conditionally render the image based on whether the question has been clicked */}
+                            {clickedQuestions.includes(index) ? (
+                                <Image source={question.image} />
+                            ) : null}
+                        </View>
+                    ))}
+            </View>
+            <View style={{ alignItems: 'flex-end', marginBottom: 20 }}>
+                <TouchableOpacity onPress={() => navigation.navigate('Slingload Quiz')} style={styles.endTestButton}>
+                    <Text style={{ fontSize: isPhone ? 18 : 22, color: '#E8E2D9' }}>Try Again</Text>
+                </TouchableOpacity>
             </View>
         </View>
     </ScrollView>
