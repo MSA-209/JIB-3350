@@ -511,9 +511,15 @@ export const styles = StyleSheet.create({
     untimedTestC1: {
         flex: isPhone? 1 : 0.3,
         backgroundColor: 'rgba(0, 0, 0, 0.7)',
+        height: 'auto',
+        minHeight: '100vh',
     },
     untimedTestC2: {
         flex: isPhone? 1 : 0.7,
+        height: 'auto',
+        minHeight: '100vh',
+        flexDirection: 'column',
+        marginTop: isPhone? 20 : 30,
     },
     timer: {
         fontSize: isPhone? 20 : 80,
