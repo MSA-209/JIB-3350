@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { Image, StyleSheet, View, TouchableOpacity, Menu, ScrollView, TextInput, FlatList, screen, Button, Dimensions} from 'react-native';
+import { Image, StyleSheet, View, TouchableOpacity, ScrollView, TextInput, FlatList, screen, Button, Dimensions} from 'react-native';
 import 'react-native-svg'
 import { Card, Provider, Text, useTheme} from 'react-native-paper';
 import { styles } from './styleSheet';
@@ -10,17 +10,38 @@ import SlingloadDropdown from './slingload';
 const screenDimension = Dimensions.get("screen");
 const isPhone = screenDimension.width < 900;
 
-const deficientImages = [require('/assets/DeficientApex_CotterPin.png'),require('/assets/DeficientApex_InvertedNut.png'),require('/assets/DeficientApex_NutMissing.png'),
-                        require('/assets/DeficientApex_SpacerMissing.png'),require('/assets/DeficientBag1.png'),require('/assets/DeficientBag2.png'),
-                        require('/assets/DeficientBag3.png'),require('./assets/DeficientBag4.png'),require('/assets/DeficientBag5.png'),
-                        require('/assets/DeficientChainClevis.png'),require('/assets/DeficientGrabhook_DomeNutMissing.png'),require('/assets/DeficientGrabhook_ExtraLink.png'),
-                        require('/assets/DeficientGrabhook_Inverted.png'),require('/assets/DeficientGrabhook_Inverted2.png'),require('/assets/DeficientGrabhook_LockNutMissing.png'),
-                        require('/assets/DeficientGrabhook_MissingLink.png'),require('/assets/DeficientPlacard_Tight.png'),require('/assets/DeficientPlacard_Weight.png')]
+const deficientImages = [
+                       {key: 'Apex' , image: require('/assets/DeficientApex_CotterPin.png'),trueAnswer: true, userAnswer: null },
+                       {key: 'Apex' ,image: require('/assets/DeficientApex_InvertedNut.png'),trueAnswer: true, userAnswer: null },
+                       {key: 'Apex' ,image: require('/assets/DeficientApex_NutMissing.png'),trueAnswer: true, userAnswer: null },
+                       {key: 'Apex' ,image: require('/assets/DeficientApex_SpacerMissing.png'),trueAnswer: true, userAnswer: null },
+                       {key: 'Bag' ,image: require('/assets/DeficientBag1.png'),trueAnswer: true, userAnswer: null },
+                       {key: 'Bag' ,image: require('/assets/DeficientBag2.png'),trueAnswer: true, userAnswer: null },
+                       {key: 'Bag' ,image: require('/assets/DeficientBag3.png'),trueAnswer: true, userAnswer: null },
+                       {key: 'Bag' ,image: require('/assets/DeficientBag4.png'),trueAnswer: true, userAnswer: null },
+                       {key: 'Bag' ,image: require('/assets/DeficientBag5.png'),trueAnswer: true, userAnswer: null },
+                       {key: 'Chain Clevis' ,image: require('/assets/DeficientChainClevis.png'),trueAnswer: true, userAnswer: null },
+                       {key: 'GrabHook' ,image: require('/assets/DeficientGrabhook_DomeNutMissing.png'),trueAnswer: true, userAnswer: null },
+                       {key: 'GrabHook' ,image: require('/assets/DeficientGrabhook_ExtraLink.png'),trueAnswer: true, userAnswer: null },
+                       {key: 'GrabHook' ,image: require('/assets/DeficientGrabhook_Inverted.png'),trueAnswer: true, userAnswer: null },
+                       {key: 'GrabHook' ,image: require('/assets/DeficientGrabhook_Inverted2.png'),trueAnswer: true, userAnswer: null },
+                       {key: 'GrabHook' ,image: require('/assets/DeficientGrabhook_LockNutMissing.png'),trueAnswer: true, userAnswer: null },
+                       {key: 'GrabHook' ,image: require('/assets/DeficientGrabhook_MissingLink.png'),trueAnswer: true, userAnswer: null },
+                       {key: 'Placard' ,image: require('/assets/DeficientPlacard_Tight.png'),trueAnswer: true, userAnswer: null },
+                       {key: 'Placard' ,image: require('/assets/DeficientPlacard_Weight.png'),trueAnswer: true, userAnswer: null }]
 
-const normalImages = [require('/assets/Apex_Bottom.png'),require('/assets/BotLateralC1_Center.png'),require('/assets/ChainClevis_Left_Top.png'),
-                    require('/assets/GrabHook_Left.png'),require('/assets/MediumClevis_Center.png'),require('/assets/MidLateralC1_Center.png'),
-                        require('/assets/placard_Center.png'),require('/assets/StrapSide_Right_Top.png'),require('/assets/Suspension1_Center.png'),
-                        require('/assets/Suspension2_Center_Top.png'),require('/assets/SusStrapOrder_Center_Top.png'), require('/assets/TopLateralC1_Center.png')]
+const normalImages = [{key: 'Apex' ,image: require('/assets/Apex_Bottom.png'),trueAnswer: false, userAnswer: null },
+                        {key: 'Bottom Lateral C1' ,image: require('/assets/BotLateralC1_Center.png'),trueAnswer: false, userAnswer: null },
+                        {key: 'Chain Clevis' ,image: require('/assets/ChainClevis_Left_Top.png'),trueAnswer: false, userAnswer: null },
+                        {key: 'GrabHook' ,image: require('/assets/GrabHook_Left.png'),trueAnswer: false, userAnswer: null },
+                        {key: 'Medium Clevis' ,image: require('/assets/MediumClevis_Center.png'),trueAnswer: false, userAnswer: null },
+                        {key: 'Middle Lateral C1' ,image: require('/assets/MidLateralC1_Center.png'),trueAnswer: false, userAnswer: null },
+                       {key: 'Placard' ,image: require('/assets/placard_Center.png'),trueAnswer: false, userAnswer: null },
+                       {key: 'Strap Side' ,image: require('/assets/StrapSide_Right_Top.png'),trueAnswer: false, userAnswer: null },
+                       {key: 'Suspension 1' ,image: require('/assets/Suspension1_Center.png'),trueAnswer: false, userAnswer: null },
+                       {key: 'Suspension 2' ,image: require('/assets/Suspension2_Center_Top.png'),trueAnswer: false, userAnswer: null },
+                       {key: 'Suspension Strap Order' ,image: require('/assets/SusStrapOrder_Center_Top.png'),trueAnswer: false, userAnswer: null },
+                       {key: 'Top Lateral C1' ,image: require('/assets/TopLateralC1_Center.png'),trueAnswer: false, userAnswer: null }]
 
 function shuffleArray(array){
     for (let i = array.length - 1; i > 0; i--) {
@@ -61,12 +82,12 @@ export function SlingloadQuizScreen({ navigation, route }) {
             <View style={[styles.slTestR1VerticalBar, {borderColor: theme.colors.onSurfaceVariant}]}>
             </View>
             <View style={styles.slTestR1C2}>
-                <TouchableOpacity onPress={() => navigation.navigate('Untimed Quiz')}>
+                <TouchableOpacity onPress={() => navigation.navigate('Untimed Quiz',{ timed: false })}>
                     <View style={[styles.basicButton, {backgroundColor: theme.colors.backdrop, borderColor: theme.colors.onSurfaceVariant}]}>
                         <Text style={styles.slButtonText}>Untimed Tests</Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.navigate('Untimed Quiz')}>
+                <TouchableOpacity onPress={() => navigation.navigate('Untimed Quiz',{ timed: true })}>
                     <View style={[styles.basicButton, {backgroundColor: theme.colors.backdrop, borderColor: theme.colors.onSurfaceVariant}]}>
                         <Text style={styles.slButtonText}>Timed Tests</Text>
                     </View>
@@ -86,28 +107,25 @@ export function SlingloadQuizScreen({ navigation, route }) {
 
 export function UntimedQuizScreen({ navigation, route }) {
 
-
-    const QuizImages = []
-    if (QuizImages.length !== 0){
-        QuizImages = []
-    }
-    let QuizImagesLength = Math.floor(Math.random() * (13)) + 4;
-    if (QuizImagesLength === 4){
-        shuffleArray(deficientImages);
-        QuizImages = deficientImages.slice(0,4);
-    }
-    else{
-        shuffleArray(deficientImages);
-        shuffleArray(normalImages);
-        QuizImages.push(... deficientImages.slice(0,4));
-        QuizImages.push(...normalImages.slice(0,(QuizImagesLength - 4)))
-        shuffleArray(QuizImages)
-    }
-    console.log(QuizImagesLength)
-    console.log(QuizImages.length)
-    console.log(deficientImages)
-    console.log(QuizImages)
-
+    const { timed } = route.params; 
+    console.log(timed)
+    const [QuizImages, setQuizImages] = useState(() => {
+        let images = [];
+        let imagesLength = Math.floor(Math.random() * (13)) + 4;
+        if (imagesLength === 4){
+            shuffleArray(deficientImages);
+            images = deficientImages.slice(0,4);
+        }
+        else{
+            shuffleArray(deficientImages);
+            shuffleArray(normalImages);
+            images.push(... deficientImages.slice(0,4));
+            images.push(...normalImages.slice(0,(imagesLength - 4)))
+            shuffleArray(images)
+        }
+        console.log(images)
+        return images;
+    });
     const theme = useTheme();
 
 
@@ -124,66 +142,63 @@ export function UntimedQuizScreen({ navigation, route }) {
     const [nextTitle, setNextTitle] = useState('Next');
     const [elapsedTime, setElapsedTime] = useState(0);
     const [running, setRunning] = useState(true);
+    const [currentArrayIndex, setCurrentArrayIndex] = useState(0)
     //iterates through items when deficiency/next is pressed and if last item is pressed goes to end screen
     useEffect(() => {
-        let interval;
+        let interval = null;
         if (running) {
             interval = setInterval(() => {
                 setElapsedTime(prevTime => prevTime + 1);
             }, 1000);
-        } else {
+        } else if (!running && interval !== null) {
             clearInterval(interval);
         }
-        return () => clearInterval(interval);
-    }, [running]);
-    useEffect(() => {
-        if (items[currentItem] !== null) {
-            const itemKeys = Object.keys(items);
-            const currentIndex = itemKeys.indexOf(currentItem);
-            if (currentIndex < itemKeys.length - 1) {
-                setCurrentItem(itemKeys[currentIndex + 1]);
-            } else {
-                navigation.navigate('End Quiz');
+        if (timed === true ) {
+            if (elapsedTime > 120) {
+                navigation.navigate('End Quiz', { imageArray: QuizImages })
             }
         }
-    }, [items]);
+        return () => {
+            if (interval !== null) {
+                clearInterval(interval);
+            }
+        };
+    }, [running, elapsedTime, timed]);
+    const handleDeficiencyPress = () => {
+        QuizImages[currentArrayIndex].userAnswer = QuizImages[currentArrayIndex].userAnswer === null ? true : null;
+        if (currentArrayIndex < QuizImages.length - 1) {
+            setCurrentArrayIndex(prevIndex => prevIndex + 1);
+        }
+    };
+    
+    const handleNextPress = () => {
+        QuizImages[currentArrayIndex].userAnswer = QuizImages[currentArrayIndex].userAnswer === null ? false : null;
+        if (currentArrayIndex < QuizImages.length - 1) {
+            setCurrentArrayIndex(prevIndex => prevIndex + 1);
+        }
+    };
+    
     useEffect(() => {
-        if (items[currentItem] === null) {
+        if (QuizImages[currentArrayIndex].userAnswer === null) {
             setDeficiencyTitle('Deficiency');
             setNextTitle('Next');
-        } else if (items[currentItem] === true) {
+        } else if (QuizImages[currentArrayIndex].userAnswer === true) {
             setDeficiencyTitle('Unmark');
+            setNextTitle('Next');
         } else {
+            setDeficiencyTitle('Deficiency');
             setNextTitle('Unmark');
         }
-        console.log(currentItem);
-    }, [currentItem]);
-    const handleDeficiencyPress = () => {
-        if (items[currentItem] === null) {
-            setItems(prevItems => ({ ...prevItems, [currentItem]: true }));
-        } else {
-            setItems(prevItems => ({ ...prevItems, [currentItem]: null }));
-        }
-    };
+    }, [QuizImages, currentArrayIndex]);
     const handleLeftPress = () => {
-        const itemKeys = Object.keys(items);
-        const currentIndex = itemKeys.indexOf(currentItem);
-        if (currentIndex > 0) {
-            setCurrentItem(itemKeys[currentIndex - 1]);
-
+        if (currentArrayIndex > 0) {
+            setCurrentArrayIndex(prevIndex => prevIndex - 1);
         }
-        console.log(itemKeys[currentIndex])
     };
     const handleRightPress = () => {
-        const itemKeys = Object.keys(items);
-        const currentIndex = itemKeys.indexOf(currentItem);
-        if (currentIndex < itemKeys.length - 1) {
-            setCurrentItem(itemKeys[currentIndex + 1]);
+        if (currentArrayIndex < QuizImages.length - 1) {
+            setCurrentArrayIndex(prevIndex => prevIndex + 1);
         }
-        console.log(itemKeys[currentIndex])
-    };
-    const handleNextPress = () => {
-        setItems(prevItems => ({ ...prevItems, [currentItem]: false }));
     };
     const toggleStopwatch = () => {
         setRunning(prevRunning => !prevRunning);
@@ -245,7 +260,7 @@ export function UntimedQuizScreen({ navigation, route }) {
     return (
         
         <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}> 
-        {/* <Image source={QuizImages[0]}/>  Testing image it does work*/}
+        <Image source={QuizImages[currentArrayIndex].image}/>
             <View style={{marginTop: -9, marginBottom: 8}}>
                 <View style={{flexDirection: 'row', alignItems: 'center', backgroundColor: "#221f20", height: 45, borderTopWidth: 5, borderBottomWidth: 3, borderColor: "#ffcc01" }}>
                     <View style={{alignSelf: 'center', display: 'flex', flex: 1}}>
@@ -269,7 +284,7 @@ export function UntimedQuizScreen({ navigation, route }) {
                             </TouchableOpacity>
                         </View>
                         <View style={[styles.endTestButton]}>
-                            <TouchableOpacity onPress={handleNextPress}>
+                            <TouchableOpacity onPress={() => navigation.navigate('End Quiz', { imageArray: QuizImages })}>
                                 <Text style={{fontSize: isPhone? 18 : 22, color: '#E8E2D9'}}>End Test</Text>
                             </TouchableOpacity>
                         </View>
@@ -346,7 +361,9 @@ const formatTime = (timeInSeconds) => {
 };
 
 
-export function EndQuizScreen({ navigation, route }) {
+export function EndQuizScreen({ navigation, route}) {
+    const { imageArray } = route.params; // This is your QuizImages array
+    console.log(imageArray)
     return (
     <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}> 
         <View style={{marginTop: -9, marginBottom: 8}}>
