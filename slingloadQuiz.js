@@ -82,12 +82,12 @@ export function SlingloadQuizScreen({ navigation, route }) {
             <View style={[styles.slTestR1VerticalBar, {borderColor: theme.colors.onSurfaceVariant}]}>
             </View>
             <View style={styles.slTestR1C2}>
-                <TouchableOpacity onPress={() => navigation.navigate('Untimed Quiz')}>
+                <TouchableOpacity onPress={() => navigation.navigate('Untimed Quiz',{ timed: false })}>
                     <View style={[styles.basicButton, {backgroundColor: theme.colors.backdrop, borderColor: theme.colors.onSurfaceVariant}]}>
                         <Text style={styles.slButtonText}>Untimed Tests</Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.navigate('Untimed Quiz')}>
+                <TouchableOpacity onPress={() => navigation.navigate('Untimed Quiz',{ timed: true })}>
                     <View style={[styles.basicButton, {backgroundColor: theme.colors.backdrop, borderColor: theme.colors.onSurfaceVariant}]}>
                         <Text style={styles.slButtonText}>Timed Tests</Text>
                     </View>
@@ -107,7 +107,8 @@ export function SlingloadQuizScreen({ navigation, route }) {
 
 export function UntimedQuizScreen({ navigation, route }) {
 
-
+    const { timed } = route.params; 
+    console.log(timed)
     const [QuizImages, setQuizImages] = useState(() => {
         let images = [];
         let imagesLength = Math.floor(Math.random() * (13)) + 4;
@@ -144,16 +145,25 @@ export function UntimedQuizScreen({ navigation, route }) {
     const [currentArrayIndex, setCurrentArrayIndex] = useState(0)
     //iterates through items when deficiency/next is pressed and if last item is pressed goes to end screen
     useEffect(() => {
-        let interval;
+        let interval = null;
         if (running) {
             interval = setInterval(() => {
                 setElapsedTime(prevTime => prevTime + 1);
             }, 1000);
-        } else {
+        } else if (!running && interval !== null) {
             clearInterval(interval);
         }
-        return () => clearInterval(interval);
-    }, [running]);
+        if (timed === true ) {
+            if (elapsedTime > 120) {
+                navigation.navigate('End Quiz', { imageArray: QuizImages })
+            }
+        }
+        return () => {
+            if (interval !== null) {
+                clearInterval(interval);
+            }
+        };
+    }, [running, elapsedTime, timed]);
     const handleDeficiencyPress = () => {
         QuizImages[currentArrayIndex].userAnswer = QuizImages[currentArrayIndex].userAnswer === null ? true : null;
         if (currentArrayIndex < QuizImages.length - 1) {
@@ -167,7 +177,6 @@ export function UntimedQuizScreen({ navigation, route }) {
             setCurrentArrayIndex(prevIndex => prevIndex + 1);
         }
     };
-    }, [currentArrayIndex]);
     
     useEffect(() => {
         if (QuizImages[currentArrayIndex].userAnswer === null) {
@@ -275,7 +284,7 @@ export function UntimedQuizScreen({ navigation, route }) {
                             </TouchableOpacity>
                         </View>
                         <View style={[styles.endTestButton]}>
-                            <TouchableOpacity onPress={handleNextPress}>
+                            <TouchableOpacity onPress={() => navigation.navigate('End Quiz', { imageArray: QuizImages })}>
                                 <Text style={{fontSize: isPhone? 18 : 22, color: '#E8E2D9'}}>End Test</Text>
                             </TouchableOpacity>
                         </View>
@@ -352,7 +361,9 @@ const formatTime = (timeInSeconds) => {
 };
 
 
-export function EndQuizScreen({ navigation, route }) {
+export function EndQuizScreen({ navigation, route}) {
+    const { imageArray } = route.params; // This is your QuizImages array
+    console.log(imageArray)
     return (
     <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}> 
         <View style={{marginTop: -9, marginBottom: 8}}>
