@@ -11,6 +11,7 @@ To launch, simply clone the repository and launch using Expo.
 * Feature 4 slingload quiz timer
 * Feature 5 slingload sling quiz dropdown keeps track of markings
 * Feature 6 slingload quiz scores screen
+* Feature 7 quizes are randomized
 ### Bug Fixes
 * fixed expo tunnel so it works on mobile
 ### Known Issues
