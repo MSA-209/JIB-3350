@@ -222,7 +222,9 @@ export function UntimedQuizScreen({ navigation, route }) {
     const [currentState, setCurrentState] = useState(elements[0]);
   
     const handleItemClick = (element) => {
-      setCurrentState(element);
+        const updatedIndex = setCurrentArrayIndex(elements.indexOf(element));
+
+      setCurrentState(elements[updatedIndex]);
     };
   
     // const handleButtonClick = (buttonType) => {
@@ -354,8 +356,8 @@ export function UntimedQuizScreen({ navigation, route }) {
                 <FontAwesome name="bars" size={isPhone? 24 : 50} color="black" />
         </TouchableOpacity>
 </View>
-      {/* Menu box */}
-        {menuVisible && (<View style={{justifyContent: 'flex-end', backgroundColor: 'rgba(0, 0, 0, 0.7)', width: 'auto', paddingLeft: isPhone? 'none' : 25}}>
+{/* Menu box */}
+{menuVisible && (<View style={{justifyContent: 'flex-end', backgroundColor: 'rgba(0, 0, 0, 0.7)', width: 'auto', paddingLeft: isPhone? 'none' : 25}}>
         {/* Menu items */}
         <View style={{backgroundColor: theme.colors.backdrop, marginTop: isPhone? 10: -70, height: isPhone? 'auto': 100, padding: isPhone? 1 : 15, width: isPhone? 150 : 420, justifyContent: 'center', marginLeft: isPhone? 'auto' : -25, marginBottom: isPhone? 5 : -25}}>
                 <Text style={{marginLeft: isPhone? 'auto' : 45, zIndex: 3, color: '#E8E2D9', fontSize: isPhone? 20 : 30, marginBottom: isPhone? 5 : 15}}>SECTION MENU</Text>
@@ -386,6 +388,7 @@ export function UntimedQuizScreen({ navigation, route }) {
         ))}
       </View>
         )}
+      
 
       {/* Buttons to toggle item states */}
 
@@ -442,36 +445,58 @@ export function EndQuizScreen({ navigation, route}) {
     
     return (
     <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}> 
-        <View style={{marginTop: -9, marginBottom: 8}}>
+        <View style={{marginTop: -9, marginBottom: 8, backgroundColor: 'rgba(0, 0, 0, 0.7)'}}>
             <View style={{flexDirection: 'row', alignItems: 'center', backgroundColor: "#221f20", height: 45, borderTopWidth: 5, borderBottomWidth: 3, borderColor: "#ffcc01" }}>
                 <View style={{alignSelf: 'center', display: 'flex', flex: 1}}>
                 <Text style={{alignSelf: 'center', color:"#FFFFFF", fontSize: 20}} variant='headlineLarge'>End Screen stat</Text>
                 </View>
             </View>
-            <View style={{ padding: 20 }}>
-                    <Text>Total Time: {formatTime(elapsedTime)}</Text>
-                    <Text>{passStatus}</Text>
-                    <Text>Deficiencies Identified: {deficienciesIdentified}</Text>
-                    <Text style={{ marginTop: 10, fontWeight: 'bold' }}>Questions:</Text>
-                    {imageArray.map((question, index) => (
-                        <View key={index} style={{ marginTop: 5 }}>
-                            <TouchableOpacity onPress={() => handleQuestionClick(index)}>
-                                <Text style={{ fontWeight: 'bold' }}>Question {(index + 1)} : {question.key}</Text>
-                            </TouchableOpacity>
-                            <Text>User Answer: {question.userAnswer === null ? 'No answer' : question.userAnswer ? 'True' : 'False'}</Text>
-                            <Text>Correct Answer: {question.trueAnswer ? 'True' : 'False'}</Text>
-                            {/* Conditionally render the image based on whether the question has been clicked */}
-                            {clickedQuestions.includes(index) ? (
-                                <Image source={question.image} />
-                            ) : null}
-                        </View>
-                    ))}
+            <View style={[styles.endQuizR1, {alignItems: 'center', width: 1100, alignSelf: 'center'}]}>
+                <View style={{flex: 0.3, justifyContent: 'center', marginLeft: 50}}>
+                    <Text style={{fontSize: isPhone? 20: 45, color:'#E8E2D9', fontWeight: 500, alignSelf: 'center'}} >{formatTime(elapsedTime)}</Text>
+                    <Text style={{fontSize: isPhone? 20: 20, color:'#E8E2D9', fontWeight: 500, alignSelf: 'center'}} >Total Time</Text>
+
+                </View>
+                    <View style={{flex: 0.4, justifyContent: 'center', alignSelf: 'center'}}>
+                <Text style={{alignSelf: 'center', color: passStatus==='PASS'? 'green' : 'red', fontSize: isPhone? 20: 65, fontWeight: 700}}>{passStatus}</Text>
+
+                </View>
+                <View style={{flex: 0.3, justifyContent: 'center', marginRight: 50}}>
+                <Text style={{fontSize: isPhone? 20: 45, color:'#E8E2D9', alignSelf: 'center' }} >{deficienciesIdentified}</Text>
+
+                <Text style={{fontSize: isPhone? 20: 20, color:'#E8E2D9', alignSelf: 'center' }} >Deficiencies Identified</Text>
+                </View>
             </View>
-            <View style={{ alignItems: 'flex-end', marginBottom: 20 }}>
-                <TouchableOpacity onPress={() => navigation.navigate('Slingload Quiz')} style={styles.endTestButton}>
-                    <Text style={{ fontSize: isPhone ? 18 : 22, color: '#E8E2D9' }}>Try Again</Text>
+            <View style={{ padding: 20 }}>
+
+                {imageArray.map((question, index) => (
+                    <TouchableOpacity onPress={() => handleQuestionClick(index)}>
+                    <View key={index} style={[styles.resultBox, {alignContent:'center', marginTop: 5, flexDirection: 'row', backgroundColor: question.trueAnswer===question.userAnswer? 'green' : 'red'}]}>
+                        {/* <Text style={{fontSize: 30, color:'#E8E2D9', marginLeft: 20}}>Question {(index + 1)} : {question.key}</Text> */}
+                        <Text style={{fontSize: 30, color:'#E8E2D9', marginLeft: 20}}>{question.trueAnswer===question.userAnswer? 'Correct' : 'Incorrect'} :  {question.key}</Text>
+
+                        <Text style={{marginLeft: 15, fontSize: 30, color:'#E8E2D9'}}>-</Text>
+                        <Text style={{fontWeight: 600, fontSize: 20, color:'#E8E2D9', marginLeft: 15, marginTop: 8}}>Your Answer:</Text>
+                        <Text style={{fontSize: 20, color:'#E8E2D9', marginLeft: 20, marginTop: 8}}>{question.userAnswer === null ? 'No answer' : question.userAnswer ? 'True' : 'False'}</Text>
+                        <Text style={{marginLeft: 15, fontSize: 30, color:'#E8E2D9', marginLeft: 5}}>|</Text>
+                        <Text style={{fontWeight: 600, fontSize: 20, color:'#E8E2D9', marginLeft: 5, marginTop: 8}}>Correct Answer:</Text>
+                        <Text style={{ fontSize: 20, color:'#E8E2D9', marginLeft: 20, marginTop: 8}}>{question.trueAnswer ? 'True' : 'False'}</Text>
+
+                        {/* Conditionally render the image based on whether the question has been clicked */}
+                        {clickedQuestions.includes(index) ? (
+                            <Image source={question.image} />
+                        ) : null}
+                    </View>
+                    </TouchableOpacity>
+
+                ))}
+            </View>
+            <View style={{ alignItems: 'flex-end', marginBottom: 20, marginRight: 100}}>
+                <TouchableOpacity onPress={() => navigation.navigate('Slingload Quiz')} style={[styles.endTestButton]}>
+                    <Text style={{ fontSize: isPhone ? 18 : 22, color: '#E8E2D9'}}>Try Again</Text>
                 </TouchableOpacity>
             </View>
+
         </View>
     </ScrollView>
     );
