@@ -127,17 +127,14 @@ export function UntimedQuizScreen({ navigation, route }) {
         return images;
     });
     const theme = useTheme();
-
-
-    //truth table for items should match with pictures
-    const [items, setItems] = useState({
-        placard: null,
-        apex: null,
-        grabhook: null,
-        ChainClevis : null,
-        MediumClevis : null,
-    });
-    const [currentItem, setCurrentItem] = useState('placard');
+    useEffect(() => {
+        deficientImages.forEach(item => {
+            item.userAnswer = null;
+        });
+        normalImages.forEach(item => {
+            item.userAnswer = null;
+        });
+    }, []);
     const [deficiencyTitle, setDeficiencyTitle] = useState('Deficiency');
     const [nextTitle, setNextTitle] = useState('Next');
     const [elapsedTime, setElapsedTime] = useState(0);
@@ -425,6 +422,7 @@ const formatTime = (timeInSeconds) => {
 
 
 export function EndQuizScreen({ navigation, route}) {
+    const { quizScores, setQuizScores } = React.useContext(QuizScoresContext);
     const { imageArray, elapsedTime } = route.params; // This is your QuizImages array
     const deficienciesTotal = imageArray.length;;
     const deficienciesCorrect = imageArray.filter(question => question.userAnswer === question.trueAnswer).length;
@@ -439,7 +437,10 @@ export function EndQuizScreen({ navigation, route}) {
             setClickedQuestions(updatedClickedQuestions);
         }
     };
-    
+    React.useEffect(() => {
+        const scorePercentage = Math.round((deficienciesCorrect / deficienciesTotal) * 100);
+        setQuizScores([...quizScores, scorePercentage]);
+    }, [deficienciesCorrect, deficienciesTotal]);
     return (
     <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}> 
         <View style={{marginTop: -9, marginBottom: 8}}>
@@ -480,13 +481,13 @@ export function EndQuizScreen({ navigation, route}) {
 
 
 export function QuizScoresScreen({ navigation, route }) {
+    const { quizScores } = React.useContext(QuizScoresContext);
     // Sample data
     const data = {
-        labels: ['1', '2', '3', '4', '5'],
+        labels: quizScores.map((_, index) => (index + 1).toString()),
         datasets: [
             {
-                data: [20, 45, 28, 80, 99],
-                strokeWidth: 2, // optional
+                data: quizScores,
             },
         ],
     };
@@ -505,7 +506,7 @@ export function QuizScoresScreen({ navigation, route }) {
             <Text style={{ fontSize: 24, textAlign: 'center', marginTop: 10 }}>Deficiencies Caught</Text>
             <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
                 <View style={{ justifyContent: 'center', paddingRight: 10 }}>
-                    <Text style={{ fontSize: 20 }}>Scores</Text>
+                    <Text style={{ fontSize: 20 }}>Scores percentage</Text>
                 </View>
                 <View style={{ alignItems: 'center' }}>
                     <LineChart
