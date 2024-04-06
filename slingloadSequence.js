@@ -7,7 +7,7 @@ import { styles } from './styleSheet';
 import { FontAwesome } from '@expo/vector-icons'; 
 import ModelComp from './ModelComp';
 const screenDimension = Dimensions.get("screen");
-const isPhone = screenDimension.width < 1000;
+const isPhone = screenDimension.width < 900;
 
 const imageSources = {
   'Apex': require('/assets/Apex_Extra.png'), 
