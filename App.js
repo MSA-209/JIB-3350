@@ -53,6 +53,7 @@ import {VideoScreen} from './AirAssaultHome.js';
 import { PlaylistScreen } from './AirAssaultHome.js';
 import { VideoPlayerScreen } from './VideoButton.js';
 import { AddedVideosContext } from './videoContext.js';
+import { QuizScoresContext } from './quizScoresContext.js';
 import {SlingloadScreen, PlacardScreen, PlacardSequence, PlacardVideo, ApexScreen, 
 ApexVideo, ApexSequence, GrabhookScreen, GrabhookVideo, GrabhookSequence, ChainClevisScreen, 
 ChainClevisVideo, ChainClevisSequence, MediumClevisScreen,MediumClevisSequence,
@@ -980,7 +981,9 @@ function HomeStackScreen({navigation, route}) {
   const theme = useTheme();
   const { isDarkMode, toggleDarkMode } = React.useContext(AppContext);
   const [addedVideos, setAddedVideos] = React.useState({});
+  const [quizScores, setQuizScores] = React.useState([]);
   return (
+    <QuizScoresContext.Provider value={{ quizScores, setQuizScores }}>
     <AddedVideosContext.Provider value={{ addedVideos, setAddedVideos }}>
     <Stack.Navigator
       screenOptions={{
@@ -1048,6 +1051,7 @@ function HomeStackScreen({navigation, route}) {
       <Stack.Screen name="Quiz Scores" component={QuizScoresScreen} />
     </Stack.Navigator>
     </AddedVideosContext.Provider>
+    </QuizScoresContext.Provider>
   );
 }
 
