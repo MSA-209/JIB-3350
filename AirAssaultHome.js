@@ -647,8 +647,8 @@ export function PlaylistScreen({ navigation, route }) {
     const fetchVideos = async () => {
       try {
         const urls = [
-          "https://airdbnew.onrender.com/api/air-assault-videos?populate=video",
-          "https://airdbnew.onrender.com/api/pathfinder-videos?populate=video"
+          "https://airdbnew.onrender.com/api/air-assault-videos?populate=video,thumbnail",
+          "https://airdbnew.onrender.com/api/pathfinder-videos?populate=video,thumbnail"
         ];
         const allRequests = urls.map(url =>
           axios.get(url, {
@@ -667,6 +667,7 @@ export function PlaylistScreen({ navigation, route }) {
                 link: item.attributes.video.data[0].attributes.url,
                 title: item.attributes.title,
                 description: item.attributes.description,
+                thumbnail: item.attributes.thumbnail.data.attributes.url,
               };
             });
             setAirAssaultVideos(formattedData);
@@ -678,6 +679,7 @@ export function PlaylistScreen({ navigation, route }) {
                 link: item.attributes.video.data[0].attributes.url,
                 title: item.attributes.title,
                 description: item.attributes.description,
+                thumbnail: item.attributes.thumbnail.data.attributes.url,
               };
             });
             setPathfinderVideos(formattedData);
