@@ -7,6 +7,7 @@ import { styles } from './styleSheet';
 import { FontAwesome } from '@expo/vector-icons'; 
 import { LineChart } from 'react-native-chart-kit';
 import SlingloadDropdown from './slingload';
+import { QuizScoresContext } from './quizScoresContext.js';
 const screenDimension = Dimensions.get("screen");
 const isPhone = screenDimension.width < 900;
 
@@ -57,7 +58,7 @@ export function SlingloadQuizScreen({ navigation, route }) {
         <View style={{marginTop: -9, marginBottom: 8}}>
             <View style={{flexDirection: 'row', alignItems: 'center', backgroundColor: "#221f20", height: 45, borderTopWidth: 5, borderBottomWidth: 3, borderColor: "#ffcc01" }}>
                 <View style={{alignSelf: 'center', display: 'flex', flex: 1}}>
-                <Text style={{alignSelf: 'center', color:"#FFFFFF", fontSize: 20}} variant='headlineLarge'>QUIZZES</Text>
+                <Text style={{alignSelf: 'center', color:"#FFFFFF", fontSize: 20}} variant='headlineLarge'>TESTS</Text>
                 </View>
             </View>
 
@@ -163,14 +164,14 @@ export function UntimedQuizScreen({ navigation, route }) {
         };
     }, [running, elapsedTime, timed]);
     const handleDeficiencyPress = () => {
-        QuizImages[currentArrayIndex].userAnswer = QuizImages[currentArrayIndex].userAnswer === null ? true : null;
+        QuizImages[currentArrayIndex].userAnswer = (QuizImages[currentArrayIndex].userAnswer === null || QuizImages[currentArrayIndex].userAnswer === false) ? true : null;
         if (currentArrayIndex < QuizImages.length - 1) {
             setCurrentArrayIndex(prevIndex => prevIndex + 1);
         }
     };
     
     const handleNextPress = () => {
-        QuizImages[currentArrayIndex].userAnswer = QuizImages[currentArrayIndex].userAnswer === null ? false : null;
+        QuizImages[currentArrayIndex].userAnswer = (QuizImages[currentArrayIndex].userAnswer === null || QuizImages[currentArrayIndex].userAnswer === true) ? false : null;
         if (currentArrayIndex < QuizImages.length - 1) {
             setCurrentArrayIndex(prevIndex => prevIndex + 1);
         }
@@ -266,7 +267,6 @@ export function UntimedQuizScreen({ navigation, route }) {
       };
   
     return (
-        
         <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}> 
         <View style={{marginTop: -9, marginBottom: 8}}>
             <View style={{flexDirection: 'row', alignItems: 'center', backgroundColor: "#221f20", height: 45, borderTopWidth: 5, borderBottomWidth: 3, borderColor: "#ffcc01" }}>
@@ -310,10 +310,8 @@ export function UntimedQuizScreen({ navigation, route }) {
                     />
                 </View>
                 <View>
-
                 </View>
                 <View>
-
                 </View>
 
 <View style={{ flexDirection: 'column', flex: isPhone? 1 : 0.3, width: isPhone? 230 : 420, height: 'auto', marginTop: isPhone? 5 : -15, marginLeft: isPhone? 0 : '60%'}}>
