@@ -34,14 +34,11 @@ const VideoComp = ({video,  handleAddToPlaylist, addedVideos, videoLinks, curren
               source={{ uri: `https://img.youtube.com/vi/${video.link.split('v=')[1]}/0.jpg` }}
               style={{ marginTop: 10, width: 345, height: 290, alignSelf: 'center', borderTopLeftRadius: 8, borderBottomRightRadius: 8 }}
             /> */}
-          <View>
-            <VideoThumbnail
-              videoUrl={video.link}
-              thumbnailHandler={(thumbnail) => console.log(thumbnail)}
-            />
-
-          </View>
-                <View style={{width: 345, height: 45, position: 'absolute', zIndex: 1, marginTop: 223}} >
+          <Image
+  source={{ uri: video.thumbnail }}
+  style={{ marginTop: 10, width: 345, height: 290, alignSelf: 'center', borderTopLeftRadius: 8, borderBottomRightRadius: 8 }}
+         />
+            <View style={{width: 345, height: 45, position: 'absolute', zIndex: 1, marginTop: 223}} >
           <View style={styles.videoStyle.videoDescriptionContainer}>
             <Text style={{ fontSize: 16, fontWeight: 'bold', alignSelf: 'center', padding: 5}}>
               {video.title}
