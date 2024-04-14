@@ -98,13 +98,13 @@ export const styles = StyleSheet.create({
         textDecorationLine: 'underline',
     },
     feedbackForm: {
-        backgroundColor: '#b0afae',
+        // backgroundColor: '#b0afae',
         borderRadius: 10,
         margin: 50,
         width: isPhone? 350 : 1040,
         height: isPhone? 630 : 'auto',
         paddingVertical: isPhone? 15 : 40,
-        paddingHorizontal: isPhone? 10 :60,
+        paddingHorizontal: isPhone? 10 :40,
         alignSelf: 'center',
     },
     picker: {                              
@@ -115,13 +115,12 @@ export const styles = StyleSheet.create({
         backgroundColor: '#ffcc01',
         borderRadius: 8,
         fontWeight: 500,
-        fontSize: 17,
+        // fontSize: 17,
         shadowOffset: 0.3,
         shadowColor: 'black',
         overflow: 'hidden',
         opacity: 0.7,
         paddingHorizontal: isPhone? 10 : 35,
-
     },
     pickerText: {
         marginTop: isPhone? 15 : 5,
@@ -133,6 +132,7 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         overflow: 'hidden',
         zIndex: isPhone? 1 : 0,
+        position: 'relative',
     },
     textScroll: {                           // select school text
         fontWeight: 600, 
@@ -174,15 +174,18 @@ export const styles = StyleSheet.create({
         textDecorationColor: 'yellow',
     },
     titleBox: {
-        height: isPhone? 35 : 50,
+        height: isPhone? 40 : 50,
         width: isPhone? 300 : 920,
         backgroundColor: '#ffffff',
         borderRadius: 8,
         borderColor: '#525254', 
         textAlignVertical: 'top', 
-        marginTop: isPhone? 15 : 10,
+        marginTop: isPhone? 15 : 70,
         borderWidth: 1,
         padding: isPhone? 0 : 15,
+        backgroundColor: '#ffffff90',
+        paddingLeft: 15,
+
     },
     commentBox: {
         height: isPhone? 150 : 200,
@@ -193,6 +196,9 @@ export const styles = StyleSheet.create({
         marginTop: 30,
         borderWidth: 1,
         padding: 15,
+        marginBottom: isPhone? 15 : 'auto',
+        backgroundColor: '#ffffff90',
+
     },
 //APP.JS SCREEN
     card: {
@@ -694,5 +700,4 @@ endQuizR2: {
     flex: 1,
     marginTop: isPhone? 20 : 30,
 },
-
 });

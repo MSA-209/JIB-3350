@@ -7,10 +7,11 @@ import { Searchbar } from 'react-native-paper';
 import Constants from "expo-constants"
 import * as SplashScreen from 'expo-splash-screen';
 import { MaterialIcons } from '@expo/vector-icons'; // Assuming you're using Expo icons
-import {Picker} from '@react-native-picker/picker';
+// import {Picker} from '@react-native-picker/picker';
 import { SafeAreaView } from 'react-native';
 import 'react-native-svg'
-
+const screenDimension = Dimensions.get("screen");
+const isPhone = screenDimension.width < 900;
 import {
   NavigationContainer,
   DarkTheme as NavigationDarkTheme,
@@ -794,8 +795,9 @@ function FeedbackScreen({ navigation, route }) {
     setFeedback(text);
   }
   const handleSchoolChange = (value) => {
-    setSchool(value);
-  }
+  setSchool(value);
+    setMenuVisible(false);
+    setSchoolSelected(value);  }
   const handleTitleChange = (text) => {
     setTitle(text);
   }
@@ -886,24 +888,65 @@ function FeedbackScreen({ navigation, route }) {
       setTitle('');
   };
   const TextStylingBar = ({ onBold, onItalic, onUnderline }) => (
-    <View style={styles.textStylingBar}>
+    <View style={[styles.textStylingBar, {marginBottom: 7}]}>
       <TouchableOpacity onPress={onBold}>
-        <MaterialIcons name="format-bold" size={24} color={bold ? 'blue' : 'black'} />
+        <MaterialIcons name="format-bold" size={bold? 27 : 24} color={bold ? '#ffcc01' : theme.colors.onBackground} />
       </TouchableOpacity>
       <TouchableOpacity onPress={onItalic}>
-        <MaterialIcons name="format-italic" size={24} color={italic ? 'blue' : 'black'} />
+        <MaterialIcons name="format-italic" size={italic? 27 : 24} color={italic ? '#ffcc01' : theme.colors.onBackground} />
       </TouchableOpacity>
       <TouchableOpacity onPress={onUnderline}>
-        <MaterialIcons name="format-underlined" size={24} color={underline ? 'blue' : 'black'} />
+        <MaterialIcons name="format-underlined" size={underline? 27 : 24} color={underline ? '#ffcc01' : theme.colors.onBackground} />
       </TouchableOpacity>
     </View>
   );
+  
+  const [menuVisible, setMenuVisible] = useState(false);
 
+  const handleSchoolPicker = () => {
+    setMenuVisible(!menuVisible);
+  };
+
+  const schools = [
+    "Air Assault School",
+    "Pathfinder School",
+    "Ranger School"
+  ];
+
+  const [schoolSelected, setSchoolSelected] = useState("Select school for feedback");
   return (
-    <View style={styles.feedbackForm}>
+    <ScrollView style={styles.scrollView}>
+    <View style={[styles.feedbackForm, {alignSelf: 'center', backgroundColor: theme.colors.surfaceDisabled, flexDirection: 'column', justifyContent: 'space-around', borderColor: theme.colors.primary, borderWidth: isPhone? 0.5 : 1, top: isPhone? 'auto' : 10}]}>
+          <View style={{position: 'absolute',borderColor: '#ffcc01', backgroundColor: theme.colors.primaryContainer, borderWidth: 2, borderRadius: 10, overflow: 'hidden', zIndex: 20, top :isPhone? 30 : 35, marginBottom: 30, alignSelf: 'center', alignItems: 'center'}}>
+          <TouchableOpacity onPress={handleSchoolPicker}>
+        <View style={{fontSize: isPhone? 18 : 25, backgroundColor: '#ffcc01', alignItems: 'center', width: isPhone? 300 : 400, height: isPhone? 36 : 40, borderRadius: 8}}>
+        <Text style={{alignSelf: 'center', color: '#000234', marginTop: isPhone? 8 : 15, size: isPhone? 16 : 25 }}>{schoolSelected}</Text>
+        </View>
+        {/* <ScrollView style={{height: isPhone? 'auto' : 100}}> */}
+        {menuVisible && (
+          <ScrollView style={{height: isPhone? 'auto' : 120, width: isPhone? 300 : 400}}>
+            <View style={{marginTop: isPhone? -5 : 0}}>
+              {schools.map((school, index) => (
+              <TouchableOpacity key={index} onPress={() => handleSchoolChange(school)}>
+              <View style={{backgroundColor: '#ffffff', width: isPhone? 300 : 400, height: 36 }}>
+                <Text style={{alignSelf: 'center', marginTop: 11, color: '#000000', fontSize: isPhone? 16 : 20}}>{schools[index]}</Text>
+              </View>
+            </TouchableOpacity>
+          ))}
+                  <View style={{height: isPhone? 10 : 25, backgroundColor: '#ffffff'}}></View>
+          </View>
+          </ScrollView>
+
+          
+        )}
+        {/* </ScrollView> */}
+
+    </TouchableOpacity>
+          </View>
+
       <View style={styles.schoolSelector}>
         {/* <Text style={styles.pickerText}>Select a school to give feedback to</Text> */}
-        <Picker style={styles.picker}
+        {/* <Picker style={styles.picker}
           onValueChange={handleSchoolChange}
           value={school}>
           <Picker.Item label="Select school for feedback" value="" />
@@ -913,7 +956,7 @@ function FeedbackScreen({ navigation, route }) {
           <Picker.Item label="Pathfinder School" value="Pathfinder School" />
           <View style={styles.separator} />
           <Picker.Item label="Ranger School" value="Ranger School" />
-        </Picker>
+        </Picker> */}
 
         <TextInput
           style={styles.titleBox}
@@ -965,7 +1008,9 @@ function FeedbackScreen({ navigation, route }) {
           <Button title="Submit Rating" onPress={submitRating}><Text style={styles.buttonText}>Submit Rating</Text></Button>
         </View>
       </View>
-    </View>
+    </View> 
+    </ScrollView>
+    
   );
 }
 

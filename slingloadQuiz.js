@@ -244,11 +244,8 @@ export function UntimedQuizScreen({ navigation, route }) {
         //   const updatedResult = [...result];
           updatedResult[currentIndex] = 'unmarked';
           setResult(updatedResult);
-        //   setCurrentState(elements[currentIndex]);
   
           // Restore buttons to original state
-        //   updatedButtonStates[currentIndex] = buttonType;
-        //   setButtonStates(updatedButtonStates);
         } else if (currentIndex <= elements.length) {
           // Toggle mark color for current element
         //   const updatedResult = [...result];
@@ -323,7 +320,6 @@ export function UntimedQuizScreen({ navigation, route }) {
 
 {menuVisible && (<View style={{justifyContent: 'flex-end', backgroundColor:  'rgba(0, 0, 0, 0.7)', width: 'auto', paddingLeft: isPhone? 'none' : 25, transform: [{ translateX: isPhone? 0 :'auto'}, {translateY: isPhone ? 0 : 'auto'}],}}>
     {/* Menu items */}
-
     <View style={[styles.menuSection]}>
             <Text style={styles.sectionMenuTitle}>SECTION MENU</Text>
         </View>
