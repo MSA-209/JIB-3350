@@ -1,0 +1,58 @@
+[33m078317a[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m small fix
+ 1 file changed, 2 insertions(+), 40 deletions(-)
+[33mfa1a937[m Merge pull request #57 from MSA-209/RyanImageArrays
+[33m68b1c52[m[33m ([m[1;31morigin/RyanImageArrays[m[33m)[m Merge branch 'main' into RyanImageArrays
+[33m7a29af2[m[33m ([m[1;32mRyanImageArrays[m[33m)[m Ryan image arrays
+ 1 file changed, 286 insertions(+), 86 deletions(-)
+[33mb816f43[m Merge pull request #56 from MSA-209/RyanDefImages
+[33m86d834c[m[33m ([m[1;31morigin/RyanDefImages[m[33m)[m Merge branch 'main' into RyanDefImages
+[33mecdde4f[m[33m ([m[1;32mRyanDefImages[m[33m)[m fix images and random def selector
+ 15 files changed, 43 insertions(+)
+[33m57264c9[m Merge pull request #54 from MSA-209/RyanDef
+[33m554a1e2[m[33m ([m[1;31morigin/RyanDef[m[33m, [m[1;32mRyanDef[m[33m)[m deficient images
+ 14 files changed, 0 insertions(+), 0 deletions(-)
+[33me36ab43[m Merge pull request #49 from MSA-209/RyanTransImg
+[33me3ce9d1[m[33m ([m[1;31morigin/RyanTransImg[m[33m, [m[1;32mRyanTransImg[m[33m)[m made model image background transparent
+ 108 files changed, 0 insertions(+), 0 deletions(-)
+[33m78f5d8e[m Merge branch 'main' of https://github.com/MSA-209/JIB-3350
+[33mdeb885d[m Merge branch 'main' of https://github.com/MSA-209/JIB-3350
+[33m04cf903[m conflict fix
+[33m38b15b1[m Merge pull request #44 from MSA-209/RyanModelNew
+[33me83d774[m[33m ([m[1;31morigin/RyanModelNew[m[33m)[m Merge branch 'main' into RyanModelNew
+[33m3c21e76[m[33m ([m[1;32mRyanModelNew[m[33m)[m add pics for other parts
+ 102 files changed, 70 insertions(+), 26 deletions(-)
+[33m06a4be5[m Merge pull request #43 from MSA-209/RyanModelNew
+[33m2740ade[m model comp small update
+ 3 files changed, 5 insertions(+), 5 deletions(-)
+[33m8aa0553[m Merge pull request #36 from MSA-209/RyanModel
+[33mcdd931a[m[33m ([m[1;31morigin/RyanModel[m[33m)[m temp model test with strings
+ 14 files changed, 30 insertions(+), 26 deletions(-)
+[33m2633dc6[m deleted 3d models
+ 9 files changed, 4034 deletions(-)
+[33m71e2bd4[m placard vid fix
+ 17 files changed, 4811 insertions(+), 938 deletions(-)
+[33mba5e85d[m Merge pull request #32 from MSA-209/RyanModelComp
+[33m12d187e[m[33m ([m[1;31morigin/RyanModelComp[m[33m)[m small video description fix, started model component, might rework to implement 3d models
+ 13 files changed, 52 insertions(+), 3 deletions(-)
+[33m71be160[m Merge pull request #30 from MSA-209/RyanSlingLoad
+[33m9e6d161[m[33m ([m[1;31morigin/RyanSlingLoad[m[33m)[m small fix for sling load page
+ 2 files changed, 2 insertions(+), 46 deletions(-)
+[33m5df43f4[m Merge pull request #19 from MSA-209/RyanStrapiVid
+[33m8698580[m[33m ([m[1;31morigin/RyanStrapiVid[m[33m)[m Rayn Strapi vid integration, fix search, and thumbnail covers title and playlist button
+ 6 files changed, 698 insertions(+), 1317 deletions(-)
+[33mbef6571[m Merge pull request #15 from MSA-209/RyanVideoPlayerFix
+[33m808bd21[m[33m ([m[1;31morigin/RyanVideoPlayerFix[m[33m)[m changes to video player, screen size, title, playlist, other videos
+ 2 files changed, 52 insertions(+), 26 deletions(-)
+[33mf0fbf53[m Merge branch 'main' of https://github.com/MSA-209/JIB-3350
+[33m2f00e02[m Merge pull request #13 from MSA-209/RyanDescription
+[33m31562d0[m Merge branch 'main' of https://github.com/MSA-209/JIB-3350
+[33med01271[m[33m ([m[1;31morigin/RyanDescription[m[33m)[m added videoplayerscreen and description button
+ 3 files changed, 68 insertions(+), 11 deletions(-)
+[33m20ae2ed[m ignore
+[33m338af2b[m small fix for hans layout
+ 1 file changed, 20 insertions(+), 23 deletions(-)
+[33m3cb31a4[m Merge pull request #5 from MSA-209/Ryan
+[33mb68d72f[m[33m ([m[1;31morigin/Ryan[m[33m)[m testing
+ 1 file changed, 12 deletions(-)
+[33m312539c[m[33m ([m[1;31morigin/ryanPhase1Cards[m[33m)[m Update AirAssaultHome.js
+ 1 file changed, 40 insertions(+), 3 deletions(-)
