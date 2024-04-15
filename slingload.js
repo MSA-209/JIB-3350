@@ -34,7 +34,8 @@ export function SlingloadScreen({ navigation, route }) {
       <View style={{marginTop: -10, marginBottom: 8}}>
       <View style={styles.headerTitleContainer}>
         <View style={{left: '0%'}}>
-          <SlingloadDropdown/>
+        <SlingloadDropdown style={{backgroundColor: 'yellow', width: 40, height: 40, flex: 5}}/>
+
         </View>
 
         <View style={styles.titleTextBox}>
@@ -55,6 +56,9 @@ export function SlingloadScreen({ navigation, route }) {
             resizeMode:"contain"
             }}/>
           </View> */}
+          <View>
+
+          </View>
           <View>
             <Text style={[styles.inspectorTitle]}>SLINGLOAD INSPECTOR</Text>
           </View>
@@ -1125,7 +1129,7 @@ const SlingloadDropdown = () => {
     <Menu
       visible={menuVisible}
       onDismiss={closeMenu}
-      anchor={<Button icon="menu" onPress={openMenu} backgroundColor={"#FFFFFF"} />}
+      anchor={<Button icon="menu" onPress={openMenu} backgroundColor={"red"} />}
       style={{position: "absolute", marginTop: 30, marginLeft: -10}}
     >
       <Menu.Item onPress={() => { navigation.navigate('Placard'); closeMenu(); }} title="Placard" />
