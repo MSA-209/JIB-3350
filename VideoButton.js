@@ -44,7 +44,6 @@ const VideoComp = ({video,  handleAddToPlaylist, addedVideos, videoLinks, curren
     <View style={{display:'flex'}}>
       <View style={styles.videoCard}>
       <View>
-
         <TouchableOpacity onPress={() =>  {
           // navigation push will cause previous videos to continue playing and navigate just doesnt work
           // replace will replace the current stack with new, if navigating from video hub -> video player

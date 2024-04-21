@@ -127,10 +127,11 @@ React.useEffect(() => {
     try {
       console.log(process.env.REACT_APP_API_URL + "pathfinder-programs")
       const res = await axios.get(
-        "https://airdb-u5up.onrender.com/api/pathfinder-programs" ,
+        "https://airdbnew.onrender.com/api/pathfinder-programs" ,
       {
         headers: {
-          Authorization: "bearer " + "4a47b960dbb6ee5a206f9e93a33e99865a0061acd0b8573a8caf40457d01c3060fad0851ab73ffd9f0fe9afbae69bea6205f7303734d79706bd6bce30f1a565ff880520efb9e2047cb643c6846a4d12bfbb67e0a732c2d411c9851a293e2f630aa0cf0b25d7390909ed050efb9d7bc8dda15500b5e0ee9f423c1a6b301f9af8e",
+          //api key
+          Authorization: "bearer " + "2f30ba70854a898c7ec8c7e9bec66d3a7365c62feeea4d12e540c6cacebc3f169b1db46cc6b2b7b9367e5a60bfdd8488c4866cb97f0dc80ac7356caafe17d927397d26b52669a2bf3be2160346eed23a6f3043b08749e7fffa0ed3f0dd3e6c35bdaa42a756258cd95a864b4136f295c02ed9e4a4aff8b0128118e53cc44085b9",
         }
       }
     )
@@ -225,6 +226,23 @@ React.useEffect(() => {
               {pathfinderNote}
               </Text>
             </Card.Content>
+            <TouchableRipple
+              onPress={() => {
+                navigation.navigate('Video Hub', { 
+                source: 'pathfinder' // or 'airassault' for airassaulthome.js
+                });
+              }}
+              borderless={true}
+              style={{ borderRadius: 0 }}
+              >
+              <Card.Title
+                title="Video Hub"
+                titleVariant="titleLarge"
+                left={(props) => <Icon name='video' color={theme.colors.primary} size={24} style={{ marginLeft: 8 }} />}
+                right={(props) => <Icon name='chevron-right' color={theme.colors.primary} size={24} style={{ marginRight: 32 }} />}
+              />
+          </TouchableRipple>
+          <Divider bold={true}></Divider>
           </Card>
         </View>
       </View>

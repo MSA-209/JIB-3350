@@ -2,11 +2,16 @@ import 'react-native-gesture-handler';
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Animated, Platform, Appearance, ImageBackground, Linking, Dimensions } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { Image, StyleSheet, View, TouchableOpacity, SafeAreaView, ScrollView } from 'react-native';
+import { Image, StyleSheet, View, TouchableOpacity, ScrollView, TextInput, FlatList} from 'react-native';
 import { Searchbar } from 'react-native-paper';
-import * as rssParser from 'react-native-rss-parser';
 import Constants from "expo-constants"
 import * as SplashScreen from 'expo-splash-screen';
+import { MaterialIcons } from '@expo/vector-icons'; // Assuming you're using Expo icons
+// import {Picker} from '@react-native-picker/picker';
+import { SafeAreaView } from 'react-native';
+import 'react-native-svg'
+const screenDimension = Dimensions.get("screen");
+const isPhone = screenDimension.width < 900;
 import {
   NavigationContainer,
   DarkTheme as NavigationDarkTheme,
@@ -37,10 +42,9 @@ import {
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import * as NavigationBar from 'expo-navigation-bar';
+import { styles } from './styleSheet'; 
 
 /*import * as rssParser from 'react-native-rss-parser';*/
-
-
 import {AirAssaultScreen} from './AirAssaultHome.js';
 import {Phase1Screen} from './AirAssaultHome.js';
 import {Phase2Screen} from './AirAssaultHome.js';
@@ -48,10 +52,20 @@ import {PathfinderScreen} from './PathfinderHome.js';
 import {RangerScreen} from './RangerHome.js';
 import {VideoScreen} from './AirAssaultHome.js';
 import { PlaylistScreen } from './AirAssaultHome.js';
-//import {TestScreen} from './AirAssaultHome.js';
-
+import { VideoPlayerScreen } from './VideoButton.js';
 import { AddedVideosContext } from './videoContext.js';
+import { QuizScoresContext } from './quizScoresContext.js';
+import {SlingloadScreen, PlacardScreen, PlacardSequence, PlacardVideo, ApexScreen, 
+ApexVideo, ApexSequence, GrabhookScreen, GrabhookVideo, GrabhookSequence, ChainClevisScreen, 
+ChainClevisVideo, ChainClevisSequence, MediumClevisScreen,MediumClevisSequence,
+MediumClevisVideo, Suspension1Screen,Suspension1Video, Suspension1Sequence, Suspension2Screen, Suspension2Sequence, Suspension2Video, 
+ Suspension3Screen, Suspension3Video,Suspension3Sequence, Suspension4Screen, Suspension4Sequence, Suspension4Video,
+SusStrapOrderScreen,SusStrapOrderSequence,SusStrapOrderVideo, 
+TopLateralC1Screen, TopLateralC1Sequence, TopLateralC1Video, MidLateralC1Screen, MidLateralC1Sequence, MidLateralC1Video,
+BotLateralC1Screen, BotLateralC1Sequence, BotLateralC1Video, StrapSideScreen, StrapSideSequence, StrapSideVideo} from './slingload.js';
+import {SlingloadQuizScreen, UntimedQuizScreen, EndQuizScreen, QuizScoresScreen} from './slingloadQuiz.js';
 
+// import {FeedbackScreen} from './feedbackScreen.js';
 //version output
 const version = Constants.manifest.version
 console.log("Version: ", version)
@@ -167,7 +181,7 @@ function CustomNavigationBar({ navigation, back, route, isDarkMode, toggleDarkMo
   return (
     <Appbar.Header style={{backgroundColor: "#221f20", borderBottomWidth: 5, borderColor: "#ffcc01", height: 55, justifyContent: "space-around"}}>
       <View style={{position: "absolute", left: 0, justifyContent: "center"}}>
-        {(screen == ("Home") || screen == ("News") || screen == ("About")) &&
+        {(screen == ("Home") || screen == ("News") || screen == ("About")|| screen == ("Feedback")) &&
         <Menu
           visible={menuVisible}
           onDismiss={closeMenu}
@@ -188,6 +202,8 @@ function CustomNavigationBar({ navigation, back, route, isDarkMode, toggleDarkMo
           <Menu.Item onPress={() => { navigation.navigate('NewsScreen'); closeMenu(); }} title="News" />
           <Divider></Divider>
           <Menu.Item onPress={() => { navigation.navigate('AboutScreen'); closeMenu(); }} title="About" />
+          <Divider></Divider>
+          <Menu.Item onPress={() => { navigation.navigate('FeedbackScreen'); closeMenu(); }} title="Feedback" />
           <Divider style= {{backgroundColor: "#ffcc01", height: 3}}></Divider>
           <Menu.Item onPress={() => { navigation.navigate('Air Assault Program'); closeMenu(); }} title="Air Assault" />
           <Divider></Divider>
@@ -197,7 +213,7 @@ function CustomNavigationBar({ navigation, back, route, isDarkMode, toggleDarkMo
           <Divider style= {{backgroundColor: "#ffcc01", height: 3, marginBottom: -10}}></Divider>
         </Menu>}
       </View>
-      {(screen != ("Home") && screen != ("About") && screen != ("News")) && <Appbar.BackAction 
+      {(screen != ("Home") && screen != ("About") && screen != ("News") && screen != ("Feedback")) && <Appbar.BackAction 
         style={{position: "absolute", left: 0, bottom: 0}} onPress={navigation.goBack} color={"#FFFFFF"}/>
       }
       <Appbar.Action
@@ -206,7 +222,7 @@ function CustomNavigationBar({ navigation, back, route, isDarkMode, toggleDarkMo
         onPress={toggleDarkMode}
         color={'#FFFFFF'}
       />
-      {(screen == ("Home") || screen == ("News") || screen == ("About")) && <TouchableRipple
+      {(screen == ("Home") || screen == ("News") || screen == ("About") || screen == ("Video Hub") || screen  == ("Your Playlist") || screen == ("Video Player")|| screen == ("Feedback") ) && <TouchableRipple
         onPress={() => navigation.navigate('Home')}
         style={{
           height: 75,
@@ -282,6 +298,27 @@ function CustomNavigationBar({ navigation, back, route, isDarkMode, toggleDarkMo
           borderBottomRightRadius: 32,
         }}>
         <Image source={require("./assets/RangerBadgeClear.png")} style={{
+          marginLeft: 10,
+          marginRight: 10,
+          marginBottom: -20,
+          width: 100,
+          height: 45,
+          resizeMode:"contain"
+          }}/>
+      </TouchableRipple>}
+      {(screen == "Slingload Integration" || screen == "Slingload Quiz" || screen == "Placard" || screen == "Apex" || screen == "Untimed Quiz" || screen == "Quiz Scores") && <TouchableRipple
+        onPress={() => navigation.navigate('Air Assault Program')}
+        style={{
+          height: 75,
+          backgroundColor: "#221f20",
+          borderColor: "#221f20",
+          justifyContent: "flex-end",
+          borderRadius: 0,
+          borderBottomWidth: 32,
+          borderBottomLeftRadius: 32,
+          borderBottomRightRadius: 32,
+        }}>
+        <Image source={require("./assets/AssaultBadgeClear.png")} style={{
           marginLeft: 10,
           marginRight: 10,
           marginBottom: -20,
@@ -583,13 +620,15 @@ React.useEffect(() => {
     try {
       console.log(process.env.REACT_APP_API_URL + "course-informations")
       const res = await axios.get(
-        "https://airdb-u5up.onrender.com/api/abouts" ,
+        "https://airdbnew.onrender.com/api/abouts" ,
       {
+        //api key
         headers: {
-          Authorization: "bearer " + "4a47b960dbb6ee5a206f9e93a33e99865a0061acd0b8573a8caf40457d01c3060fad0851ab73ffd9f0fe9afbae69bea6205f7303734d79706bd6bce30f1a565ff880520efb9e2047cb643c6846a4d12bfbb67e0a732c2d411c9851a293e2f630aa0cf0b25d7390909ed050efb9d7bc8dda15500b5e0ee9f423c1a6b301f9af8e",
+          Authorization: "bearer " + "2f30ba70854a898c7ec8c7e9bec66d3a7365c62feeea4d12e540c6cacebc3f169b1db46cc6b2b7b9367e5a60bfdd8488c4866cb97f0dc80ac7356caafe17d927397d26b52669a2bf3be2160346eed23a6f3043b08749e7fffa0ed3f0dd3e6c35bdaa42a756258cd95a864b4136f295c02ed9e4a4aff8b0128118e53cc44085b9",
         }
       }
     )
+    console.log("hhelp")
     console.log(res.data)
     console.log(res.data.data)
     setData(res.data.data)
@@ -719,6 +758,262 @@ React.useEffect(() => {
   );
 }
 
+function FeedbackScreen({ navigation, route }) {
+  const theme = useTheme();
+  const [feedback, setFeedback] = useState('');
+  const [school, setSchool] = useState('');
+  const [title, setTitle] = useState('');
+  const [rating, setRating] = useState(0);
+  const [length, setLength] = useState('');
+  const [iconColors, setIconColors] = useState(['#ffcc01','#ffcc01','#ffcc01','#ffcc01','#ffcc01']);
+  const [bold, setBold] = useState(false);
+  const [italic, setItalic] = useState(false);
+  const [underline, setUnderline] = useState(false);
+  //styling
+  const handleBold = () => {
+    setBold(!bold);
+    console.log(bold)
+  };
+
+  const handleItalic = () => {
+    setItalic(!italic);
+    console.log(italic)
+  };
+
+  const handleUnderline = () => {
+    setUnderline(!underline);
+    console.log(underline)
+  };
+  const handleFeedbackChange = (text) => {
+    if (text.length < 50) {
+      setLength('short');
+    } else if (text.length < 100) {
+      setLength('medium');
+    } else {
+      setLength('long');
+    }
+    setFeedback(text);
+  }
+  const handleSchoolChange = (value) => {
+  setSchool(value);
+    setMenuVisible(false);
+    setSchoolSelected(value);  }
+  const handleTitleChange = (text) => {
+    setTitle(text);
+  }
+  const handleRating = (value) => {
+    setRating(value);
+    console.log(rating)
+  };
+
+  const submitFeedback = () => {
+    if (!school || !title || !feedback) {
+      alert('Incomplete Feedback, Please fill in all fields.');
+      return;
+    }
+    let formattedFeedback = feedback;
+    if (bold) {
+      formattedFeedback = `<bold>${formattedFeedback}</bold>`;
+    }
+
+    if (italic) {
+      formattedFeedback = `<italic>${formattedFeedback}</italic>`;
+    }
+
+    if (underline) {
+      formattedFeedback = `<underline>${formattedFeedback}</underline>`;
+    }
+    const data = {
+      data: {
+        School: school,
+        Title: title,
+        FeedbackBody: [
+          {
+            type: 'paragraph',
+            children: [
+              {
+                text: formattedFeedback,
+                type: 'text'
+              }
+            ]
+          }
+        ],
+        length: length
+      },
+    };
+    console.log(data)
+    //post feedback to STrapi
+
+    axios.post(
+      "https://airdbnew.onrender.com/api/feedbacks",
+      data,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: "bearer " + "2f30ba70854a898c7ec8c7e9bec66d3a7365c62feeea4d12e540c6cacebc3f169b1db46cc6b2b7b9367e5a60bfdd8488c4866cb97f0dc80ac7356caafe17d927397d26b52669a2bf3be2160346eed23a6f3043b08749e7fffa0ed3f0dd3e6c35bdaa42a756258cd95a864b4136f295c02ed9e4a4aff8b0128118e53cc44085b9",
+        },
+      }
+    )
+
+      setFeedback('');
+      setSchool('');
+      setTitle('');
+  };
+  const submitRating = () => {
+    if (!rating) {
+      alert('Rating not filled');
+      return;
+    }
+    const data = {
+      data: {
+          rating: rating,
+      },
+    };
+    console.log(data)
+    //post feedback to STrapi
+
+    axios.post(
+      "https://airdbnew.onrender.com/api/ratings",
+      data,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: "bearer " + "2f30ba70854a898c7ec8c7e9bec66d3a7365c62feeea4d12e540c6cacebc3f169b1db46cc6b2b7b9367e5a60bfdd8488c4866cb97f0dc80ac7356caafe17d927397d26b52669a2bf3be2160346eed23a6f3043b08749e7fffa0ed3f0dd3e6c35bdaa42a756258cd95a864b4136f295c02ed9e4a4aff8b0128118e53cc44085b9",
+        },
+      }
+    )
+
+      setFeedback('');
+      setSchool('');
+      setTitle('');
+  };
+  const TextStylingBar = ({ onBold, onItalic, onUnderline }) => (
+    <View style={[styles.textStylingBar, {marginBottom: 7}]}>
+      <TouchableOpacity onPress={onBold}>
+        <MaterialIcons name="format-bold" size={bold? 27 : 24} color={bold ? '#ffcc01' : theme.colors.onBackground} />
+      </TouchableOpacity>
+      <TouchableOpacity onPress={onItalic}>
+        <MaterialIcons name="format-italic" size={italic? 27 : 24} color={italic ? '#ffcc01' : theme.colors.onBackground} />
+      </TouchableOpacity>
+      <TouchableOpacity onPress={onUnderline}>
+        <MaterialIcons name="format-underlined" size={underline? 27 : 24} color={underline ? '#ffcc01' : theme.colors.onBackground} />
+      </TouchableOpacity>
+    </View>
+  );
+  
+  const [menuVisible, setMenuVisible] = useState(false);
+
+  const handleSchoolPicker = () => {
+    setMenuVisible(!menuVisible);
+  };
+
+  const schools = [
+    "Air Assault School",
+    "Pathfinder School",
+    "Ranger School"
+  ];
+
+  const [schoolSelected, setSchoolSelected] = useState("Select school for feedback");
+  return (
+    <ScrollView style={styles.scrollView}>
+    <View style={[styles.feedbackForm, {alignSelf: 'center', backgroundColor: theme.colors.surfaceDisabled, flexDirection: 'column', justifyContent: 'space-around', borderColor: theme.colors.primary, borderWidth: isPhone? 0.5 : 1, top: isPhone? 'auto' : 10}]}>
+          <View style={{position: 'absolute',borderColor: '#ffcc01', backgroundColor: theme.colors.primaryContainer, borderWidth: 2, borderRadius: 10, overflow: 'hidden', zIndex: 20, top :isPhone? 30 : 35, marginBottom: 30, alignSelf: 'center', alignItems: 'center'}}>
+          <TouchableOpacity onPress={handleSchoolPicker}>
+        <View style={{fontSize: isPhone? 18 : 25, backgroundColor: '#ffcc01', alignItems: 'center', width: isPhone? 300 : 400, height: isPhone? 36 : 40, borderRadius: 8}}>
+        <Text style={{alignSelf: 'center', color: '#000234', marginTop: isPhone? 8 : 15, size: isPhone? 16 : 25 }}>{schoolSelected}</Text>
+        </View>
+        {/* <ScrollView style={{height: isPhone? 'auto' : 100}}> */}
+        {menuVisible && (
+          <ScrollView style={{height: isPhone? 'auto' : 120, width: isPhone? 300 : 400}}>
+            <View style={{marginTop: isPhone? -5 : 0}}>
+              {schools.map((school, index) => (
+              <TouchableOpacity key={index} onPress={() => handleSchoolChange(school)}>
+              <View style={{backgroundColor: '#ffffff', width: isPhone? 300 : 400, height: 36 }}>
+                <Text style={{alignSelf: 'center', marginTop: 11, color: '#000000', fontSize: isPhone? 16 : 20}}>{schools[index]}</Text>
+              </View>
+            </TouchableOpacity>
+          ))}
+                  <View style={{height: isPhone? 10 : 25, backgroundColor: '#ffffff'}}></View>
+          </View>
+          </ScrollView>
+
+          
+        )}
+        {/* </ScrollView> */}
+
+    </TouchableOpacity>
+          </View>
+
+      <View style={styles.schoolSelector}>
+        {/* <Text style={styles.pickerText}>Select a school to give feedback to</Text> */}
+        {/* <Picker style={styles.picker}
+          onValueChange={handleSchoolChange}
+          value={school}>
+          <Picker.Item label="Select school for feedback" value="" />
+          <View style={styles.separator} />
+          <Picker.Item label="Air Assault School" value="Air Assault School" />
+          <View style={styles.separator} />
+          <Picker.Item label="Pathfinder School" value="Pathfinder School" />
+          <View style={styles.separator} />
+          <Picker.Item label="Ranger School" value="Ranger School" />
+        </Picker> */}
+
+        <TextInput
+          style={styles.titleBox}
+          placeholder="Please enter title!"
+          onChangeText={handleTitleChange}
+          value={title}
+        />
+        <Text style={{fontWeight: 500}}></Text>
+        <View style={[styles.feedbackContainer, {margin: 10}]}>
+        <TextStylingBar
+          onBold={handleBold}
+          onItalic={handleItalic}
+          onUnderline={handleUnderline}
+        />
+      <TextInput
+        style={[
+          styles.commentBox,
+          bold && styles.bold,
+          italic && styles.italic,
+          underline && styles.underline
+        ]}
+        placeholder="Give your feedback here!"
+        onChangeText={handleFeedbackChange}
+        value={feedback}
+      />
+        </View>
+                    <View style={[styles.submitButton, {marginTop: 30}]}> 
+        <Button title="Submit Feedback" onPress={submitFeedback}><Text style={styles.buttonText}>Submit Feedback</Text></Button>
+      </View>
+        <View style={{marginTop: 20, marginBottom: 20}}>
+          <Text style={[styles.buttonText, {marginTop: 10}]}>Rate your experience:</Text>
+          <View style={styles.starContainer}>
+            {[1, 2, 3, 4, 5].map((star) => (
+              <TouchableOpacity
+                key={star}
+                onPress={() => handleRating(star)}
+                style={styles.starButton}
+              >
+                <MaterialIcons
+                  name={star <= rating ? 'star' : 'star'}
+                  size={30}
+                  color={star <= rating ? '#ffcc01' : 'white'}
+                />
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
+        <View style={styles.submitButton}>
+          <Button title="Submit Rating" onPress={submitRating}><Text style={styles.buttonText}>Submit Rating</Text></Button>
+        </View>
+      </View>
+    </View> 
+    </ScrollView>
+    
+  );
+}
+
 const Tab = createMaterialBottomTabNavigator();
 
 // Create a context object to hold the state and function
@@ -731,8 +1026,9 @@ function HomeStackScreen({navigation, route}) {
   const theme = useTheme();
   const { isDarkMode, toggleDarkMode } = React.useContext(AppContext);
   const [addedVideos, setAddedVideos] = React.useState({});
+  const [quizScores, setQuizScores] = React.useState([]);
   return (
-    //addedVideos are for playlist
+    <QuizScoresContext.Provider value={{ quizScores, setQuizScores }}>
     <AddedVideosContext.Provider value={{ addedVideos, setAddedVideos }}>
     <Stack.Navigator
       screenOptions={{
@@ -747,8 +1043,60 @@ function HomeStackScreen({navigation, route}) {
       <Stack.Screen name='Ranger Program' component={RangerScreen}/>
       <Stack.Screen name='Video Hub' component={VideoScreen} />
       <Stack.Screen name='Your Playlist' component={PlaylistScreen} />
+      <Stack.Screen name='Video Player' component={VideoPlayerScreen}/>
+      <Stack.Screen name='Slingload Integration' component={SlingloadScreen} />
+      <Stack.Screen name='Placard' component={PlacardScreen} />
+      <Stack.Screen name='Placard Video' component={PlacardVideo} />
+      <Stack.Screen name='Placard Sequence' component={PlacardSequence} />
+      <Stack.Screen name='Apex' component={ApexScreen} />
+      <Stack.Screen name='Apex Video' component={ApexVideo} />
+      <Stack.Screen name='Apex Sequence' component={ApexSequence} />
+      <Stack.Screen name='Grabhook' component={GrabhookScreen} />
+      <Stack.Screen name='Grabhook Video' component={GrabhookVideo} />
+      <Stack.Screen name='Grabhook Sequence' component={GrabhookSequence} />
+      <Stack.Screen name='ChainClevis' component={ChainClevisScreen} />
+      <Stack.Screen name='ChainClevis Video' component={ChainClevisVideo} />
+      <Stack.Screen name='ChainClevis Sequence' component={ChainClevisSequence} />
+      <Stack.Screen name='MediumClevis' component={MediumClevisScreen} />
+      <Stack.Screen name='MediumClevis Video' component={MediumClevisVideo} />
+      <Stack.Screen name='MediumClevis Sequence' component={MediumClevisSequence} />
+      <Stack.Screen name='Suspension1' component={Suspension1Screen} />
+      <Stack.Screen name='Suspension1 Video' component={Suspension1Video} />
+      <Stack.Screen name='Suspension1 Sequence' component={Suspension1Sequence} />
+      <Stack.Screen name='Suspension2' component={Suspension2Screen} />
+      <Stack.Screen name='Suspension2 Video' component={Suspension2Video} />
+      <Stack.Screen name='Suspension2 Sequence' component={Suspension2Sequence} />
+      <Stack.Screen name='Suspension3' component={Suspension3Screen} />
+      <Stack.Screen name='Suspension3 Video' component={Suspension3Video} />
+      <Stack.Screen name='Suspension3 Sequence' component={Suspension3Sequence} />
+      <Stack.Screen name='Suspension4' component={Suspension4Screen} />
+      <Stack.Screen name='Suspension4 Video' component={Suspension4Video} />
+      <Stack.Screen name='Suspension4 Sequence' component={Suspension4Sequence} />
+      <Stack.Screen name='SusStrapOrder' component={SusStrapOrderScreen} />
+      <Stack.Screen name='SusStrapOrder Video' component={SusStrapOrderVideo} />
+      <Stack.Screen name='SusStrapOrder Sequence' component={SusStrapOrderSequence} />
+      <Stack.Screen name='StrapSide' component={StrapSideScreen} />
+      <Stack.Screen name='StrapSide Video' component={StrapSideVideo} />
+      <Stack.Screen name='StrapSide Sequence' component={StrapSideSequence} />
+      <Stack.Screen name='S1P2' component={SusStrapOrderScreen} />
+      <Stack.Screen name='S1P2 Video' component={SusStrapOrderVideo} />
+      <Stack.Screen name='S1P2 Sequence' component={SusStrapOrderSequence} />
+      <Stack.Screen name='TopLateralC1' component={TopLateralC1Screen} />
+      <Stack.Screen name='TopLateralC1 Video' component={TopLateralC1Video} />
+      <Stack.Screen name='TopLateralC1 Sequence' component={TopLateralC1Sequence} />
+      <Stack.Screen name='MidLateralC1' component={MidLateralC1Screen} />
+      <Stack.Screen name='MidLateralC1 Video' component={MidLateralC1Video} />
+      <Stack.Screen name='MidLateralC1 Sequence' component={MidLateralC1Sequence} />
+      <Stack.Screen name='BotLateralC1' component={BotLateralC1Screen} />
+      <Stack.Screen name='BotLateralC1 Video' component={BotLateralC1Video} />
+      <Stack.Screen name='BotLateralC1 Sequence' component={BotLateralC1Sequence} />
+      <Stack.Screen name="Slingload Quiz" component={SlingloadQuizScreen} />
+      <Stack.Screen name="Untimed Quiz" component={UntimedQuizScreen} />
+      <Stack.Screen name="End Quiz" component={EndQuizScreen} />
+      <Stack.Screen name="Quiz Scores" component={QuizScoresScreen} />
     </Stack.Navigator>
     </AddedVideosContext.Provider>
+    </QuizScoresContext.Provider>
   );
 }
 
@@ -778,6 +1126,21 @@ function AboutStackScreen({navigation, route}) {
       <Stack.Screen name='About' component={About} />
     </Stack.Navigator>
   );
+  
+}
+function FeedbackStackScreen({navigation, route}) {
+  const { isDarkMode, toggleDarkMode } = React.useContext(AppContext);
+
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        header: (props) => <CustomNavigationBar {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />,
+      }}
+    >
+      <Stack.Screen name='Feedback' component={FeedbackScreen} />
+    </Stack.Navigator>
+  );
+  
 }
 
 //SplashScreen.preventAutoHideAsync(); // Prevents the splash screen from hiding automatically, for debugging
@@ -800,7 +1163,7 @@ function AnimatedSplashScreen({ children }) {
 
   const onImageLoaded = useCallback(async () => {
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000)); // Change this to force minimum splash time
+      await new Promise(resolve => setTimeout(resolve, 5000)); // Change this to force minimum splash time
       await SplashScreen.hideAsync();
       // Load stuff
       await Promise.all([]);
@@ -860,6 +1223,7 @@ export default function App() {
           <NavigationContainer theme={isDarkMode ? CombinedDarkTheme : CombinedDefaultTheme}>
           <StatusBar style="light" translucent={true} />
           <AnimatedSplashScreen>
+
           <Tab.Navigator
             initialRouteName='Home'
             screenOptions={{ headerShown: false }}
@@ -895,6 +1259,16 @@ export default function App() {
                 ),
               }}
             />
+            <Tab.Screen
+              name='FeedbackScreen'
+              component={FeedbackStackScreen}
+              options={{
+                tabBarLabel: 'Feedback',
+                tabBarIcon: ({ focused, color }) => (
+                  <Icon name={focused ? 'message' : 'message-outline'} color={color} size={24} />
+                  ),
+              }}
+            />
           </Tab.Navigator>
           </AnimatedSplashScreen>
           </NavigationContainer>
@@ -903,33 +1277,4 @@ export default function App() {
     );
   }
 
-      const styles = StyleSheet.create({
-        card: {
-          marginTop: 0,
-          justifyContent: 'center',
-          marginHorizontal: 0,
-        },
-        cardBtn: {
-          borderRadius: 10,
-          marginHorizontal: 10,
-        },
-        container: {
-          flex: 1,
-          paddingLeft: 8,
-          paddingRight: 8,
-          marginHorizontal: 0,
-        },
-        scrollView: {
-          marginHorizontal: 0,
-        },
-        newsImage: {
-          borderWidth: 2,
-          borderRadius: 8
-        },
-        rectangle: {
-          height: 8,
-          backgroundColor: '#ffcc01',
-          position: 'relative', 
-        },
-      });
 
