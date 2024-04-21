@@ -1,4 +1,6 @@
 import * as React from 'react';
+
+
 import {  
           LayoutAnimation,
           Linking,
@@ -8,7 +10,8 @@ import {
           TouchableOpacity,
           SafeAreaView,
           ScrollView,
-          TextInput
+          TextInput,
+          Dimensions,
         } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import {   
@@ -34,9 +37,14 @@ import { initializeApp } from "firebase/app";
 import { getDatabase, ref, child, get, onValue } from "firebase/database";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import axios from 'axios';
+
+
+
 // this const below is for firebase
 // for future maintainers, please get a new apiKey
 // this github has been public for a while  --Eric
+
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyA_5_RK8ebZPrHAErXJS9oPWoXTSvVCVxc",
@@ -528,6 +536,7 @@ export function Phase2Screen({ navigation, route }) {
 
 // Video Screen thumbnail display
 import VideoButton from './VideoButton';
+// imports videoLinks
 import videoLinks from './videoLinks'
 import videoLinks2 from './videoLinks2'
 
@@ -547,8 +556,8 @@ export function VideoScreen({ navigation, route }) {
     const fetchVideos = async () => {
       try {
         const urls = [
-          "https://airdbnew.onrender.com/api/air-assault-videos?populate=video",
-          "https://airdbnew.onrender.com/api/pathfinder-videos?populate=video"
+          "https://airdbnew.onrender.com/api/air-assault-videos?populate=video,thumbnail",
+          "https://airdbnew.onrender.com/api/pathfinder-videos?populate=video,thumbnail"
         ];
         const allRequests = urls.map(url =>
           axios.get(url, {
@@ -560,13 +569,14 @@ export function VideoScreen({ navigation, route }) {
         Promise.all(allRequests).then(responses => {
           const airAssaultResponse = responses[0];
           const pathfinderResponse = responses[1];
-  
+          console.log(airAssaultResponse)
           if (airAssaultResponse.data && airAssaultResponse.data.data) {
             const formattedData = airAssaultResponse.data.data.map((item) => {
               return {
                 link: item.attributes.video.data[0].attributes.url,
                 title: item.attributes.title,
                 description: item.attributes.description,
+                thumbnail: item.attributes.thumbnail.data.attributes.url,
               };
             });
             console.log(formattedData + "air")
@@ -579,6 +589,7 @@ export function VideoScreen({ navigation, route }) {
                 link: item.attributes.video.data[0].attributes.url,
                 title: item.attributes.title,
                 description: item.attributes.description,
+                thumbnail: item.attributes.thumbnail.data.attributes.url,
               };
             });
             console.log(formattedData + "pathfinder")
@@ -630,7 +641,9 @@ export function VideoScreen({ navigation, route }) {
       />
       </View>
       {/* Display video button with an array of video links */}
-        <VideoButton videoLinks={filteredData} currentVideoID={null} />
+      <View style={{justifyContent: 'center', alignItems: 'center'}}>
+    <VideoButton videoLinks={filteredData} currentVideoID={null} />
+          </View>
          {/* changing filtered data to test videos, replace the videolinks with videodata from strapi */}
       <View style={{ marginBottom: 30 }}></View>
     </ScrollView>
@@ -647,8 +660,8 @@ export function PlaylistScreen({ navigation, route }) {
     const fetchVideos = async () => {
       try {
         const urls = [
-          "https://airdbnew.onrender.com/api/air-assault-videos?populate=video,thumbnail",
-          "https://airdbnew.onrender.com/api/pathfinder-videos?populate=video,thumbnail"
+          "https://airdbnew.onrender.com/api/air-assault-videos?populate=video",
+          "https://airdbnew.onrender.com/api/pathfinder-videos?populate=video"
         ];
         const allRequests = urls.map(url =>
           axios.get(url, {

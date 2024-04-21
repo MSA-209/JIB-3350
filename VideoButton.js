@@ -6,18 +6,44 @@ import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { Video } from 'expo-av';
 import VideoThumbnail from 'react-video-thumbnail';
 import { styles } from './styleSheet'; 
+import * as VideoThumbnails from 'expo-video-thumbnails';
 
 
 const screenDimension = Dimensions.get("screen")
-
+const isPhone = screenDimension.width < 1000; // Adjust the threshold as needed
+const resolution = 9/16;
 const VideoComp = ({video,  handleAddToPlaylist, addedVideos, videoLinks, currentVideoID}) => {
   const navigation = useNavigation();
+  const [thumbnail, setThumbnail] = useState(null);
+  const[isAdded, setIsAdded] = useState(!!addedVideos[video.link]);
+  
+  const handleAdd = (video) => {
+    handleAddToPlaylist(video);
+    setIsAdded(!isAdded);
+  }
 
+  /*
+  React.useEffect(() => {
+    if (isPhone) {
+    generateThumbnail();
+  }
+  }, []);
+    const generateThumbnail = async () => {
+    try {
+      console.log(video.link)
+      const { uri } = await VideoThumbnails.getThumbnailAsync(video.link);
+      setThumbnail(uri);
+      console.log(uri)
+      console.log(thumbnail)
+    } catch (e) {
+      console.log(e)
+    }
+  };
+  */
   return (
     <View style={{display:'flex'}}>
       <View style={styles.videoCard}>
-<View>
-
+      <View>
         <TouchableOpacity onPress={() =>  {
           // navigation push will cause previous videos to continue playing and navigate just doesnt work
           // replace will replace the current stack with new, if navigating from video hub -> video player
@@ -36,31 +62,38 @@ const VideoComp = ({video,  handleAddToPlaylist, addedVideos, videoLinks, curren
             /> */}
           <Image
   source={{ uri: video.thumbnail }}
-  style={{ marginTop: 10, width: 345, height: 290, alignSelf: 'center', borderTopLeftRadius: 8, borderBottomRightRadius: 8 }}
-         />
-            <View style={{width: 345, height: 45, position: 'absolute', zIndex: 1, marginTop: 223}} >
-          <View style={styles.videoStyle.videoDescriptionContainer}>
+  style={{ marginTop: isPhone? 0: 0, width: 345, height: 290, alignSelf: 'center', borderTopLeftRadius: 8, borderBottomRightRadius: 8 }}
+/>
+<View style={{width: 345, position: 'absolute', zIndex: 3, bottom: isPhone ? 80 : 20}} >
+          <View style={{position: 'absolute',
+            bottom: 0,
+            left: 0,
+            width: '100%',
+            justifyContent: 'flex-start', 
+            flexDirection: 'row',
+            backgroundColor: '#ffcc01',
+            borderBottomLeftRadius: 8,
+            borderBottomRightRadius: 8,
+            height: 45,
+            width: isPhone? 345 : resolution * (screenDimension.width),
+            zIndex: 1}}>
             <Text style={{ fontSize: 16, fontWeight: 'bold', alignSelf: 'center', padding: 5}}>
               {video.title}
             </Text>
-            <TouchableOpacity onPress={() => handleAddToPlaylist(video)}  style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text style={{ fontSize: 16, fontWeight: 'bold', alignSelf: 'center', padding: 5 }}>
-                { addedVideos[video.link] ? 'Remove from' :'Add to'}</Text>
+            <TouchableOpacity onPress={() => handleAdd(video)}  style={{ flexDirection: 'row', alignItems: 'center', marginLeft: isPhone? '20%': '10%'}}>
+            <Text style={{ fontSize: 16, fontWeight: 'bold', alignSelf: 'center', padding: 5 }}>
+            { isAdded ? 'Remove from' :'Add to'}</Text>
               <IconButton
                 icon="playlist-play"
                 size={20}
                 color="#000000"
               />
+              </TouchableOpacity>
+            </View>
+            </View>
             </TouchableOpacity>
-          </View>
-
-          </View>
-
-            </TouchableOpacity>
-    {/* </TouchableOpacity> */}
-        </View>
       </View>
-
+      </View>
     </View>
   );
 }
