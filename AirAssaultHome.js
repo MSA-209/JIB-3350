@@ -10,7 +10,8 @@ import {
           TouchableOpacity,
           SafeAreaView,
           ScrollView,
-          TextInput
+          TextInput,
+          Dimensions,
         } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import {   
@@ -36,9 +37,14 @@ import { initializeApp } from "firebase/app";
 import { getDatabase, ref, child, get, onValue } from "firebase/database";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import axios from 'axios';
+
+
+
 // this const below is for firebase
 // for future maintainers, please get a new apiKey
 // this github has been public for a while  --Eric
+
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyA_5_RK8ebZPrHAErXJS9oPWoXTSvVCVxc",
@@ -499,48 +505,78 @@ import VideoButton from './VideoButton';
 // imports videoLinks
 import videoLinks from './videoLinks'
 export function VideoScreen({ navigation, route }) {
-  const [data, setData] = React.useState([])
-  const [videoName, setVideoName] = React.useState("")
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        console.log(process.env.REACT_APP_API_URL + "air-assault-videos")
-        const res = await axios.get(
-          "https://airdb-u5up.onrender.com/api/air-assault-videos?populate=video" ,
-        {
-          headers: {
-            Authorization: "bearer " + "4a47b960dbb6ee5a206f9e93a33e99865a0061acd0b8573a8caf40457d01c3060fad0851ab73ffd9f0fe9afbae69bea6205f7303734d79706bd6bce30f1a565ff880520efb9e2047cb643c6846a4d12bfbb67e0a732c2d411c9851a293e2f630aa0cf0b25d7390909ed050efb9d7bc8dda15500b5e0ee9f423c1a6b301f9af8e"
-            /*{"77f8b9051e98185e8415940294a97ccfaa98676aaef1b5a728ff3cad09197502ddac6a2494767c24f4447d8ee68d56226ee8319849ab6074c8460c2d33d65972383838a7dc2a2ca2db871d658424547ec55a5df560b82568759f3d78161e12599c42363c91e23bef25aeffce1d81d671da1cc712e615236fe0bc61a4e17699bf"}**/,
-          }
-        }
-      )
-      console.log(res.data)
-      setData(res.data.data)
-    } catch (err) {
-      console.log(err);
-     }
-    }
-    fetchData();
-    console.log(data)
-  }, []);
-  React.useEffect(() => {
-    if (data.length > 0) {
-      if (data[0].attributes) {
-        console.log(data[0].attributes.video.data[0].attributes.name)
-        setVideoName(data[0].attributes.video.data[0].attributes.name)
-      } else {
-        console.log("No attributes");
-      }
-    } else {
-      console.log("Data is empty");
-    }
-  }, [data]);
   const theme = useTheme();
   const screen = route.name;
+  const source = route.params.source;
+  const [airAssaultVideos, setAirAssaultVideos] = React.useState([])
+  const [pathfinderVideos, setPathfinderVideos] = React.useState([])
   const [searchQuery, setSearchQuery] = React.useState('');
   const [isSearchVisible, setIsSearchVisible] = React.useState(false);
+  const videoLinksUsed = source === 'pathfinder' ? pathfinderVideos : airAssaultVideos;
+  const [filteredData, setFilteredData] = React.useState(videoLinksUsed); //created filteredData for search filtering
 
-  const onChangeSearch = query => setSearchQuery(query);
+//Strapi Videos  
+  React.useEffect(() => {
+    const fetchVideos = async () => {
+      try {
+        const urls = [
+          "https://airdbnew.onrender.com/api/air-assault-videos?populate=video,thumbnail",
+          "https://airdbnew.onrender.com/api/pathfinder-videos?populate=video,thumbnail"
+        ];
+        const allRequests = urls.map(url =>
+          axios.get(url, {
+            headers: {
+              Authorization: "bearer " + "2f30ba70854a898c7ec8c7e9bec66d3a7365c62feeea4d12e540c6cacebc3f169b1db46cc6b2b7b9367e5a60bfdd8488c4866cb97f0dc80ac7356caafe17d927397d26b52669a2bf3be2160346eed23a6f3043b08749e7fffa0ed3f0dd3e6c35bdaa42a756258cd95a864b4136f295c02ed9e4a4aff8b0128118e53cc44085b9"
+            }
+          })
+        );
+        Promise.all(allRequests).then(responses => {
+          const airAssaultResponse = responses[0];
+          const pathfinderResponse = responses[1];
+          console.log(airAssaultResponse)
+          if (airAssaultResponse.data && airAssaultResponse.data.data) {
+            const formattedData = airAssaultResponse.data.data.map((item) => {
+              return {
+                link: item.attributes.video.data[0].attributes.url,
+                title: item.attributes.title,
+                description: item.attributes.description,
+                thumbnail: item.attributes.thumbnail.data.attributes.url,
+              };
+            });
+            console.log(formattedData + "air")
+            setAirAssaultVideos(formattedData);
+          }
+  
+          if (pathfinderResponse.data && pathfinderResponse.data.data) {
+            const formattedData = pathfinderResponse.data.data.map((item) => {
+              return {
+                link: item.attributes.video.data[0].attributes.url,
+                title: item.attributes.title,
+                description: item.attributes.description,
+                thumbnail: item.attributes.thumbnail.data.attributes.url,
+              };
+            });
+            console.log(formattedData + "pathfinder")
+            setPathfinderVideos(formattedData);
+          }
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    };
+  
+    fetchVideos();
+  }, []);  
+  React.useEffect(() => {
+    setFilteredData(videoLinksUsed);
+  }, [videoLinksUsed]);  
+  const onChangeSearch = query => { 
+    setSearchQuery(query);
+    const newFilteredData = videoLinksUsed.filter(videoLinks => videoLinks.title.toLowerCase().includes(query.toLowerCase()) || videoLinks.description.toLowerCase().includes(query.toLowerCase())); 
+    console.log(videoLinksUsed)
+    console.log("new", newFilteredData) // Changed this line
+    setFilteredData(newFilteredData);
+  } //filters the data by title or description based on the search query and updates the filteredData state
   return (
     <ScrollView style={{ marginTop: -10, marginBottom: 0 }} showsVerticalScrollIndicator={true}>
       <View style={{ alignItems: 'center', backgroundColor: "#221f20", height: 45, borderTopWidth: 5, borderBottomWidth: 3, borderColor: "#ffcc01" }}>
@@ -560,6 +596,7 @@ export function VideoScreen({ navigation, route }) {
           <Text style={{color:theme.colors.primary, fontSize: 20}}>Search</Text>
           {/* navigates to playlistScreen which will only shows videos in playlist*/}
         </TouchableOpacity>
+  
         <IconButton
         icon="playlist-play"
         color="black"
@@ -568,7 +605,10 @@ export function VideoScreen({ navigation, route }) {
       />
       </View>
       {/* Display video button with an array of video links */}
-        <VideoButton videoLinks={videoLinks} />
+      <View style={{justifyContent: 'center', alignItems: 'center'}}>
+    <VideoButton videoLinks={filteredData} currentVideoID={null} />
+          </View>
+         {/* changing filtered data to test videos, replace the videolinks with videodata from strapi */}
       <View style={{ marginBottom: 30 }}></View>
     </ScrollView>
   );
@@ -577,18 +617,72 @@ export function VideoScreen({ navigation, route }) {
 import { AddedVideosContext } from './videoContext';
 
 export function PlaylistScreen({ navigation, route }) {
+  const [airAssaultVideos, setAirAssaultVideos] = React.useState([]);
+  const [pathfinderVideos, setPathfinderVideos] = React.useState([]);
+
+  React.useEffect(() => {
+    const fetchVideos = async () => {
+      try {
+        const urls = [
+          "https://airdbnew.onrender.com/api/air-assault-videos?populate=video",
+          "https://airdbnew.onrender.com/api/pathfinder-videos?populate=video"
+        ];
+        const allRequests = urls.map(url =>
+          axios.get(url, {
+            headers: {
+              Authorization: "bearer " + "2f30ba70854a898c7ec8c7e9bec66d3a7365c62feeea4d12e540c6cacebc3f169b1db46cc6b2b7b9367e5a60bfdd8488c4866cb97f0dc80ac7356caafe17d927397d26b52669a2bf3be2160346eed23a6f3043b08749e7fffa0ed3f0dd3e6c35bdaa42a756258cd95a864b4136f295c02ed9e4a4aff8b0128118e53cc44085b9"
+            }
+          })
+        );
+        Promise.all(allRequests).then(responses => {
+          const airAssaultResponse = responses[0];
+          const pathfinderResponse = responses[1];
+
+          if (airAssaultResponse.data && airAssaultResponse.data.data) {
+            const formattedData = airAssaultResponse.data.data.map((item) => {
+              return {
+                link: item.attributes.video.data[0].attributes.url,
+                title: item.attributes.title,
+                description: item.attributes.description,
+                thumbnail: item.attributes.thumbnail.data.attributes.url,
+              };
+            });
+            setAirAssaultVideos(formattedData);
+          }
+
+          if (pathfinderResponse.data && pathfinderResponse.data.data) {
+            const formattedData = pathfinderResponse.data.data.map((item) => {
+              return {
+                link: item.attributes.video.data[0].attributes.url,
+                title: item.attributes.title,
+                description: item.attributes.description,
+                thumbnail: item.attributes.thumbnail.data.attributes.url,
+              };
+            });
+            setPathfinderVideos(formattedData);
+          }
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchVideos();
+  }, []);
+
+
   const { addedVideos } = React.useContext(AddedVideosContext);
   const theme = useTheme();
   const screen = route.name;
-  
-  const playlistVideoLinks = videoLinks.filter(video => addedVideos[video.link]);
+  const allVideoLinks = [...airAssaultVideos, ...pathfinderVideos];
+  const playlistVideoLinks = allVideoLinks.filter(video => addedVideos[video.link]);
 
   return (
     <ScrollView style={{ marginTop: -10, marginBottom: 0 }} showsVerticalScrollIndicator={true}>
       <View style={{ alignItems: 'center', backgroundColor: "#221f20", height: 45, borderTopWidth: 5, borderBottomWidth: 3, borderColor: "#ffcc01" }}>
         <Text style={{ color: "#FFFFFF", fontSize: 20 }} variant='headlineLarge'>{screen}</Text>
       </View>
-      <VideoButton videoLinks={playlistVideoLinks} /> 
+      <VideoButton videoLinks={playlistVideoLinks} currentVideoID={null} /> 
     </ScrollView>
   );
 }
