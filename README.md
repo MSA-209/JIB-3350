@@ -2,7 +2,27 @@
 Educational application designated for the Sabaluski Air Assault School located in Fort Cambell.
 App is functional on any mobile device with the launch of Expo Go, native Android devices with the app package, and websites using the Metro Go Bundler.
 To launch, simply clone the repository and launch using Expo.
+# Installation Guide
+## Pre-requisites
+* Should use this repo as it's more updated https://github.com/MSA-209/NewExpo
+* Should have the latest expo app installed running on version sdk 50
+* Should have npm installed to install other packages
+## Download Instructions
+* Download the zip file and extract it
+## Build Instructions
+* run 'npm install' on the terminal to install missing packages
+* then run command 'npm start' to run locally or 'npx expo start --tunnel' to run through qr code for other devices
+## TroubleShooting
+* make sure you're in the right directory when running npm start
 # Release Notes Section
+## Version 1.5.0
+### Features
+* Feature 1 added coming soon banner for future use
+* Feature 2 added rotating images in slingload quiz
+### Bug Fixes
+* fixed stlying of feedback screen
+* fixed video hub styling on phone
+* fixed a lot of in slingload simulator
 ## Version 1.4.0
 ### Features
 * Feature 1 slingload untimed quiz screen
